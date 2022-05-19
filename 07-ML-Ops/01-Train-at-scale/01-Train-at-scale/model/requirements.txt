@@ -1,37 +1,13 @@
 colorama
-# prevent bq 3+ db-dtypes package error when running training from bq
-google-cloud-bigquery<3.0.0
-google-cloud-storage
 ipdb
+ipykernel
 matplotlib
-mlflow
-nbresult
 numpy
 pandas
-prefect
-prefect[viz]
-psycopg2
+nbresult
 pygeohash
 pytest
 seaborn
 sklearn
 yapf
-
 # tensorflow or tensorflow-macos
-
-# fastapi
-# google
-# google-api-python-client
-# joblib
-# json
-# pickle
-# pytz
-# requests
-# seaborn
-# sqlalchemy
-# sqlite3
-# tensorflow
-# tensorflow_serving
-# tqdm
-# train
-# typing
