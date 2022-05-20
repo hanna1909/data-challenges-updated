@@ -119,6 +119,8 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.z
 ```
 </details>
 
+<br>
+
 
 # 2️⃣ UNDERSTAND DATA SCIENTIST WORK
 
@@ -138,10 +140,10 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 
 </details>
 
+<br>
 
 
 # 3️⃣ PACKAGE CODE
-
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
@@ -195,6 +197,8 @@ But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode
 
 </details>
 
+<br>
+
 # 4️⃣ INVESTIGATE SCALABILITY
 
 
@@ -228,10 +232,15 @@ And make sure to understand exactly how decorators work. Refer to lecture [0405-
 
 </details>
 
+<br>
+
 
 # 5️⃣ INCREMENTAL PROCESSING
+
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
+
+<br>
 
 🎯 Your goal is to improve your codebase so as **to be able to process our model on `50M` rows or even more, without RAM limits**.
 
@@ -357,7 +366,9 @@ CHUNK_SIZE = 100000
 ```
 
 </details>
+
 <br>
+
 
 # 6️⃣ INCREMENTAL LEARNING
 
@@ -365,6 +376,7 @@ CHUNK_SIZE = 100000
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
+<br>
 
 🎯 Goal: Train our model on the full `data_processed.csv`
 
@@ -396,6 +408,7 @@ This is called **incremental learning** or **partial_fit**
 <br>
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
+
 <details>
   <summary markdown='span'><strong>Do we really need chunks with tensorflow?</strong></summary>
 
@@ -484,4 +497,5 @@ CHUNK_SIZE = 100000
 Congratulations! 🏁
 
 </details>
+
 <br>
