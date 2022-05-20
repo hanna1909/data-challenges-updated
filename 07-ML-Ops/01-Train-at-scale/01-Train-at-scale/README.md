@@ -2,14 +2,23 @@
 
 In this unit, you will learn how to package the notebook provided by the Data Science team at WagonCab, and how to scale it so that it can be trained on the full dataset locally on your machine.
 
-This unit consist of the 5 challenges below, that are all regrouped in this single README file.
+This unit consist of the 5 challenges below, that are all regrouped in this single readme file. Simply follow the guide, step by step!
 
-Simply follow the guide and `git push` after each main section so we can track your progress!
+1. **LOCAL SETUP**: Structure the code into an installable python package, make sure your VS code is setup for the week and be ready to say goodbye to jupyter notebooks!
+2. **UNDERSTAND DATA SCIENTIST WORK**: Discover the notebook provided by the Data Science team
+3. **FROM NOTEBOOK TO PACKAGE**: Discover the notebook provided by the Data Science team
+4. **INVESTIGATE BOTTLENECKS**: Now that we have an operable package, we will discover how to explore and correct the slower parts of our code
+5. **INCREMENTAL PROCESSING**: We will see how to preprocess the dataset incrementally so that we can process a volume of data that does not fit into memory
+6. **INCREMENTAL LEARNING**
+Finally we will see how to train the model without ever loading all data at once in memory.
+
+
+# 1️⃣ LOCAL SETUP
 
 <details>
-  <summary>
-    <h1>1️⃣ LOCAL SETUP</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
+<br>
 
 As lead ML Engineer for the project, your first role is to setup a local working environment (pyenv) and a python package that only contains the skeleton of your code base.
 
@@ -108,13 +117,15 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ```bash
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > model/data/raw/train_50M.csv.zip
 ```
-
 </details>
 
+
+# 2️⃣ UNDERSTAND DATA SCIENTIST WORK
+
 <details>
-  <summary>
-    <h1>2️⃣ UNDERSTAND DATA SCIENTIST WORK</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
+<br>
 
 Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for this module)
 
@@ -125,15 +136,17 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 - Run all cells carefully while understanding them. This handover between you and the DS team is the perfect time to interact with them.
 - If some packages are missing, add them to your `requirements.txt` and `pip install -e .` again
 
-👉 Once all tests have passed, please `git push` your updated notebook!
-
 </details>
 
 
+
+# 3️⃣ PACKAGE CODE
+
+
 <details>
-  <summary>
-    <h1>3️⃣ PACKAGE CODE</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
+<br>
 
 🎯 Your goal is to be able to run the `taxifare_model.interface.main_local` module as per below
 
@@ -161,28 +174,34 @@ To do so, please code the missing code marked `# YOUR CODE HERE` in the followin
 │       └── utils.py        # ✅ keep for later
 ```
 
-👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE. But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
-
-```python
-# taxifare_model/ml_logic/params.py
-DATASET_SIZE = '100k'
-```
-
-🧪 We have written various tests to help you check your code step-by-steps. Feel free to `commit` and `push` your results in a regular interval!
+We have written various tests to help you check your code step-by-steps
 
 ```bash
 # -> model
 make test_train_at_scale
 ```
 
+👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE
+
+```python
+# taxifare_model/ml_logic/params.py
+DATASET_SIZE = '100k'
+```
+
+But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
+
+
 💡 Tips: Did you know you could convert `.ipynb` files into a single `.py` files with VScode? To do so, open any notebook, and use the command palette to select "Convert to Python Script". It may help you copy paste multiple cell logic at once.
 
 </details>
 
+# 4️⃣ INVESTIGATE SCALABILITY
+
+
 <details>
-  <summary>
-    <h1>4️⃣ INVESTIGATE SCALABILITY</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
+<br>
 
 Now that you managed to make the package work for a small dataset, time to see how it will handle the real dataset!
 
@@ -206,12 +225,14 @@ def clear_data() -> pd.DataFrame:
 ```
 And make sure to understand exactly how decorators work. Refer to lecture [0405-Communicate](https://kitt.lewagon.com/camps/<user.batch_slug>/lectures/content/04-Decision-Science_05-Communicate.slides.html?title=Communicate#/6/3)
 
+
 </details>
 
+
+# 5️⃣ INCREMENTAL PROCESSING
 <details>
-  <summary>
-    <h1>5️⃣ INCREMENTAL PROCESSING</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
 🎯 Your goal is to improve your codebase so as **to be able to process our model on `50M` rows or even more, without RAM limits**.
 
 ### 5.1) Discussion
@@ -320,7 +341,7 @@ def preprocess(training_set=True):
 ```
 
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale` and push your update when you're finished!
+When you are happy with your results, test your code with `make test_train_at_scale`
 
 **❓ Create and store the 4 large preprocessed datasets**
 - `data/processed/train_processed_500k.csv`
@@ -336,11 +357,14 @@ CHUNK_SIZE = 100000
 ```
 
 </details>
+<br>
+
+# 6️⃣ INCREMENTAL LEARNING
+
 
 <details>
-  <summary>
-    <h1>6️⃣ INCREMENTAL LEARNING</h1>
-  </summary>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
 
 🎯 Goal: Train our model on the full `data_processed.csv`
 
@@ -446,8 +470,8 @@ def train():
 ```
 
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale` and push your results!
-Everything tests should be green by now!
+When you are happy with your results, test your code with `make test_train_at_scale`
+Everything tests should be green 🏁
 
 **Give it a try with the full dataset!**
 ```python
@@ -457,7 +481,7 @@ VALIDATION_DATASET_SIZE = '500k'
 CHUNK_SIZE = 100000
 ```
 
-🏁 Congratulations! 🏁
+Congratulations! 🏁
 
 </details>
 <br>

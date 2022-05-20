@@ -1,6 +1,6 @@
 from tests.test_base import write_result
 
-from taxifare_model.ml_logic.data import (clean_data)
+from taxifare_model.ml_logic.data import clean_data
 
 from taxifare_model.ml_logic.params import (CHUNK_SIZE,
                                             DATA_RAW_DTYPES_OPTIMIZED,
