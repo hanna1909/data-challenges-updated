@@ -132,7 +132,7 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 
 <details>
   <summary>
-    <title>3️⃣ PACKAGE CODE</title>
+    <h1>3️⃣ PACKAGE CODE</h1>
   </summary>
 
 🎯 Your goal is to be able to run the `taxifare_model.interface.main_local` module as per below
