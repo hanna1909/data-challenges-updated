@@ -13,7 +13,12 @@ This unit consist of the 5 challenges below, that are all regrouped in this sing
 Finally we will see how to train the model without ever loading all data at once in memory.
 
 
-# 1️⃣ LOCAL SETUP
+
+<details>
+  <summary markdown='span'><h1> 1️⃣ LOCAL SETUP </h1></summary>
+
+  test
+</details>
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
