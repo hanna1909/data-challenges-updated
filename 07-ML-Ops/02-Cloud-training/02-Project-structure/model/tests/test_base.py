@@ -1,31 +1,5 @@
 """
-`test_base` module usage:
-
-## test `Makefile` commands through text files
-
-adding a text capture point in the `Makefile`:
-
-``` Makefile
-write_results:
-    @echo "verify gcloud auth..."
-    @gcloud auth list > tests/setup/test_setup_cli_auth.txt 2>&1 || :
-```
-
-test the captured text (showcase):
-- tests/setup/test_setup.py:
-
-## test package features through pickle files
-
-adding a pickle capture point in the code:
-
-``` python
-from tests.test_base import write_result
-
-write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
-```
-
-test the captured pickled (showcase):
-- tests/train_at_scale/test_pickler.py:
+Tests base class
 """
 
 import inspect
