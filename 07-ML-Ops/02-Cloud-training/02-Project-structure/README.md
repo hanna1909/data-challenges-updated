@@ -23,29 +23,23 @@ The ressources of the cloud will be accessible literaly at your fingertips. Thro
 
 ## Unit challenges
 
-**1️⃣ Shell practice**
-- Take the time to make sure to be familiar with the command line
-
-**2️⃣ Project structure**
+**1️⃣ Project structure**
 - Discover the structure of the challenges that you will be tackling for the rest of the module
 
-**3️⃣ Environment**
+**2️⃣ Environment**
 - Setup the configuration for your project
 
-**4️⃣ Setup check**
+**3️⃣ Setup check**
 - Let's make sure that your machine is in the launch pad, ready to ignite **Google Cloud Platform** 🛰
 - **GCP** will allow you to allocate and use remote ressources in the cloud
 
-**5️⃣ Data in the cloud**
+**4️⃣ Data in the cloud**
 - We will upload our data to **Cloud Storage** and **Big Query**
 - This will allow our package to train incrementally from data in the cloud
 
-**6️⃣ Train in the cloud**
+**5️⃣ Train in the cloud**
 - The first job that we will dispatch to another machine is the model training
 - We will use **Compute Engine** to allocate a VM for the training
-
-**⏸ Optional: Predict in the cloud**
-- How can we leverage the various trained models in order to make a prediction on a **Compute Engine**?
 
 **▶️ Recap - Vertex AI: training on a managed VM**
 - Discover **Vertex AI Workbench** which allows us to train models in the cloud with minimal setup
