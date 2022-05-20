@@ -175,7 +175,6 @@ To do so, please code the missing code marked `# YOUR CODE HERE` in the followin
 ```
 
 We have written various tests to help you check your code step-by-steps
-
 ```bash
 # -> model
 make test_train_at_scale
