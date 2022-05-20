@@ -15,7 +15,7 @@ Finally we will see how to train the model without ever loading all data at once
 
 
 <details>
-  <summary markdown='span'><h1> 1️⃣ LOCAL SETUP </h1></summary>
+  <summary markdown='span'><strong> 1️⃣ LOCAL SETUP </strong></summary>
 
   test
 </details>
@@ -33,7 +33,7 @@ bad
 </details>
 
 <details>
-  <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me) </strong></summary>
 
   not so bad
 </details>
