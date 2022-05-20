@@ -49,7 +49,7 @@ def save_model(model: Model = None,
     print("\n✅ data saved locally")
 
 
-def load_model(stage="None") -> Model:
+def load_model() -> Model:
     """
     load the latest saved model
     """

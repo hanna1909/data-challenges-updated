@@ -23,4 +23,5 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     # YOUR CODE HERE
 
     print("\n✅ data cleaned")
+
     return df
