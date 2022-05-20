@@ -1,6 +1,4 @@
 
-import mlflow
-
 import glob
 import os
 import time
@@ -18,45 +16,6 @@ def save_model(model: Model = None,
     """
     persist trained model, params and metrics
     """
-
-    if os.environ.get("MODEL_TARGET") == "mlflow":
-
-        print(Fore.BLUE + "\nSave model to mlflow..." + Style.RESET_ALL)
-
-        # retrieve mlfow env params
-        mlflow_tracking_uri = os.environ.get("MLFLOW_TRACKING_URI")
-        mlflow_experiment = os.environ.get("MLFLOW_EXPERIMENT")
-        mlflow_model_name = os.environ.get("MLFLOW_MODEL_NAME")
-
-        mlflow.set_tracking_uri(mlflow_tracking_uri)
-        mlflow.set_experiment(experiment_name=mlflow_experiment)
-
-        with mlflow.start_run():
-
-            # iterate through parameter categories and parameters
-            if params is not None:
-                for param_name, param in params.items():
-                    mlflow.log_param(param_name, param)
-
-            # iterate through metrics
-            if metrics is not None:
-                for metric_name, metric in metrics.items():
-                    mlflow.log_metric(metric_name, metric)
-
-            # save model
-            if model is not None:
-
-                mlflow.keras.log_model(keras_model=model,
-                                       artifact_path="model",
-                                       keras_module="tensorflow.keras",
-                                       registered_model_name=mlflow_model_name)
-
-            # log artifacts
-            # mlflow.log_artifact("test.md")
-
-        print("\n✅ data saved to mlflow")
-
-        return model
 
     print(Fore.BLUE + "\nSave model to local disk..." + Style.RESET_ALL)
 
@@ -91,30 +50,10 @@ def save_model(model: Model = None,
     print("\n✅ data saved locally")
 
 
-def load_model(stage="None") -> Model:
+def load_model() -> Model:
     """
     load the latest saved model
     """
-
-    if os.environ.get("MODEL_TARGET") == "mlflow":
-
-        print(Fore.BLUE + "\nLoad model from mlflow..." + Style.RESET_ALL)
-
-        mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI"))
-
-        mlflow_model_name = os.environ.get("MLFLOW_MODEL_NAME")
-
-        model_uri = f"models:/{mlflow_model_name}/{stage}"
-        print(f"- uri: {model_uri}")
-
-        model = mlflow.keras.load_model(model_uri=model_uri)
-        print("\n✅ model loaded from mlflow")
-
-        # raise exception if no model exists
-        if model is None:
-            raise NameError(f"No {mlflow_model_name} model in {stage} stage stored in mlflow")
-
-        return model
 
     print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
 

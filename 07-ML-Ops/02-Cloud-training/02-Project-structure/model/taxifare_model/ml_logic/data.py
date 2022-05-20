@@ -32,6 +32,40 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df[df["pickup_longitude"].between(left=-74.3, right=-73.7)]
     df = df[df["dropoff_longitude"].between(left=-74.3, right=-73.7)]
 
-
     print("\n✅ data cleaned")
+
     return df
+
+def get_chunk(source_name: str,
+              index: int = 0,
+              chunk_size: int = None) -> pd.DataFrame:
+    """
+    return a chunk of the dataset between `index` and `index + chunk_size - 1`
+    """
+
+    if "processed" in source_name:
+        columns = None
+        dtypes = DATA_PROCESSED_DTYPES_OPTIMIZED
+    else:
+        columns = DATA_RAW_COLUMNS
+        dtypes = DATA_RAW_DTYPES_OPTIMIZED
+
+    chunk_df = get_pandas_chunk(path=source_name,
+                                index=index,
+                                chunk_size=chunk_size,
+                                dtypes=dtypes,
+                                columns=columns)
+
+    return chunk_df
+
+
+def save_chunk(source_name: str,
+               is_first: bool,
+               data: pd.DataFrame) -> None:
+    """
+    save chunk
+    """
+
+    save_local_chunk(path=source_name,
+                     data=data,
+                     is_first=is_first)

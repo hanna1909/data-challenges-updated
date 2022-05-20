@@ -37,8 +37,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df[df["pickup_longitude"].between(left=-74.3, right=-73.7)]
     df = df[df["dropoff_longitude"].between(left=-74.3, right=-73.7)]
 
-
     print("\n✅ data cleaned")
+
     return df
 
 def get_chunk(source_name: str,
@@ -91,4 +91,3 @@ def save_chunk(source_name: str,
     save_local_chunk(path=source_name,
                      data=data,
                      is_first=is_first)
-

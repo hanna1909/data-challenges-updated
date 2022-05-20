@@ -23,7 +23,8 @@ import pandas as pd
 from colorama import Fore, Style
 
 
-def preprocess_and_train():
+def preprocess_and_train(
+    first_row=0):
     """
     Load data in memory, clean and preprocess it, train a Keras model on it,
     save the model, and finally compute & save a performance metric
@@ -62,14 +63,14 @@ def preprocess_and_train():
     # model params
     learning_rate = 0.001
     batch_size = 256
-,
+
     load_existing_model = False
     if first_row != 0:
         load_existing_model = True
-,
+
     model = None
     if load_existing_model:
-        model = load_model(stage=stage)
+        model = load_model(        )
 
     # initialize model
     if model is None:
@@ -102,7 +103,9 @@ def preprocess_and_train():
     return val_mae
 
 
-def preprocess():
+def preprocess(
+    first_row=0
+):
     """
     Preprocess the dataset by chunks fitting in memory.
     """
@@ -174,7 +177,8 @@ def preprocess():
     print(f"\n✅ data processed saved entirely: {row_count} rows ({cleaned_row_count} cleaned)")
 
 
-def train():
+def train(
+    first_row=0):
     """
     Train a new model on the full (already preprocessed) dataset ITERATIVELY, by loading it
     chunk-by-chunk, and updating the weight of the model after each chunks.
@@ -199,7 +203,7 @@ def train():
     y_val = data_val[["fare_amount"]]
 
     X_val_processed = preprocess_features(X_val)
-,
+
     load_existing_model = False
     if first_row != 0:
         load_existing_model = True
@@ -235,10 +239,10 @@ def train():
         # increment trained row count
         chunk_row_count = data_processed_chunk.shape[0]
         row_count += chunk_row_count
-,
+
         if model is None:
             if load_existing_model:
-                model = load_model(stage=stage)
+                model = load_model(                )
 
         # initialize model
         if model is None:
@@ -312,7 +316,7 @@ def evaluate(first_row):
 
     X_new_processed = preprocess_features(X_new)
 
-    model = load_model(stage="Production")
+    model = load_model(    )
 
     metrics_dict = evaluate_model(model=model, X=X_new_processed, y=y_new)
 
@@ -331,8 +335,8 @@ def evaluate(first_row):
     return mae
 
 
-def pred(X_pred: pd.DataFrame = None,
-         stage="None") -> np.ndarray:
+def pred(
+    X_pred: pd.DataFrame = None) -> np.ndarray:
     """
     Make a prediction using the latest trained model
     """
@@ -350,7 +354,7 @@ def pred(X_pred: pd.DataFrame = None,
             dropoff_latitude=[40.769802],
             passenger_count=[1]))
 
-    model = load_model(stage=stage)
+    model = load_model(    )
 
     X_processed = preprocess_features(X_pred)
 
