@@ -104,7 +104,7 @@ list:
 	@echo "\n        $(fbold)dev_test$(ccreset)"
 	@echo "            Run the tests."
 
-	@echo "\n    $(ccgreen)$(fbold)internal rules:$(ccreset)"
+	@echo "\n    $(ccblue)$(fbold)internal rules:$(ccreset)"
 	@echo "\n        $(fbold)write_results$(ccreset)"
 	@echo "            Write the test results so they can be added and committed to git."
 	@echo "\n        $(fbold)pylint$(ccreset)"
