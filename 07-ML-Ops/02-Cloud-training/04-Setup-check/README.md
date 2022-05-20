@@ -34,7 +34,7 @@ We will now verify that:
 👉 `test_setup_cli_auth`, `test_setup_key_env`, `test_setup_key_path`, `test_code_get_project` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can head back towards the _Google Cloud Platform setup_ section of the [data setup](https://github.com/lewagon/data-setup) and in particular have a look at *Create a service account key*.
@@ -61,7 +61,7 @@ Find the `gcloud` command allowing you to list your **GCP project id**.
 👉 `test_setup_project_id` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can use the `-h` flag or the `--help` (more details) parameter in order to retrieve contextual help on the `gcloud` commands or sub commands (use `gcloud billing -h` to list the gcloud billing sub commands or `gcloud billing --help` for a more detailed help on the sub commands).
@@ -100,7 +100,7 @@ Find the `gsutil` command allowing you to retrieve the name of your **bucket**.
 👉 `test_setup_bucket_name` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can also use the [Cloud Storage console](https://console.cloud.google.com/storage/) in order to verify that the bucket was created.

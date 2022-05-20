@@ -135,7 +135,7 @@ The role of `main.py` is to ask for data to `data.py`, without having to know wh
 Similarly to how `main.py` deletages data retrieval to `data.py`, `data.py` in its turn delegates the job of `pd.read_csv` to `local_disk.py`.
 
 <details>
-<summary> 💡 Why did we do that ? </summary>
+  <summary markdown='span'><strong> 💡 Why did we do that ? </strong></summary>
 
 
   The job of `data.py` is not to actually read the data. But to ask someone else (`local_disk.py`) to do it.

@@ -10,7 +10,7 @@ In this challenge, we will discover the third pillar product of the **Google Clo
 🏍 **Compute Engine**, which provides *Virtual Machines*, will allow us to do the actual training in the cloud
 
 <details>
-<summary> 🔎 More on Compute Engine </summary>
+  <summary markdown='span'><strong> 🔎 More on Compute Engine </strong></summary>
 
 
   Compute Engine is the service that powers behind the scenes most of the GCP products that require computing capacity.
@@ -49,7 +49,7 @@ The `taxifare_model` package is ready to train on a machine in the cloud. Let's 
 Head towards the GCP console [Compute Engine](https://console.cloud.google.com/compute) page. The console will allow you to explore easilly the options available. Make sure to create an **Ubuntu** instance (read this _How to_, and have a look at the _Hint_).
 
 <details>
-<summary> 🗺 How to configure your VM instance </summary>
+  <summary markdown='span'><strong> 🗺 How to configure your VM instance </strong></summary>
 
 
   Let's explore the options available. The top right of the interface gives you a monthly estimate of the cost for the selected parameters if the VM remains on all the time.
@@ -68,7 +68,7 @@ Head towards the GCP console [Compute Engine](https://console.cloud.google.com/c
 👉 `test_cloud_training_create_vm` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   In the future, when you know exactly what type of VM you want to create, you will be able to use the `gcloud compute instances` commands if you want to do everything from the command line. For example:
@@ -89,7 +89,7 @@ You can easily start and stop a vm instance from the GCP console, which allows t
 <a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png" width="150" alt="gce vm start"></a>
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   A faster way to start and stop your virtual machine is to use the command line. The commands still take some time to complete, but you do not have to navigate through the GCP console interface.
@@ -120,7 +120,7 @@ The GCP console allows you to connect to the VM instance through a web interface
 You can disconnect by typing `exit` or closing the window.
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can change the user the web interface connects with if you need to:
@@ -155,7 +155,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 **💻 Connect to your VM instance and run the commands of the following sections**
 
 <details>
-<summary> ⚙️ <code>zsh</code> and <code>omz</code> </summary>
+  <summary markdown='span'><strong> ⚙️ <code>zsh</code> and <code>omz</code> </strong></summary>
 
 
   The **zsh** shell and its **Oh My Zsh** framework are the configuration you are already familiar with. Accept to make zsh the default shell.
@@ -168,7 +168,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 </details>
 
 <details>
-<summary> ⚙️ <code>pyenv</code> and <code>pyenv-virtualenv</code> </summary>
+  <summary markdown='span'><strong> ⚙️ <code>pyenv</code> and <code>pyenv-virtualenv</code> </strong></summary>
 
 
   Clone the repos:
@@ -198,7 +198,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 </details>
 
 <details>
-<summary> ⚙️ <code>python</code> </summary>
+  <summary markdown='span'><strong> ⚙️ <code>python</code> </strong></summary>
 
 
   Add dependencies required to build python:
@@ -225,7 +225,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 </details>
 
 <details>
-<summary> ⚙️ <code>git</code> authentication to GitHub </summary>
+  <summary markdown='span'><strong> ⚙️ <code>git</code> authentication to GitHub </strong></summary>
 
 
   Git will be pretty handy to share our code between the vm and your machine. Create a directory to store your git credentials:
@@ -252,7 +252,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 </details>
 
 <details>
-<summary> ⚙️ <em>python</em> code authentication to GCP </summary>
+  <summary markdown='span'><strong> ⚙️ <em>python</em> code authentication to GCP </strong></summary>
 
 
   The code of your package will need to access your data stored in the cloud in Cloud Storage or Big Query.
@@ -284,7 +284,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 Your vm is now a data science beast 🔥
 
 <details>
-<summary> 🔎 Make a generic data science setup </summary>
+  <summary markdown='span'><strong> 🔎 Make a generic data science setup </strong></summary>
 
 
   You could decide to proceed with the rest of the [Le Wagon setup](https://github.com/lewagon/data-setup) and install all the packages of the bootcamp on your vm:
@@ -306,7 +306,7 @@ Let's run your first training in the cloud!
 **💻 Clone your package, install its requirements, and run the training**
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can copy your code to the vm by cloning your GitHub project with this syntax (adapt the name of your GitHub repository):

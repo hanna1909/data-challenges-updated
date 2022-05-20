@@ -40,7 +40,7 @@ Find the `gsutil` command allowing you to upload the `TaxiFare` dataset to your 
 👉 `test_cloud_data_uploaded_blob` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   There is a command for everything. You may use `curl` to download the data:
@@ -68,7 +68,7 @@ You can now train you model from the cloud using data chunks retrieved from Clou
 **⚙️ Train your model with data from Cloud Storage and time the outcome ⏰**
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can time the duration of a command by prefixing it with the `time` command:
@@ -105,7 +105,7 @@ Note how in Big Query a *dataset* can contain several sets of data stored as *ta
 👉 `test_cloud_data_create_dataset` and `test_cloud_data_create_table` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   Although the `bq` command is a child of the **Google Cloud SDK** that you installed on your machine, it does not seem to be follow the same help pattern as the `gcloud` and `gsutil` commands.
@@ -133,7 +133,7 @@ Make sure that the _datasets_ that you create use the following data types:
 👉 `test_cloud_data_table_content` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   The command will probably ask you to provide a schema for the data that you are uploading to your table (remember that we have not provided a schema for the table yet).
@@ -166,7 +166,7 @@ We added the `get_bq_chunk` function to the `taxifare_model.data_sources.big_que
 👉 `test_cloud_data_bq_chunks` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   If you look for *Paging through data table* in Big Query, or have a look at the [Big Query python API reference](https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html), you should identify a method allowing you to retrieve the rows of a query one chunk after the next.

@@ -16,7 +16,7 @@ Our goal is to be able to configure the behavior of our project based on variabl
 In order to do so, we will install the `direnv` shell extension. Its job is to locate the nearest `.env` file in the parent directory structure of the project and load its content into the environment.
 
 <details>
-<summary> ⚙️ macOS </summary>
+  <summary markdown='span'><strong> ⚙️ macOS </strong></summary>
 
 
   ``` bash
@@ -25,7 +25,7 @@ In order to do so, we will install the `direnv` shell extension. Its job is to l
 </details>
 
 <details>
-<summary> ⚙️ Ubuntu (Linux or Windows WSL2) </summary>
+  <summary markdown='span'><strong> ⚙️ Ubuntu (Linux or Windows WSL2) </strong></summary>
 
 
   ``` bash
@@ -43,7 +43,7 @@ Edit your `~/.zshrc` with your favorite editor. The `~/.zshrc` is interpreted by
 **💻 Add `direnv` to the list of plugins**
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   Open the ressources files:
@@ -86,7 +86,7 @@ cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/.env.s
 👉 `test_environment_dataset_size` should be ✅
 
 <details>
-<summary> 💡 Hint </summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   You can retrieve info on how `direnv` works with:
