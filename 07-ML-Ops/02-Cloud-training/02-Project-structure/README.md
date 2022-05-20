@@ -1,4 +1,55 @@
 
+[//]: # ( presentation of the unit )
+
+**🪐 Enter the dimension of Cloud Computing! 🚀**
+
+In the previous unit, you have packaged the notebook of the `WagonCab` **Data Science** team. And you updated the code so that the model can be trained on the full `TaxiFare` dataset.
+
+In this unit, you will learn how to grow from a **Data Scientist** into a **ML Engineer** 🤩
+
+A **Data Scientist** does all their research work on a single machine, either their local machine or a machine in the cloud through a hosted service such as **Colab** for example.
+
+A **ML Engineer** knows how to dispatch their work to several machines and use a pool of cloud ressources, remote storage or processing capacities, as their playground.
+
+You will discover how to split your work into jobs dispatched to multiple machines in the cloud, so that manually trigerring the execution of your code is no longer a bottleneck for the model lifecycle.
+
+You will learn how to drive a remote machine in a data center located anywhere in the world! Or in space if you find a cloud provider that offers capacity there 👽
+
+The ressources of the cloud will be accessible literaly at your fingertips. Through the **Terminal** or through a **Graphical User Interface**.
+
+[//]: # ( unit tech stack: gcloud gsutil cloud-storage compute-engine mlflow vertex-ai )
+
+[//]: # ( presentation of the challenges of the unit )
+
+## Unit challenges
+
+**1️⃣ Shell practice**
+- Take the time to make sure to be familiar with the command line
+
+**2️⃣ Project structure**
+- Discover the structure of the challenges that you will be tackling for the rest of the module
+
+**3️⃣ Environment**
+- Setup the configuration for your project
+
+**4️⃣ Setup check**
+- Let's make sure that your machine is in the launch pad, ready to ignite **Google Cloud Platform** 🛰
+- **GCP** will allow you to allocate and use remote ressources in the cloud
+
+**5️⃣ Data in the cloud**
+- We will upload our data to **Cloud Storage** and **Big Query**
+- This will allow our package to train incrementally from data in the cloud
+
+**6️⃣ Train in the cloud**
+- The first job that we will dispatch to another machine is the model training
+- We will use **Compute Engine** to allocate a VM for the training
+
+**⏸ Optional: Predict in the cloud**
+- How can we leverage the various trained models in order to make a prediction on a **Compute Engine**?
+
+**▶️ Recap - Vertex AI: training on a managed VM**
+- Discover **Vertex AI Workbench** which allows us to train models in the cloud with minimal setup
+
 [//]: # ( challenge tech stack: )
 
 [//]: # ( challenge presentation )
