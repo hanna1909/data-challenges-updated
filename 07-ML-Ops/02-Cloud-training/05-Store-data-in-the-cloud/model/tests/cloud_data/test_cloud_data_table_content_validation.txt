@@ -1,0 +1,13 @@
+Table le-wagon-ds:taxifare_dataset.val_10k
+
+   Last modified               Schema               Total Rows   Total Bytes   Expiration   Time Partitioning   Clustered Fields   Labels  
+ ----------------- ------------------------------- ------------ ------------- ------------ ------------------- ------------------ -------- 
+  17 May 19:14:26   |- key: timestamp               10000        640000                                                                    
+                    |- fare_amount: float                                                                                                  
+                    |- pickup_datetime: timestamp                                                                                          
+                    |- pickup_longitude: float                                                                                             
+                    |- pickup_latitude: float                                                                                              
+                    |- dropoff_longitude: float                                                                                            
+                    |- dropoff_latitude: float                                                                                             
+                    |- passenger_count: integer                                                                                            
+

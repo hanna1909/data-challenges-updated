@@ -69,6 +69,23 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
+	@echo "retrieve bucket content..."
+	@gsutil stat "gs://${BUCKET_NAME}/data/train_10k.sample.csv" > tests/cloud_data/test_cloud_data_uploaded_blob.txt || :
+	@gsutil stat "gs://${BUCKET_NAME}/data/val_10k.sample.csv" > tests/cloud_data/test_cloud_data_uploaded_blob_val.txt || :
+	@echo "${DATASET}" > tests/cloud_data/test_cloud_data_create_dataset.txt
+	@echo "retrieve biq query dataset list..."
+	@$(shell sh -c "echo YnEgbHMK= | base64 -d") > tests/cloud_data/test_cloud_data_create_dataset_source.txt || :
+	@echo "${TRAINING_PREFIX}" > tests/cloud_data/test_cloud_data_create_training_table.txt
+	@echo "${VALIDATION_PREFIX}" > tests/cloud_data/test_cloud_data_create_validation_table.txt
+	@echo "retrieve biq query dataset table list..."
+	@$(shell sh -c "echo YnEgbHMK= | base64 -d") ${DATASET} > tests/cloud_data/test_cloud_data_create_table_source.txt || :
+	@echo "retrieve biq query training table description..."
+	@$(shell sh -c "echo YnEgc2hvdwo= | base64 -d") ${DATASET}.${TRAINING_PREFIX} > tests/cloud_data/test_cloud_data_table_content_training.txt || :
+	@echo "retrieve biq query validation table description..."
+	@$(shell sh -c "echo YnEgc2hvdwo= | base64 -d") ${DATASET}.${VALIDATION_PREFIX} > tests/cloud_data/test_cloud_data_table_content_validation.txt || :
+	@echo "retrieve biq query training table first rows..."
+	@bq query --use_legacy_sql=false "SELECT fare_amount FROM ${DATASET}.${TRAINING_PREFIX} LIMIT 10" > tests/cloud_data/test_cloud_data_bq_chunks.txt || :
+
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
 
@@ -81,6 +98,7 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
 	@echo "            Run the package (\`taxifare_model.interface.main\` module)."
+
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"

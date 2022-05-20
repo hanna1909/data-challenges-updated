@@ -1,0 +1,2 @@
+NAME           ZONE            MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
+taxi-instance  europe-west1-b  n1-standard-1               10.132.0.21  35.241.230.156  RUNNING

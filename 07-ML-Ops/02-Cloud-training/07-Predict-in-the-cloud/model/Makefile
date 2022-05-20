@@ -81,6 +81,7 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
 	@echo "            Run the package (\`taxifare_model.interface.main\` module)."
+
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"

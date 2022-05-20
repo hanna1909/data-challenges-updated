@@ -1,0 +1,4 @@
+[oh-my-zsh] Would you like to update? [Y/n] 
+[oh-my-zsh] You can update manually by running `omz update`
+le-wagon-bucket
+le-wagon-ds

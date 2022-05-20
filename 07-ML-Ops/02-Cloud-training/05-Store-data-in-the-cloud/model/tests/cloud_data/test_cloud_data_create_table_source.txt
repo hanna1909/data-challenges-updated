@@ -1,0 +1,5 @@
+        tableId         Type    Labels   Time Partitioning   Clustered Fields  
+ --------------------- ------- -------- ------------------- ------------------ 
+  train_10k             TABLE                                                  
+  train_processed_10k   TABLE                                                  
+  val_10k               TABLE                                                  

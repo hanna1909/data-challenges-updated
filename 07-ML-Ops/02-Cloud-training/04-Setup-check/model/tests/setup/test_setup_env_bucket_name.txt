@@ -1,0 +1,2 @@
+gs://le-wagon-bucket/
+gs://le-wagon-ds/

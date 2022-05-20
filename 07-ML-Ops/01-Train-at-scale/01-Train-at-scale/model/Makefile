@@ -26,6 +26,13 @@ DATA_DIR=data
 RAW_DIR=raw
 TMP_DIR=tmp
 
+fbold=$(shell echo "\033[1m")
+fnormal=$(shell echo "\033[0m")
+
+ccgreen=$(shell echo "\033[0;32m")
+ccblue=$(shell echo "\033[0;34m")
+ccreset=$(shell echo "\033[0;39m")
+
 run_model:
 	python -m taxifare_model.interface.main
 
@@ -76,25 +83,6 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
 	@echo "            Run the package (\`taxifare_model.interface.main\` module)."
-	@echo "\n        $(fbold)run_flow$(ccreset)"
-	@echo "            Start a prefect workflow locally (run the \`taxifare_flow.main\` module)."
-
-	@echo "\n$(ccgreen)$(fbold)WORKFLOW$(ccreset)"
-
-	@echo "\n    $(ccgreen)$(fbold)data operation rules:$(ccreset)"
-	@echo "\n        $(fbold)show_data_sources$(ccreset)"
-	@echo "            Show the local data sources."
-	@echo "\n        $(fbold)show_bq_tables$(ccreset)"
-	@echo "            Show the Big Query dataset tables used by the package."
-	@echo "\n        $(fbold)reset_data_sources$(ccreset)"
-	@echo "            Reset the content of the local CSV files."
-	@echo "\n        $(fbold)reset_bq_tables$(ccreset)"
-	@echo "            Reset the content of the Big Query dataset tables used by the package."
-	@echo "\n        $(fbold)get_new_month$(ccreset)"
-	@echo "            Get one more month in the local dataset to simulate the passing of time."
-	@echo "\n        $(fbold)push_month_to_bq$(ccreset)"
-	@echo "            Get one more month in the Big Query dataset to simulate the passing of time."
-
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"

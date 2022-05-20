@@ -69,6 +69,15 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
+	@echo "verify gcloud auth..."
+	@gcloud auth list > tests/setup/test_setup_cli_auth.txt 2>&1 || :
+	@echo "${PROJECT}" > tests/setup/test_setup_project_id.txt
+	@echo "verify gcp default project..."
+	@$(shell sh -c "echo Z2Nsb3VkIGNvbmZpZyBnZXQtdmFsdWUgcHJvamVjdAo= | base64 -d") > tests/setup/test_setup_env_project_id.txt || :
+	@echo "${BUCKET_NAME}" > tests/setup/test_setup_bucket_name.txt
+	@echo "verify bucket name..."
+	@$(shell sh -c "echo Z3N1dGlsIGxzCg== | base64 -d") > tests/setup/test_setup_env_bucket_name.txt || :
+
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
 
@@ -81,6 +90,7 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
 	@echo "            Run the package (\`taxifare_model.interface.main\` module)."
+
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"

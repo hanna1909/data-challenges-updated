@@ -1,0 +1,42 @@
+colorama
+ipdb
+ipykernel
+matplotlib
+numpy
+pandas
+nbresult
+pygeohash
+pytest
+seaborn
+sklearn
+yapf
+# tensorflow or tensorflow-macos
+
+mlflow
+prefect
+prefect[viz]
+psycopg2-binary
+
+# prevent bq 3+ db-dtypes package error when running training from bq
+google-cloud-bigquery<3.0.0
+google-cloud-storage
+
+
+
+# fastapi
+# google
+# google-api-python-client
+# joblib
+# json
+# pickle
+# pytz
+# requests
+# seaborn
+# sqlalchemy
+# sqlite3
+# tensorflow
+# tensorflow_serving
+# tqdm
+# train
+# typing
+
