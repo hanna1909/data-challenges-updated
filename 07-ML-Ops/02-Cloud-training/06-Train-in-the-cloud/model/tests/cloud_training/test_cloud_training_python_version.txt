@@ -1,6 +1,0 @@
-[oh-my-zsh] Would you like to update? [Y/n] 
-[oh-my-zsh] You can update manually by running `omz update`
-  system
-  3.8.12
-  3.8.12/envs/lewagon
-* lewagon (set by /home/gmanchon/.pyenv/version)

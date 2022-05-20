@@ -1,8 +1,0 @@
-      Credentialed Accounts
-ACTIVE  ACCOUNT
-*       gaetan.manchon@lewagon.org
-        gmanchon@gmail.com
-
-To set the active account, run:
-    $ gcloud config set account `ACCOUNT`
-
