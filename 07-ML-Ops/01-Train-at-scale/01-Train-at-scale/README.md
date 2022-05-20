@@ -16,6 +16,30 @@ Finally we will see how to train the model without ever loading all data at once
 # 1️⃣ LOCAL SETUP
 
 <details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+  coucou
+</details>
+
+<details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+bad
+</details>
+
+<details>
+  <summary markdown='span'>❓ instructions (expand me)</summary>
+
+  not so bad
+</details>
+
+<details>
+    <summary markdown='span'>❓ instructions (expand me)</summary>
+
+real bad
+</details>
+
+<details>
     <summary markdown='span'>❓ instructions (expand me)</summary>
 
 <br>
