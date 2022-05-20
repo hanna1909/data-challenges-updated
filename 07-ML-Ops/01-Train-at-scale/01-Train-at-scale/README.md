@@ -13,39 +13,10 @@ This unit consist of the 5 challenges below, that are all regrouped in this sing
 Finally we will see how to train the model without ever loading all data at once in memory.
 
 
+# 1️⃣ LOCAL SETUP
 
 <details>
-  <summary markdown='span'><strong> 1️⃣ LOCAL SETUP </strong></summary>
-
-  test
-</details>
-
-<details>
-  <summary markdown='span'><strong> 💡 Hint </strong></summary>
-
-  coucou
-</details>
-
-<details>
-  <summary markdown='span'><strong> 💡 Hint </strong></summary>
-
-bad
-</details>
-
-<details>
-  <summary markdown='span'><strong>❓ instructions (expand me) </strong></summary>
-
-  not so bad
-</details>
-
-<details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
-
-real bad
-</details>
-
-<details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 <br>
 
@@ -152,7 +123,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.z
 # 2️⃣ UNDERSTAND DATA SCIENTIST WORK
 
 <details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 <br>
 
@@ -173,7 +144,7 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 
 
 <details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 <br>
 
@@ -228,7 +199,7 @@ But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode
 
 
 <details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 <br>
 
@@ -260,7 +231,7 @@ And make sure to understand exactly how decorators work. Refer to lecture [0405-
 
 # 5️⃣ INCREMENTAL PROCESSING
 <details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 🎯 Your goal is to improve your codebase so as **to be able to process our model on `50M` rows or even more, without RAM limits**.
 
@@ -392,7 +363,7 @@ CHUNK_SIZE = 100000
 
 
 <details>
-    <summary markdown='span'>❓ instructions (expand me)</summary>
+  <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
 
 🎯 Goal: Train our model on the full `data_processed.csv`
@@ -426,7 +397,7 @@ This is called **incremental learning** or **partial_fit**
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
 <details>
-    <summary markdown='span'>Do we really need chunks with tensorflow?</summary>
+  <summary markdown='span'><strong>Do we really need chunks with tensorflow?</strong></summary>
 
 Granted, thanks to tensorflow `Datasets` you will not always need "chunks" as you can use batch-per-batch dataset loading as below (we will see it in recap)
 
