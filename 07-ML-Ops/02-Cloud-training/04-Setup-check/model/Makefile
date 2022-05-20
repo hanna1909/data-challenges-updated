@@ -46,19 +46,11 @@ show_env:
 	@env | grep -E "DATASET_SIZE|VALIDATION_DATASET_SIZE|CHUNK_SIZE"
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"
 	@env | grep -E "DATA_SOURCE|MODEL_TARGET"
+
 	@echo "\n$(ccgreen)GCP:$(ccreset)"
 	@env | grep -E "PROJECT|REGION"
 	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
 	@env | grep -E "BUCKET_NAME|BLOB_LOCATION"
-	@echo "\n$(ccgreen)Big Query:$(ccreset)"
-	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE"
-	@echo "\n$(ccgreen)Compute Engine:$(ccreset)"
-	@env | grep -E "INSTANCE"
-	@echo "\n$(ccgreen)MLflow:$(ccreset)"
-	@env | grep -E "MLFLOW_EXPERIMENT|MLFLOW_MODEL_NAME"
-	@env | grep -E "MLFLOW_TRACKING_URI|MLFLOW_TRACKING_DB"
-	@echo "\n$(ccgreen)Prefect:$(ccreset)"
-	@env | grep -E "PREFECT_BACKEND|PREFECT_FLOW_NAME|PREFECT_LOG_LEVEL"
 
 reinstall_package:
 	@pip uninstall -y taxifare-model
