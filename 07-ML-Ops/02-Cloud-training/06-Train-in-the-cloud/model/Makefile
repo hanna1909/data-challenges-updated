@@ -47,6 +47,17 @@ show_env:
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"
 	@env | grep -E "DATA_SOURCE|MODEL_TARGET"
 
+	@echo "\n$(ccgreen)GCP:$(ccreset)"
+	@env | grep -E "PROJECT|REGION"
+	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
+	@env | grep -E "BUCKET_NAME|BLOB_LOCATION"
+
+	@echo "\n$(ccgreen)Big Query:$(ccreset)"
+	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE"
+
+	@echo "\n$(ccgreen)Compute Engine:$(ccreset)"
+	@env | grep -E "INSTANCE"
+
 reinstall_package:
 	@pip uninstall -y taxifare-model
 	@pip install -e .
@@ -56,7 +67,22 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
-	@python -m tests.notebook.write_train
+	@echo "retrieve compute api status..."
+	@$(shell sh -c "echo Z2Nsb3VkIHNlcnZpY2VzIGxpc3QgLS1lbmFibGVkIC0tZmlsdGVyPWNvbXB1dGUuZ29vZ2xlYXBpcy5jb20K= | base64 -d") > tests/cloud_training/test_cloud_training_compute_api_enabled.txt || :
+	@echo "retrieve vm list..."
+	@echo "${INSTANCE}" > tests/cloud_training/test_cloud_training_create_vm.txt
+	@gcloud compute instances list --filter="name=('${INSTANCE}')" > tests/cloud_training/test_cloud_training_create_vm_source.txt || :
+	@echo "check instance operating system..."
+	@gcloud compute ssh ${INSTANCE} --command "lsb_release -a" > tests/cloud_training/test_cloud_training_operating_system.txt 2> /dev/null || :
+	@echo "retrieve vm default shell..."
+	@gcloud compute ssh ${INSTANCE} --command "env | grep SHELL" > tests/cloud_training/test_cloud_training_default_shell.txt 2> /dev/null || :
+	@echo "retrieve vm pyenv..."
+	@gcloud compute ssh ${INSTANCE} --command "source ~/.zshrc 2> /dev/null; source ~/.zprofile 2> /dev/null; pyenv --help" > tests/cloud_training/test_cloud_training_pyenv.txt 2> /dev/null || :
+	@echo "retrieve vm python version..."
+	@gcloud compute ssh ${INSTANCE} --command "source ~/.zshrc 2> /dev/null; source ~/.zprofile 2> /dev/null; pyenv versions" > tests/cloud_training/test_cloud_training_python_version.txt 2> /dev/null || :
+	@echo "retrieve vm gcp code auth..."
+	@echo "${PROJECT}" > tests/cloud_training/test_cloud_training_project_id.txt
+	@gcloud compute ssh ${INSTANCE} --command "source ~/.zshrc 2> /dev/null; source ~/.zprofile 2> /dev/null; python -c 'from google.cloud import storage; [print(b.name) for b in storage.Client().list_buckets()]'" > tests/cloud_training/test_cloud_training_list_projects.txt 2> /dev/null || :
 
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"

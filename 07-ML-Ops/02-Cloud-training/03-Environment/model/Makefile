@@ -56,7 +56,11 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
-	@python -m tests.notebook.write_train
+	@echo "verify loaded environment variables..."
+	@echo "${DATASET_SIZE}" > tests/environment/test_environment_dataset_size.txt
+	@echo "${HELLO}" > tests/environment/test_environment_hello.txt
+	@echo "${LOCAL_DATA_PATH}" > tests/environment/test_local_data_path.txt
+	@echo "${LOCAL_REGISTRY_PATH}" > tests/environment/test_local_registry_path.txt
 
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"

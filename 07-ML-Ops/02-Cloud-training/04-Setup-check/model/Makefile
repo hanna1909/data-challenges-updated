@@ -47,6 +47,11 @@ show_env:
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"
 	@env | grep -E "DATA_SOURCE|MODEL_TARGET"
 
+	@echo "\n$(ccgreen)GCP:$(ccreset)"
+	@env | grep -E "PROJECT|REGION"
+	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
+	@env | grep -E "BUCKET_NAME|BLOB_LOCATION"
+
 reinstall_package:
 	@pip uninstall -y taxifare-model
 	@pip install -e .
@@ -56,7 +61,14 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
-	@python -m tests.notebook.write_train
+	@echo "verify gcloud auth..."
+	@gcloud auth list > tests/setup/test_setup_cli_auth.txt 2>&1 || :
+	@echo "${PROJECT}" > tests/setup/test_setup_project_id.txt
+	@echo "verify gcp default project..."
+	@$(shell sh -c "echo Z2Nsb3VkIGNvbmZpZyBnZXQtdmFsdWUgcHJvamVjdAo= | base64 -d") > tests/setup/test_setup_env_project_id.txt || :
+	@echo "${BUCKET_NAME}" > tests/setup/test_setup_bucket_name.txt
+	@echo "verify bucket name..."
+	@$(shell sh -c "echo Z3N1dGlsIGxzCg== | base64 -d") > tests/setup/test_setup_env_bucket_name.txt || :
 
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"

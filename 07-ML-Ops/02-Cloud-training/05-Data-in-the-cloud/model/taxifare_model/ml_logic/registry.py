@@ -1,6 +1,4 @@
 
-from taxifare_model.ml_logic.params import ROOT_PATH
-
 import glob
 import os
 import time
@@ -25,7 +23,8 @@ def save_model(model: Model = None,
 
     # save params
     if params is not None:
-        params_path = os.path.join(ROOT_PATH, "training_outputs", "params", suffix + ".pickle")
+        params_path = os.path.join(os.environ.get("LOCAL_REGISTRY_PATH"), "params", suffix + ".pickle")
+
         print(f"- params path: {params_path}")
 
         with open(params_path, "wb") as file:
@@ -33,7 +32,8 @@ def save_model(model: Model = None,
 
     # save metrics
     if metrics is not None:
-        metrics_path = os.path.join(ROOT_PATH, "training_outputs", "metrics", suffix + ".pickle")
+        metrics_path = os.path.join(os.environ.get("LOCAL_REGISTRY_PATH"), "metrics", suffix + ".pickle")
+
         print(f"- metrics path: {metrics_path}")
 
         with open(metrics_path, "wb") as file:
@@ -41,7 +41,8 @@ def save_model(model: Model = None,
 
     # save model
     if model is not None:
-        model_path = os.path.join(ROOT_PATH, "training_outputs", "models", suffix)
+        model_path = os.path.join(os.environ.get("LOCAL_REGISTRY_PATH"), "models", suffix + ".pickle")
+
         print(f"- model path: {model_path}")
 
         model.save(model_path)
@@ -57,7 +58,8 @@ def load_model() -> Model:
     print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
 
     # get latest model version
-    model_directory = os.path.join(ROOT_PATH, "training_outputs", "models")
+    model_directory = os.path.join(os.environ.get("LOCAL_REGISTRY_PATH"), "models")
+
     model_path = sorted(glob.glob(f"{model_directory}/*"))[-1]
     print(f"- path: {model_path}")
 

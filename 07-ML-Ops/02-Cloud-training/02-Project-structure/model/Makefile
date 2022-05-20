@@ -56,8 +56,6 @@ write_results:
 	@echo "verify installed packages versions"
 	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
 
-	@python -m tests.notebook.write_train
-
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
 
