@@ -57,8 +57,8 @@ def load_model(stage="None") -> Model:
     print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
 
     # get latest model version
-    model_folder = os.path.join(ROOT_PATH, "training_outputs", "models")
-    model_path = sorted(glob.glob(f"{model_folder}/*"))[-1]
+    model_directory = os.path.join(ROOT_PATH, "training_outputs", "models")
+    model_path = sorted(glob.glob(f"{model_directory}/*"))[-1]
     print(f"- path: {model_path}")
 
     model = keras.models.load_model(model_path)

@@ -33,6 +33,8 @@ show_env:
 	@echo "\nEnvironment variables used by the \`taxifare-model\` package loaded by \`direnv\` from your \`.env\` located at:"
 	@echo ${DIRENV_DIR}
 
+	@echo "\n$(ccgreen)local storage:$(ccreset)"
+	@env | grep -E "LOCAL_DATA_PATH|LOCAL_REGISTRY_PATH"
 	@echo "\n$(ccgreen)dataset:$(ccreset)"
 	@env | grep -E "DATASET_SIZE|VALIDATION_DATASET_SIZE|CHUNK_SIZE"
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"

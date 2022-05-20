@@ -6,6 +6,7 @@ import os
 
 import pandas as pd
 
+
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     clean raw data by removing buggy or irrelevant transactions
@@ -21,5 +22,5 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     # remove irrelevant/non-representative transactions (rows) for a training set
     # YOUR CODE HERE
 
-    print(f"\n✅ data cleaned")
+    print("\n✅ data cleaned")
     return df
