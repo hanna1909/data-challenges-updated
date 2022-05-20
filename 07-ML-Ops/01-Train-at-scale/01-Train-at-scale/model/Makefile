@@ -36,17 +36,6 @@ ccreset=$(shell echo "\033[0;39m")
 run_model:
 	python -m taxifare_model.interface.main
 
-show_env:
-	@echo "\nEnvironment variables used by the \`taxifare-model\` package loaded by \`direnv\` from your \`.env\` located at:"
-	@echo ${DIRENV_DIR}
-
-	@echo "\n$(ccgreen)local storage:$(ccreset)"
-	@env | grep -E "LOCAL_DATA_PATH|LOCAL_REGISTRY_PATH"
-	@echo "\n$(ccgreen)dataset:$(ccreset)"
-	@env | grep -E "DATASET_SIZE|VALIDATION_DATASET_SIZE|CHUNK_SIZE"
-	@echo "\n$(ccgreen)package behavior:$(ccreset)"
-	@env | grep -E "DATA_SOURCE|MODEL_TARGET"
-
 reinstall_package:
 	@pip uninstall -y taxifare-model
 	@pip install -e .
@@ -62,10 +51,6 @@ list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
 
 	@echo "\n$(ccgreen)$(fbold)PACKAGE$(ccreset)"
-
-	@echo "\n    $(ccgreen)$(fbold)environment rules:$(ccreset)"
-	@echo "\n        $(fbold)show_env$(ccreset)"
-	@echo "            Show the environment variables used by the package by category."
 
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
