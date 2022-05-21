@@ -1,11 +1,6 @@
 
 from tests.test_base import TestBase
 
-import os
-
-
-TEST_ENV = os.getenv("TEST_ENV")
-
 
 class TestCloudTraining(TestBase):
 

@@ -4,8 +4,6 @@ from tests.test_base import TestBase
 import os
 import pytest
 
-from google.cloud import storage
-
 
 TEST_ENV = os.getenv("TEST_ENV")
 
@@ -49,6 +47,8 @@ class TestGCPSetup(TestBase):
         """
         retrieve default gcp project id with code
         """
+
+        from google.cloud import storage
 
         # get default project id
         client = storage.Client()

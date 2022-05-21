@@ -1,5 +1,6 @@
 from nbresult import ChallengeResultTestCase
 
+
 class TestNotebook(ChallengeResultTestCase):
 
     def test_y_pred(self):

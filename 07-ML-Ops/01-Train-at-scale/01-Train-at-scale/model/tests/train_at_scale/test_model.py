@@ -4,6 +4,7 @@ import os
 
 TEST_ENV = os.getenv("TEST_ENV")
 
+
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 def test_model_architecture_and_fit(X_processed_1k, y_1k):
 

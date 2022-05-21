@@ -1,11 +1,8 @@
 
 from tests.test_base import TestBase
 
-from taxifare_model.data_sources.big_query import get_bq_chunk
-
-from taxifare_model.ml_logic.params import DATA_RAW_DTYPES_OPTIMIZED
-
 import os
+import pytest
 
 import numpy as np
 
@@ -90,10 +87,15 @@ class TestCloudData(TestBase):
         assert "10000" in validation_table
         assert "640000" in validation_table
 
+    @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_cloud_data_bq_chunks(self):
         """
         verify the value of the `fare_amount` column for the first 10 observations of the training dataset table
         """
+
+        from taxifare_model.data_sources.big_query import get_bq_chunk
+
+        from taxifare_model.ml_logic.params import DATA_RAW_DTYPES_OPTIMIZED
 
         source = self.load_results()
         source = source.split("\n")[3:13]
