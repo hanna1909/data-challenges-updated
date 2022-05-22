@@ -1,6 +1,6 @@
 """
 taxifare model package params
-load and validate the envinronment variables in the `.env`
+load and validate the environment variables in the `.env`
 """
 
 import os

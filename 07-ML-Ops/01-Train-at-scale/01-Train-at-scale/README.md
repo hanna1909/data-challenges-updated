@@ -112,11 +112,11 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ```
 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (it's not mandatory for the week)
-  
+
 ```bash
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > model/data/raw/train_50M.csv.zip
 ```
-  
+
 </details>
 
 # 2️⃣ UNDERSTAND DATA SCIENTIST WORK
@@ -214,7 +214,7 @@ from taxifare_model.ml_logic.utils import simple_time_and_memory_tracker
 def clear_data() -> pd.DataFrame:
     ...
 ```
-  
+
 And make sure to understand exactly how decorators work. Refer to lecture [0405-Communicate](https://kitt.lewagon.com/camps/<user.batch_slug>/lectures/content/04-Decision-Science_05-Communicate.slides.html?title=Communicate#/6/3)
 
 </details>
@@ -230,7 +230,7 @@ And make sure to understand exactly how decorators work. Refer to lecture [0405-
 ### 5.1) Discussion
 
 **What did we learn?**
-  
+
 From previous challenge, we've seen that we have memory and time constraints:
 - the `(55M,8)` `raw_data` loaded in memory as dataframe takes about 12GB of RAM, which is too much for most computers.
 - the `(55M,65)` preprocessed dataframe is even bigger.
@@ -266,7 +266,7 @@ data_chunk = pd.read_csv(
 ### 5.2) Your turn ❓
 
 ❓ First, bring back smaller dataset sizes while you try to make it work.
-  
+
 ```python
 # params.py
 DATASET_SIZE = '1k'
@@ -277,7 +277,7 @@ CHUNK_SIZE = 200
 **❓ Then, copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
 
 [//] TODO: 🚨 Code below is not the single source of truth. Find a way to remove this dual-source! 🚨
-  
+
 ```python
 def preprocess(training_set=True):
     """
@@ -461,7 +461,7 @@ When you are happy with your results, test your code with `make test_train_at_sc
 Everything tests should be green 🏁
 
 **Give it a try with the full dataset!**
-  
+
 ```python
 # params.py
 DATASET_SIZE = '500k'
