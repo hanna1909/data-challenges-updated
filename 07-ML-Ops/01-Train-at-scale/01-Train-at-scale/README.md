@@ -114,7 +114,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (it's not mandatory for the week)
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > model/data/raw/train_50M.csv.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
 ```
 
 </details>
