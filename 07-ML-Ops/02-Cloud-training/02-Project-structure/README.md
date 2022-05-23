@@ -213,12 +213,17 @@ Here is the target structure of the `<program.challenges_repo_name>` repository:
                 └── registry                      # 🧬 trained models
 ```
 
-**💻 Let's move your data to the directory in which it will be sourced by all the challenges to come**
+**💻 Let's create a data directory which will be sourced by all the challenges to come**
 
 ``` bash
 mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
 cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
-mv ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/01-Train-at-scale/01-Train-at-scale/model/data/* .
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > raw/train_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > raw/train_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > raw/train_100k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > raw/val_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > raw/val_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > raw/val_100k.csv
 ```
 
 **💻 We will copy the notebooks as well to a central location right next to the data directory**
