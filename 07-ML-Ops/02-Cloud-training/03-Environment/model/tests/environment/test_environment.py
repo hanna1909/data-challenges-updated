@@ -32,7 +32,7 @@ class TestDirenv(TestBase):
 
         local_data_path = self.load_results()
 
-        data_path_match = re.compile("^~/code/.*/07-ML-Ops/data$").match(local_data_path)
+        data_path_match = re.compile(".*/code/.*/07-ML-Ops/data$").match(local_data_path)
 
         content_writer_bypass = os.environ.get("CONTENT_WRITER_BYPASS") == "true"
 
@@ -45,7 +45,7 @@ class TestDirenv(TestBase):
 
         local_registry_path = self.load_results()
 
-        registry_path_match = re.compile("^~/code/.*/07-ML-Ops/registry$").match(local_registry_path)
+        registry_path_match = re.compile(".*/code/.*/07-ML-Ops/registry$").match(local_registry_path)
 
         content_writer_bypass = os.environ.get("CONTENT_WRITER_BYPASS") == "true"
 

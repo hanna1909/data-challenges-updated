@@ -132,6 +132,25 @@ echo $DIRENV_DIR
 
 👉 `test_environment_hello` should be ✅
 
+<details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+
+  Whenever you want to update your `.env` project configuration file, you need to open a dedicated editor, since it is located in a parent directory of your challenge.
+
+  Either use the `DIRENV_FILE` environment variable, which contains the path to the `.envrc` file (which is right next to the `.env` we want to edit):
+
+  ``` bash
+  code $DIRENV_FILE
+  ```
+
+  Or use the `DIRENV_DIR` environment variable (and remove the first `-` character of the output in order to have a correct path as a parameter):
+
+  ``` bash
+  code ${DIRENV_DIR:1}
+  ```
+</details>
+
 Let's store something a little more useful in the configuration...
 
 Remember how we want to store our datasets in a single location for all the challenges ?
@@ -139,7 +158,7 @@ Remember how we want to store our datasets in a single location for all the chal
 This location is:
 
 ``` bash
-~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
+python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data'))"
 ```
 
 **📝 Fill the `LOCAL_DATA_PATH` variable in the `.env` project configuration with this path**
@@ -153,7 +172,7 @@ Last, let's fill the path to the centralized registry directory that will store 
 Its location is:
 
 ``` bash
-~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry
+python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry'))"
 ```
 
 **📝 Fill the `LOCAL_REGISTRY_PATH` variable in the `.env` project configuration with this path**
