@@ -1,5 +1,14 @@
 
-# YOUR CODE HERE
+from taxifare_model.ml_logic.registry_db import get_latest_trained_row
+
+from taxifare_model.interface.main import (preprocess_and_train,
+                                           preprocess,
+                                           train,
+                                           evaluate)
+
+from prefect import task, Flow, Parameter
+
+import os
 
 from colorama import Fore, Style
 
@@ -18,9 +27,7 @@ def get_next_training_params(experiment):
 
     print(Fore.GREEN + "\n# 🐙 Prefect task - get next training params:" + Style.RESET_ALL)
 
-    # train on the whole dataset
-    # this function will take meaning in the _shifts_ challenge
-    next_row = 0
+    next_row = get_latest_trained_row(experiment)
 
     print()
 
@@ -37,7 +44,7 @@ def eval_perf(next_row):
           + f"\n- first row: {next_row}")
 
     # evaluate latest production model on new data
-    # YOUR CODE HERE
+    past_perf = evaluate(next_row)
 
     print()
 
@@ -68,15 +75,17 @@ def train_model(next_row):
     if next_row == 0:
 
         # preprocess data chunk by chunk
-        # YOUR CODE HERE
+        preprocess(first_row=next_row)
 
         # train model chunk by chunk
-        pass  # YOUR CODE HERE
+        new_perf = train(first_row=next_row,
+                         stage="Production")
 
     else:
 
         # preprocess and train in one piece
-        pass  # YOUR CODE HERE
+        new_perf = preprocess_and_train(first_row=next_row,
+                                        stage="Production")
 
     print()
 
@@ -94,7 +103,7 @@ def notify(past_perf, new_perf):
           + f"\n- new perf: {round(new_perf, 2) if new_perf is not None else 'None'}")
 
     # notify of performance evolution
-    # YOUR CODE HERE
+    # TODO: trigger slack or mail task
 
     print()
 
