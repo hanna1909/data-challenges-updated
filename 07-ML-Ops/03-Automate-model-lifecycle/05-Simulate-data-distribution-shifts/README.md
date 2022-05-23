@@ -29,6 +29,8 @@ Luckily the teach team already though of this and the `first_row` and `row_count
 
 They even went as far as to provide you with a **mlflow** database schema in order to allow you to retrieve the data you are looking for.
 
+<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/mlflow-tables.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/mlflow-tables.png" width="150" alt="mlflow tables"></a>
+
 And because they are very kind they also hand you a small piece of paper where the secret access codes for a read only account to the database are written in cypher:
 
 ``` bash
