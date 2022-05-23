@@ -3,7 +3,7 @@
 
 ## `taxifare_model` package
 
-- `interface/main_local.py` contains all the main routes needed to train your model in a local setup.
+- `interface/main.py` contains all the routes needed to train the model
 - `ml_logic/params.py` are global project params to set up manually
 
 ``` bash
