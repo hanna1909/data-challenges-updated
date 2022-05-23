@@ -52,8 +52,19 @@ class TestMlflow(TestBase):
         assert len(val_mae_df) != 0 or len(mean_val_df) != 0 or len(mae_df) != 0
 
     def test_mlflow_push_model(self):
+        """
+        verify model loaded in mlflow for experiment
+        """
 
-        assert True
+        model_df = pd.read_csv(_get_location("test_mlflow_push_model.csv.txt"))
+
+        assert len(model_df) != 0
+
+    def test_mlflow_pred_model(self):
+
+        pred_df = pd.read_csv(_get_location("test_mlflow_pred_model.csv.txt"))
+
+        assert len(pred_df) != 0
 
 
 def _query_mlflow_db(query):
@@ -142,7 +153,42 @@ def write_mlflow_push_metrics(experiment):
     _write_csv(results, "test_mlflow_push_metrics.csv.txt")
 
 
-def write_mlflow_push_model(experiment, model_name):
+def write_mlflow_push_model(model_name):
     """
-    retrieve pushed model
+    retrieve pushed experiment metrics
     """
+
+    query_metrics = f"""
+        SELECT
+            *
+        FROM model_versions mv
+        WHERE mv.name = '{model_name}'
+        AND mv.current_stage = 'Production';
+    """
+
+    results = _query_mlflow_db(query_metrics)
+
+    _write_csv(results, "test_mlflow_push_model.csv.txt")
+
+
+def write_mlflow_pred_model():
+    """
+    make prediction with latest production model
+    """
+
+    from taxifare_model.interface.main import pred
+
+    import os
+
+    import pandas as pd
+
+    # assert prediction is done through mlflow
+    if os.environ.get("MODEL_TARGET") != "mlflow":
+
+        raise NameError("prediction must be done through mlflow model")
+
+    y_pred = pred()
+
+    pred_df = pd.DataFrame(y_pred, columns=["prediction"])
+
+    pred_df.to_csv(_get_location("test_mlflow_pred_model.csv.txt"))

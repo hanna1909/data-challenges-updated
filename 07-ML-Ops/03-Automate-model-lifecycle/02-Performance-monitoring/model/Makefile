@@ -80,7 +80,9 @@ write_results:
 	@echo "retrieve mlflow pushed metrics..."
 	@python -c "from tests.mlflow.test_mlflow import write_mlflow_push_metrics; write_mlflow_push_metrics('${MLFLOW_EXPERIMENT}')" 2> /dev/null || :
 	@echo "retrieve mlflow pushed model..."
-	@python -c "from tests.mlflow.test_mlflow import write_mlflow_push_model; write_mlflow_push_model('${MLFLOW_EXPERIMENT}', '${MLFLOW_MODEL_NAME}')" 2> /dev/null || :
+	@python -c "from tests.mlflow.test_mlflow import write_mlflow_push_model; write_mlflow_push_model('${MLFLOW_MODEL_NAME}')" 2> /dev/null || :
+	@echo "make prediction with mlflow pushed model..."
+	@python -c "from tests.mlflow.test_mlflow import write_mlflow_pred_model; write_mlflow_pred_model()" 2> /dev/null || :
 
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"

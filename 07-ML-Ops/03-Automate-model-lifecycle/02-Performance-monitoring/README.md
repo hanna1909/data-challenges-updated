@@ -111,15 +111,38 @@ Make sure to push either `val_mae`, `mean_val` or `mae` (the code already does t
 
 Now for the better part: mlflow allows us to store the trained model so that we can easily refer to it when we want to make a prediction.
 
+This will allow you colleagues to use smoothly the model you have trained !
+
 **💻 Complete the `save_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+
+**💻 Put your model in Production in the mlflow UI**
 
 **🧪 Run the tests with `make dev_test`**
 
-👉 `test_mlflow_upload_model` should be ✅
+👉 `test_mlflow_push_model` should be ✅
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
   Have a look at the [mlflow python API for Keras](https://mlflow.org/docs/latest/python_api/mlflow.keras.html) and find a function allowing you to upload your trained model.
+</details>
+
+## Make a prediction from you model saved in mlflow
+
+What use is it to store my model in mlflow you say ? Well for starters mlflow allows you to handle very easily the lifecycle stage (_None_, _Staging_ or _Production_) of the model in order to synchronize the information accross the team. And more importantly, it allows any application to load a trained model in a given stage in order to make a prediction.
+
+❓ **How do you make a prediction from a trained model stored in mlflow ?**
+
+**💻 Complete the `load_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+
+**🧪 Run the tests with `make dev_test`**
+
+👉 `test_mlflow_pred_model` should be ✅
+
+<details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+
+  Have a look at the [mlflow python API for Keras](https://mlflow.org/docs/latest/python_api/mlflow.keras.html) and find a function allowing you to retrieve your trained model.
 </details>
