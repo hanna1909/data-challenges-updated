@@ -83,21 +83,9 @@ Use the `first_row` and `row_count` parameters in the mlflow database in order t
   psql $MLFLOW_TRACKING_DB
   ```
 
-  No `psql` command in your setup ?
-
-  <details>
-    <summary markdown='span'><strong> ⚙️ macOS </strong></summary>
-
-
-    Head towards the [Le Wagon web setup Postgres section](https://github.com/lewagon/setup/blob/master/macos.md#postgresql).
-  </details>
-
-  <details>
-    <summary markdown='span'><strong> ⚙️ Ubuntu (Linux or Windows WSL2) </strong></summary>
-
-
-    Head towards the [Le Wagon web setup Postgres section](https://github.com/lewagon/setup/blob/master/ubuntu.md#postgresql).
-  </details>
+  No `psql` command in your setup ? Head towards the [Le Wagon web setup](https://github.com/lewagon/setup) _Postgres_ section:
+  - [macOS](https://github.com/lewagon/setup/blob/master/macos.md#postgresql)
+  - [Ubuntu (Linux or Windows WSL2)](https://github.com/lewagon/setup/blob/master/ubuntu.md#postgresql)
 
   Where do you go from there ?
 
