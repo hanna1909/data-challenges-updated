@@ -155,7 +155,7 @@ Let's store something a little more useful in the configuration...
 
 Remember how we want to store our datasets in a single location for all the challenges ?
 
-This location is:
+Its location is output by the following command:
 
 ``` bash
 python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data'))"
@@ -167,9 +167,16 @@ python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<p
 
 👉 `test_local_data_path` should be ✅
 
+<details>
+  <summary markdown='span'><strong> 💡 Why do we need to run a python command to retrieve the location ? </strong></summary>
+
+
+  It seems that the pickle package is unable to write files to a file path containing a `~`. The consequence is that the environment variable storing the path on which to store your pickles files cannot contain a `~`. Hence the conversion to an absolute path with `os.path.expanduser`.
+</details>
+
 Last, let's fill the path to the centralized registry directory that will store our trained models, params and metrics.
 
-Its location is:
+Its location is output by the following command:
 
 ``` bash
 python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry'))"
