@@ -41,25 +41,25 @@ show_env:
 	@echo ${DIRENV_DIR}
 
 	@echo "\n$(ccgreen)local storage:$(ccreset)"
-	@env | grep -E "LOCAL_DATA_PATH|LOCAL_REGISTRY_PATH"
+	@env | grep -E "LOCAL_DATA_PATH|LOCAL_REGISTRY_PATH" || :
 	@echo "\n$(ccgreen)dataset:$(ccreset)"
-	@env | grep -E "DATASET_SIZE|VALIDATION_DATASET_SIZE|CHUNK_SIZE"
+	@env | grep -E "DATASET_SIZE|VALIDATION_DATASET_SIZE|CHUNK_SIZE" || :
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"
-	@env | grep -E "DATA_SOURCE|MODEL_TARGET"
+	@env | grep -E "DATA_SOURCE|MODEL_TARGET" || :
 
 	@echo "\n$(ccgreen)GCP:$(ccreset)"
-	@env | grep -E "PROJECT|REGION"
+	@env | grep -E "PROJECT|REGION" || :
 	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
-	@env | grep -E "BUCKET_NAME|BLOB_LOCATION"
+	@env | grep -E "BUCKET_NAME|BLOB_LOCATION" || :
 
 	@echo "\n$(ccgreen)Big Query:$(ccreset)"
-	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE"
+	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE" || :
 
 	@echo "\n$(ccgreen)Compute Engine:$(ccreset)"
-	@env | grep -E "INSTANCE"
+	@env | grep -E "INSTANCE" || :
 
 reinstall_package:
-	@pip uninstall -y taxifare-model
+	@pip uninstall -y taxifare-model || :
 	@pip install -e .
 
 write_results:

@@ -97,9 +97,21 @@ You have already used commands to test your challenges in the last unit.
 
 From now on you will use a different set of commands:
 - `make list` lists the available commands (try it now 🤩, more commands will be added in the units to come)
+- `make show_env` will produce an empty output for now (you will start to use it on the next challenges)
 - `make run_model` runs the `taxifare_model` package (basically a `python -m taxifare_model.interface.main`)
 - `make reinstall_package` installs the package of the current challenge in the virtual environment (🚨 you do not want to call the package of the previous challenge by mistake when running your code or a `Makefile` command)
 - `make dev_test` allows you to run the tests ✅
+
+<details>
+  <summary markdown='span'><strong> 💡 How to run these commands ? </strong></summary>
+
+
+  The `make` commands must be ran in the directory containing the `Makefile`. In order to run them you should be in the `model` directory:
+
+  ``` bash
+  cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model
+  ```
+</details>
 
 ### 🚪 `main.py`
 
@@ -230,6 +242,12 @@ mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/reg
 ``` bash
 cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
 ls -tRalala . > ../02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
+```
+
+Go back to the project directory
+
+``` bash
+cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model
 ```
 
 **🧪 Run the tests with `make dev_test`**

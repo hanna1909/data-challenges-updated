@@ -37,7 +37,7 @@ run_model:
 	python -m taxifare_model.interface.main
 
 reinstall_package:
-	@pip uninstall -y taxifare-model
+	@pip uninstall -y taxifare-model || :
 	@pip install -e .
 
 write_results:
