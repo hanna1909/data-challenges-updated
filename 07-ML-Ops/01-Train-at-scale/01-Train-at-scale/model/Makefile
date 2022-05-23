@@ -60,9 +60,6 @@ list:
 	@echo "            Install the version of the package corresponding to the challenge."
 	@echo "\n        $(fbold)test_train_at_scale$(ccreset)"
 	@echo "            Run the package tests."
-	@echo "\n        $(fbold)dev_test$(ccreset)"
-	@echo "            Run the tests."
-
 	@echo "\n    $(ccblue)$(fbold)internal rules:$(ccreset)"
 	@echo "\n        $(fbold)write_results$(ccreset)"
 	@echo "            Write the test results so they can be added and committed to git."

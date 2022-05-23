@@ -74,8 +74,6 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"
 	@echo "\n        $(fbold)reinstall_package$(ccreset)"
 	@echo "            Install the version of the package corresponding to the challenge."
-	@echo "\n        $(fbold)test_train_at_scale$(ccreset)"
-	@echo "            Run the package tests."
 	@echo "\n        $(fbold)dev_test$(ccreset)"
 	@echo "            Run the tests."
 
