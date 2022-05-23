@@ -2,16 +2,9 @@
 
 In this unit, you will learn how to package the notebook provided by the Data Science team at WagonCab, and how to scale it so that it can be trained on the full dataset locally on your machine.
 
-This unit consist of the 5 challenges below, that are all regrouped in this single readme file. Simply follow the guide, step by step!
+This unit consist of the 5 challenges below, that are all regrouped in this single README file.
 
-1. **LOCAL SETUP**: Structure the code into an installable python package, make sure your VS code is setup for the week and be ready to say goodbye to jupyter notebooks!
-2. **UNDERSTAND DATA SCIENTIST WORK**: Discover the notebook provided by the Data Science team
-3. **FROM NOTEBOOK TO PACKAGE**: Discover the notebook provided by the Data Science team
-4. **INVESTIGATE BOTTLENECKS**: Now that we have an operable package, we will discover how to explore and correct the slower parts of our code
-5. **INCREMENTAL PROCESSING**: We will see how to preprocess the dataset incrementally so that we can process a volume of data that does not fit into memory
-6. **INCREMENTAL LEARNING**
-Finally we will see how to train the model without ever loading all data at once in memory.
-
+Simply follow the guide and `git push` after each main section so we can track your progress!
 
 # 1️⃣ LOCAL SETUP
 
@@ -91,7 +84,7 @@ cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Tra
 pip install -e .
 ```
 
-Make sure the package is installed by running `pip list | grep taxifare_model`. It should print the absolute path to the package.
+Make sure the package is installed by running `pip list | grep taxifare-model`. It should print the absolute path to the package.
 
 
 ### 1.3) Download raw data locally on your drive
@@ -114,7 +107,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (it's not mandatory for the week)
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > model/data/raw/train_50M.csv.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
 ```
 
 </details>
@@ -167,29 +160,28 @@ To do so, please code the missing code marked `# YOUR CODE HERE` in the followin
 │       └── utils.py        # ✅ keep for later
 ```
 
-We have written various tests to help you check your code step-by-steps
-
-```bash
-# -> model
-make test_train_at_scale
-```
-
-👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE
+👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE. But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
 
 ```python
 # taxifare_model/ml_logic/params.py
 DATASET_SIZE = '100k'
 ```
 
-But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
+**🧪 Test your code**
 
+```bash
+# First, make sure your package runs properly. Debug it until it runs!
+python -m taxifare_model.interface.main_local
 
-💡 Tips: Did you know you could convert `.ipynb` files into a single `.py` files with VScode? To do so, open any notebook, and use the command palette to select "Convert to Python Script". It may help you copy paste multiple cell logic at once.
+# Then only, try to pass tests (don't make before !)
+make test_train_at_scale
+```
+
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/070101_tests_to_validate.png' width=600>
 
 </details>
 
 # 4️⃣ INVESTIGATE SCALABILITY
-
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
@@ -335,8 +327,13 @@ def preprocess(training_set=True):
     print("✅ data processed saved entirely")
 ```
 
+
+
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale`
+When you are happy with your results, test your code with `make test_train_at_scale`.
+You should pass the two tests:
+- `tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_pass  PASSED
+- tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_value PASSED
 
 **❓ Create and store the 4 large preprocessed datasets**
 - `data/processed/train_processed_500k.csv`
@@ -457,8 +454,8 @@ def train():
 ```
 
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale`
-Everything tests should be green 🏁
+When you are happy with your results, test your code with `make test_train_at_scale` and push your results!
+Everything tests should be green by now!
 
 **Give it a try with the full dataset!**
 
@@ -469,6 +466,6 @@ VALIDATION_DATASET_SIZE = '500k'
 CHUNK_SIZE = 100000
 ```
 
-Congratulations! 🏁
+🏁 Congratulations! 🏁
 
 </details>

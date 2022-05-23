@@ -3,8 +3,7 @@
 
 ## `taxifare_model` package
 
-- `interface/main.py` contains all the routes needed for the V1 of the package, which can train on a limited number of rows
-- `interface/main_incremental.py` contains all the routes needed for the V2 of the package, which can train incrementally on an unlimited number of rows!
+- `interface/main.py` contains all the routes needed to train the model
 - `ml_logic/params.py` are global project params to set up manually
 
 ``` bash

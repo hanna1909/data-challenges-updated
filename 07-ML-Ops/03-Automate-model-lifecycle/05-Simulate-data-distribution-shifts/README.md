@@ -25,7 +25,7 @@ But how do you avoid to retrain your model on data it has already seen ?
 
 The idea is to store in mlflow along with the training parameters the index of the last data row the model has seen during the latest training.
 
-Luckily the teach team already though of this and the `first_row` and `row_count` parameters are already stored in mlflow on each training.
+Luckily the tech team already though of this and the `first_row` and `row_count` parameters are already stored in mlflow on each training.
 
 They even went as far as to provide you with a **mlflow** database schema in order to allow you to retrieve the data you are looking for.
 
@@ -69,9 +69,9 @@ Use the `first_row` and `row_count` parameters in the mlflow database in order t
 
   You can have a look at the structure of the database using **DBeaver**. Remember that `make show_env` will allow you to retrieve easily the parameters for the read only account to connect to the database. The database used by mlflow is a **Postgres** database (you need to specify the type of connection to create when using _DBeaver_).
 
-  Another option is to use you teammate the CLI and make use of the `psql` command (for _Postgres_, you guessed it).
+  Another option is to use your teammate the CLI and make use of the `psql` command (for _Postgres_, you guessed it).
 
-  Let's add a new environment variable to your `.env` project configuration. this will help you connect to the database.
+  Let's add a new environment variable to your `.env` project configuration. This will help you connect to the database.
 
   ``` bash
   MLFLOW_TRACKING_DB=postgresql://$MLFLOW_DB_USER:$MLFLOW_DB_PASSWORD@$MLFLOW_DB_HOSTNAME:$MLFLOW_DB_PORT/$MLFLOW_DB_NAME

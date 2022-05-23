@@ -63,7 +63,7 @@ def preprocess_and_train():
         batch_size=batch_size)
     save_model(model, params=params, metrics=metrics)
 
-    # 🧪 Write tests. Check your results with `make test_train_at_scale`
+    # 🧪 Write test output (used by Kitt to track progress - do not remove)
     write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ preprocess_and_train() done")
@@ -90,7 +90,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     # make a prediction
     # YOUR CODE HERE
 
-    # 🧪 Tests
+    # 🧪 Write test output (used by Kitt to track progress - do not remove)
     write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
     print("✅ prediction done: ", y_pred, y_pred.shape)
 
