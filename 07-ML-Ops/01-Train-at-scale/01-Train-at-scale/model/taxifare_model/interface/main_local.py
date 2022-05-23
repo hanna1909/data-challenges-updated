@@ -100,10 +100,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 if __name__ == '__main__':
     try:
         preprocess_and_train()
-        preprocess()
-        preprocess(training_set=False)
-        train()
-        pred()
+        #pred()
     except:
         import ipdb, traceback, sys
         extype, value, tb = sys.exc_info()

@@ -43,6 +43,8 @@ You will store monitoring data 🔎 to ensure that your model continues to perfo
 
 [//]: # ( challenge tech stack: mlflow )
 
+**💻 Install the package of the current challenge with `make reinstall_package`**
+
 [//]: # ( challenge instructions )
 
 ## Configure your project for mlflow
@@ -146,3 +148,5 @@ What use is it to store my model in mlflow you say ? Well for starters mlflow al
 
   Have a look at the [mlflow python API for Keras](https://mlflow.org/docs/latest/python_api/mlflow.keras.html) and find a function allowing you to retrieve your trained model.
 </details>
+
+🏁 Congrats! Your `taxifare-model` package is now persisting every aspect of your experiments in **mlflow**

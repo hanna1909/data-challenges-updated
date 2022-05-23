@@ -1,6 +1,8 @@
 
 [//]: # ( challenge tech stack: compute-engine gcloud )
 
+**💻 Install the package of the current challenge with `make reinstall_package`**
+
 [//]: # ( challenge instructions )
 
 Ever been stranded on a spot with low connectivity but still want to work on your data science project?

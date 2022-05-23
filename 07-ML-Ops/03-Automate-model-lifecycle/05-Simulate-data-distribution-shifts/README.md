@@ -1,6 +1,8 @@
 
 [//]: # ( challenge tech stack: )
 
+**💻 Install the package of the current challenge with `make reinstall_package`**
+
 [//]: # ( challenge instructions )
 
 The `taxifare_flow` package is not ready for production. But before pushing it live, we want to make sure that everything works fine when running a complete lifecycle on several iterations of new incomings data.
@@ -155,3 +157,5 @@ Si now your goal will be to alternate for example `make get_new_month` and `make
 **🧪 Run the tests with `make dev_test`**
 
 👉 `test_shifts_complete` should be ✅
+
+🏁 Congrats! Your workflow lifecycle is ready to be shipped in production 🔥
