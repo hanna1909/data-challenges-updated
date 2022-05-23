@@ -2,23 +2,14 @@
 
 In this unit, you will learn how to package the notebook provided by the Data Science team at WagonCab, and how to scale it so that it can be trained on the full dataset locally on your machine.
 
-This unit consist of the 5 challenges below, that are all regrouped in this single readme file. Simply follow the guide, step by step!
+This unit consist of the 5 challenges below, that are all regrouped in this single README file.
 
-1. **LOCAL SETUP**: Structure the code into an installable python package, make sure your VS code is setup for the week and be ready to say goodbye to jupyter notebooks!
-2. **UNDERSTAND DATA SCIENTIST WORK**: Discover the notebook provided by the Data Science team
-3. **FROM NOTEBOOK TO PACKAGE**: Discover the notebook provided by the Data Science team
-4. **INVESTIGATE BOTTLENECKS**: Now that we have an operable package, we will discover how to explore and correct the slower parts of our code
-5. **INCREMENTAL PROCESSING**: We will see how to preprocess the dataset incrementally so that we can process a volume of data that does not fit into memory
-6. **INCREMENTAL LEARNING**
-Finally we will see how to train the model without ever loading all data at once in memory.
-
+Simply follow the guide and `git push` after each main section so we can track your progress!
 
 # 1️⃣ LOCAL SETUP
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
-
-<br>
 
 As lead ML Engineer for the project, your first role is to setup a local working environment (pyenv) and a python package that only contains the skeleton of your code base.
 
@@ -35,7 +26,7 @@ cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Tra
 python --version # First, check your <YOUR_PYTHON_VERSION>. For example: 3.8.12
 ```
 
-```
+```bash
 pyenv virtualenv <YOUR_PYTHON_VERSION> taxifare-model
 pip install --upgrade pip
 pyenv local taxifare-model
@@ -93,7 +84,7 @@ cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Tra
 pip install -e .
 ```
 
-Make sure the package is installed by running `pip list | grep taxifare_model`. It should print the absolute path to the package.
+Make sure the package is installed by running `pip list | grep taxifare-model`. It should print the absolute path to the package.
 
 
 ### 1.3) Download raw data locally on your drive
@@ -114,20 +105,17 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ```
 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (it's not mandatory for the week)
+
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > model/data/raw/train_50M.csv.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
 ```
+
 </details>
-
-<br>
-
 
 # 2️⃣ UNDERSTAND DATA SCIENTIST WORK
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
-
-<br>
 
 Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for this module)
 
@@ -140,15 +128,11 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 
 </details>
 
-<br>
-
 
 # 3️⃣ PACKAGE CODE
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
-
-<br>
 
 🎯 Your goal is to be able to run the `taxifare_model.interface.main_local` module as per below
 
@@ -176,36 +160,30 @@ To do so, please code the missing code marked `# YOUR CODE HERE` in the followin
 │       └── utils.py        # ✅ keep for later
 ```
 
-We have written various tests to help you check your code step-by-steps
-
-```bash
-# -> model
-make test_train_at_scale
-```
-
-👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE
+👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE. But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
 
 ```python
 # taxifare_model/ml_logic/params.py
 DATASET_SIZE = '100k'
 ```
 
-But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
+🧪 We have written various tests to help you check your code step-by-steps. Feel free to `commit` and `push` your results in a regular interval!
 
+```bash
+# -> model
+make test_train_at_scale
+```
+
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/070101_tests_to_validate.png' width=400>
 
 💡 Tips: Did you know you could convert `.ipynb` files into a single `.py` files with VScode? To do so, open any notebook, and use the command palette to select "Convert to Python Script". It may help you copy paste multiple cell logic at once.
 
 </details>
 
-<br>
-
 # 4️⃣ INVESTIGATE SCALABILITY
-
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
-
-<br>
 
 Now that you managed to make the package work for a small dataset, time to see how it will handle the real dataset!
 
@@ -227,12 +205,10 @@ from taxifare_model.ml_logic.utils import simple_time_and_memory_tracker
 def clear_data() -> pd.DataFrame:
     ...
 ```
+
 And make sure to understand exactly how decorators work. Refer to lecture [0405-Communicate](https://kitt.lewagon.com/camps/<user.batch_slug>/lectures/content/04-Decision-Science_05-Communicate.slides.html?title=Communicate#/6/3)
 
-
 </details>
-
-<br>
 
 
 # 5️⃣ INCREMENTAL PROCESSING
@@ -240,13 +216,12 @@ And make sure to understand exactly how decorators work. Refer to lecture [0405-
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
-<br>
-
 🎯 Your goal is to improve your codebase so as **to be able to process our model on `50M` rows or even more, without RAM limits**.
 
 ### 5.1) Discussion
 
 **What did we learn?**
+
 From previous challenge, we've seen that we have memory and time constraints:
 - the `(55M,8)` `raw_data` loaded in memory as dataframe takes about 12GB of RAM, which is too much for most computers.
 - the `(55M,65)` preprocessed dataframe is even bigger.
@@ -282,7 +257,8 @@ data_chunk = pd.read_csv(
 ### 5.2) Your turn ❓
 
 ❓ First, bring back smaller dataset sizes while you try to make it work.
-```
+
+```python
 # params.py
 DATASET_SIZE = '1k'
 VALIDATION_DATASET_SIZE = '1k'
@@ -292,6 +268,7 @@ CHUNK_SIZE = 200
 **❓ Then, copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
 
 [//] TODO: 🚨 Code below is not the single source of truth. Find a way to remove this dual-source! 🚨
+
 ```python
 def preprocess(training_set=True):
     """
@@ -349,8 +326,13 @@ def preprocess(training_set=True):
     print("✅ data processed saved entirely")
 ```
 
+
+
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale`
+When you are happy with your results, test your code with `make test_train_at_scale`.
+You should pass the two tests:
+- `tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_pass  PASSED
+- tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_value PASSED
 
 **❓ Create and store the 4 large preprocessed datasets**
 - `data/processed/train_processed_500k.csv`
@@ -367,16 +349,12 @@ CHUNK_SIZE = 100000
 
 </details>
 
-<br>
-
 
 # 6️⃣ INCREMENTAL LEARNING
 
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
-
-<br>
 
 🎯 Goal: Train our model on the full `data_processed.csv`
 
@@ -394,18 +372,12 @@ This is called **incremental learning** or **partial_fit**
 - We *retrain* model with this second chunk, this time updating previously computed weights ${\theta_1} \rightarrow {\theta_2}$!
 - etc... until the end of the entire dataset
 
-<br>
-
 ❗️ Not all machine-learning model support incremental learning: only *parametric* models $f_{\theta}$ that are based on *iterative update methods* like gradient descent do
 - In **scikit-learn**, `model.partial_fit()` is only available SGDRegressor/Classifier and few others ([read this carefully 📚](https://scikit-learn.org/0.15/modules/scaling_strategies.html#incremental-learning)).
 - In **tensorflow** and another other deep learning framework, training is always iterative and incremental learning is the default behavior! You just need to avoid calling `model.initialize()` between two chunks!
 
-<br>
-
 ❗️ Do not confuse `chunk_size` with `batch_size` from deep learning
 - For each chunk (big), your model will read data batch-per-batch (small) many times over (epochs)
-
-<br>
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
 
@@ -422,8 +394,6 @@ model.fit(ds)
 
 However, we would like to teach you the universal method of incremental fit by chunk in this challenge, as it applies to any framework, and will prove useful to *partially retrain* your model with newer data once it is put in production.
 </details>
-
-<br>
 
 👎 **Cons**: The model will be biased towards fitting the *latest chunk* better than the *first* ones. In our case, it is not a problem as our training dataset is shuffled, but it is important to keep that in mind when we will do a partial-fit of our model with newer data once it is in production.
 
@@ -483,10 +453,11 @@ def train():
 ```
 
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale`
-Everything tests should be green 🏁
+When you are happy with your results, test your code with `make test_train_at_scale` and push your results!
+Everything tests should be green by now!
 
 **Give it a try with the full dataset!**
+
 ```python
 # params.py
 DATASET_SIZE = '500k'
@@ -494,8 +465,6 @@ VALIDATION_DATASET_SIZE = '500k'
 CHUNK_SIZE = 100000
 ```
 
-Congratulations! 🏁
+🏁 Congratulations! 🏁
 
 </details>
-
-<br>
