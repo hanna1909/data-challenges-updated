@@ -246,7 +246,7 @@ mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/
 **💻 Run the verification command**
 
 ``` bash
-ls -tRalala ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data > ../02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
+ls -tRalala ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
 ```
 
 Go back to the project directory if you moved away to explore the structure of the project:
