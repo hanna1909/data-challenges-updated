@@ -90,7 +90,7 @@ class TestInterface(TestBase):
         0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
         0.00000000e+00, 5.69999981e+00]])
 
-        assert np.allclose(data_processed_head, expected)
+        assert np.allclose(data_processed_head, expected, atol=1e-5)
 
     @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_train_pass(self):
