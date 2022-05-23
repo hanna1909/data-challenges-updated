@@ -95,11 +95,22 @@ cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/.env.s
   direnv --help
   ```
 
-  In order to activate your `.env` project configuration file:
+  In order to activate your `.env` project configuration file, go to the `.env` directory:
 
   ``` bash
   cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops
+  ```
+
+  Allow `direnv` to load the `.env`:
+
+  ``` bash
   direnv allow .
+  ```
+
+  Go back to the challenge directory:
+
+  ``` bash
+  cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/03-Environment/model
   ```
 </details>
 

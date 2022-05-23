@@ -217,20 +217,21 @@ Here is the target structure of the `<program.challenges_repo_name>` repository:
 
 ``` bash
 mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > raw/train_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > raw/train_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > raw/train_100k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > raw/val_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > raw/val_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > raw/val_100k.csv
+mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw
+mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/processed
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_100k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/val_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/val_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/val_100k.csv
 ```
 
 **💻 We will copy the notebooks as well to a central location right next to the data directory**
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops
-cp -R ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/01-Train-at-scale/01-Train-at-scale/model/notebooks .
+mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks
+cp -R ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/01-Train-at-scale/01-Train-at-scale/model/notebooks ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks
 ```
 
 **💻 Then create a centralized local registry directory for our trained models**
@@ -245,11 +246,10 @@ mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/reg
 **💻 Run the verification command**
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
-ls -tRalala . > ../02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
+ls -tRalala ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data > ../02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
 ```
 
-Go back to the project directory
+Go back to the project directory if you moved away to explore the structure of the project:
 
 ``` bash
 cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model
