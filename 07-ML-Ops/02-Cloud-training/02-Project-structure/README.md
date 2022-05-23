@@ -249,7 +249,13 @@ mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/
 ls -tRalala ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model/tests/structure/test_structure_data.txt
 ```
 
-Go back to the project directory if you moved away to explore the structure of the project:
+**👀 Observe the structure that we created**
+
+``` bash
+tree -C ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry
+```
+
+Then go back to the project directory if you moved away to explore the structure of the project:
 
 ``` bash
 cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model
