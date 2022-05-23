@@ -166,6 +166,8 @@ write_results:
 	@echo "${PREFECT_FLOW_NAME}" > tests/prefect/test_prefect_flow_name.txt
 	@echo "${PREFECT_BACKEND}" > tests/prefect/test_prefect_backend.txt
 	@echo "${PREFECT_LOG_LEVEL}" > tests/prefect/test_prefect_log_level.txt
+	@echo "test workflow complete lifecycle..."
+	@python -c "from tests.prefect.test_prefect import write_prefect_flow; write_prefect_flow()" > tests/prefect/test_prefect_flow.txt 2> /dev/null || :
 
 list:
 	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
