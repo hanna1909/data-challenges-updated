@@ -216,9 +216,9 @@ Here is the target structure of the `<program.challenges_repo_name>` repository:
 **💻 Let's create a data directory which will be sourced by all the challenges to come**
 
 ``` bash
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/processed
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/processed
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_1k.csv
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_10k.csv
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data/raw/train_100k.csv
@@ -230,17 +230,17 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > 
 **💻 We will copy the notebooks as well to a central location right next to the data directory**
 
 ``` bash
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks
 cp -R ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/01-Train-at-scale/01-Train-at-scale/model/notebooks ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/notebooks
 ```
 
 **💻 Then create a centralized local registry directory for our trained models**
 
 ``` bash
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/metrics
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/models
-mkdir ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/params
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/metrics
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/models
+mkdir -p ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry/params
 ```
 
 **💻 Run the verification command**
