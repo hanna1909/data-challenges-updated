@@ -268,6 +268,8 @@ Then go back to the project directory if you moved away to explore the structure
 cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/02-Project-structure/model
 ```
 
+**💻 Install the package of the challenge with the `make reinstall_package` command**
+
 **🧪 Run the tests with `make dev_test`**
 
 👉 `test_structure_data` should be ✅
