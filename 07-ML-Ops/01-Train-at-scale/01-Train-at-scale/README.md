@@ -268,7 +268,8 @@ CHUNK_SIZE = 200
 
 **❓ Then, copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
 
-[//] TODO: 🚨 Code below is not the single source of truth. Find a way to remove this dual-source! 🚨
+
+[//]: # (  🚨 Code below is not the single source of truth 🚨 )
 
 ```python
 def preprocess(training_set=True):
@@ -403,7 +404,7 @@ However, we would like to teach you the universal method of incremental fit by c
 
 **❓ Copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
 
-[//] TODO: 🚨find a way to remove this dual-source-of-truth! 🚨
+[//]: # (  🚨 Code below is not the single source of truth 🚨 )
 
 ```python
 def train():

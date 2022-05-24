@@ -48,13 +48,10 @@ The ressources of the cloud will be accessible literaly at your fingertips. Thro
 
 [//]: # ( challenge presentation )
 
-In the remainder of the **MLOps** module, you will continue to work on the **WagonCab** project. Each new challenge will bring to the codebase an additional set of features on which to work.
+🚨 In the remainder of the **MLOps** module, each new challenge will bring to the codebase an additional set of features on which to work.
+👉 From now on, **you will start each new challenge with the solution of the previous challenge**
 
-In order to simplify your work, from now on, you will start from scratch on each challenge with the solution of the previous challenge. Let's discover our new playground!
-
-🚨 Take the time to read throroughly the following in order to understand the structure of the code that you will be working with for the rest of the module and the new commands available.
-
-In this challenge, we present the new structure of the project your will work with from now on.
+❓ Now, read carefully the following document
 
 [//]: # ( challenge instructions )
 
@@ -73,11 +70,15 @@ The structure the project that you discovered during the previous unit will rema
         ├── data_sources
         │   └── local_disk.py                     # 🚚 data exchange functions
         ├── interface
-        │   └── main.py                           # 🚪 entry point
+        │   └── main.py                           # 🚪 (new) entry point
         └── ml_logic
-            ├── data.py                           # 📦 data storage interface
+            ├── data.py                           # 📦 data storage interface (updated)
+            ├── utils.py
+            ├── encoders.py
+            ├── model.py
             ├── params.py
-            ├── registry.py                       # 📦 model storage interface
+            ├── preprocessor.py
+            ├── registry.py                       # 📦 model storage interface (updated)
             └── utils.py
 ```
 
@@ -89,15 +90,21 @@ The `model` directory is the location at which you will spend most of the time. 
 
 We want to work with a dedicated `taxifare-model` virtual environment for our `taxifare-model` package. This file ensures that any python command ran in the `model` directory is executed within the `taxifare-model` virtual environment.
 
-Beware, when stepping up from the `model` directory (`cd ..` or `cd ~`), you will resume to the gloval `lewagon` virtual environment (the packages installed will not be the same).
+Beware, when stepping up from the `model` directory (`cd ..` or `cd ~`), you will resume to the global `lewagon` virtual environment
+
+
 
 ### 🐚 `Makefile`
 
-You have already used commands to test your challenges in the last unit.
-
 From now on you will use a different set of commands:
 - `make list` lists the available commands (try it now 🤩, more commands will be added in the units to come)
-- `make show_env` will produce an empty output for now (you will start to use it on the next challenges)
+
+```bash
+cd model
+make list
+```
+
+- `make show_env` will produce an empty output for now (you will start to use it in the next challenge)
 - `make run_model` runs the `taxifare_model` package (basically a `python -m taxifare_model.interface.main`)
 - `make reinstall_package` installs the package of the current challenge in the virtual environment (🚨 you do not want to call the package of the previous challenge by mistake when running your code or a `Makefile` command)
 - `make dev_test` allows you to run the tests ✅
@@ -129,7 +136,7 @@ Long live `taxifare_model.interface.main`, our new package entry point ⭐️
 
 🚨 One main change in the code of the package is that we choose to have it delegate some of its work to dedicated modules in order to limit the size of the principal files.
 
-The code of the model, the preprocessing and the data cleaning does not change: we are still working on the same content from the WagonCab Data Science team!
+The code of the model, the preprocessing and the data cleaning does not change 👌
 
 The main changes are:
 - The way we source the project configuration (we want a single configuration for all the challenges)
@@ -144,7 +151,7 @@ Now, the code of the project follows the principle of [separation of concerns](h
 
 The role of `main.py` is to ask for data to `data.py`, without having to know what is going on behind the scenes. `main.py` then delegates the training logic to `model.py`. We described roles and delegation for files because they bundle our code in this project, but delegation is more often referred to when talking about **classes** whose job it is to encapsulate state and behavior.
 
-Similarly to how `main.py` deletages data retrieval to `data.py`, `data.py` in its turn delegates the job of `pd.read_csv` to `local_disk.py`.
+Similarly to how `main.py` delegates data retrieval to `data.py`, `data.py` in its turn delegates the job of `pd.read_csv` to `local_disk.py`.
 
 <details>
   <summary markdown='span'><strong> 💡 Why did we do that ? </strong></summary>
