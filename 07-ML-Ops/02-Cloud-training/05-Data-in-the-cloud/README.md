@@ -145,6 +145,19 @@ You can now train you model from the cloud using data chunks retrieved from Big 
 
 ⚙️ **Train your model with data from Big Query and time the outcome ⏰**
 
-👉 training with data from Big Query is even slower than using data from Cloud Storage. You can speed up the training by using a larger _chunk_size_ in order to reduce the overhead of calling Big Query
+<details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+
+  You can time the duration of a command by prefixing it with the `time` command:
+
+  ``` bash
+  time python -m taxifare_model.interface.main
+  ```
+
+  The timing appears after the command output (more help on the _time_ command with `man time`).
+</details>
+
+👉 Observe how the duration of the training varies when you source the data from Big Query versus when the data is stored on the machine.
 
 🏁 Congrats! You have adapted your package to be able to source data incrementally in the cloud from either Cloud Storage or Big Query.
