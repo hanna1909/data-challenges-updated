@@ -51,37 +51,6 @@ Find the `gsutil` command allowing you to upload the `TaxiFare` dataset to your 
   ```
 </details>
 
-## Train locally from data in Cloud Storage
-
-In the previous unit, you trained your `taxifare_model` package incrementally using a CSV stored on your machine.
-
-Now we want to be able to perform this incremental training using the data we stored in Cloud Storage.
-
-**❓ How do you train your model incrementally from Cloud Storage ?**
-
-Training incrementally means that we need to retrieve the data from our data source chunk by chunk so that there is enough memory on our machine to handle the whole dataset in several passes.
-
-We added the `get_pandas_chunk` function to the package. The role of `get_pandas_chunk` is to retrieve a chunk of data from a Cloud Storage CSV file given its first row _index_ and the number of rows (_chunk_size_) to retrieve.
-
-You can now train you model from the cloud using data chunks retrieved from Cloud Storage 🎉
-
-**⚙️ Train your model with data from Cloud Storage and time the outcome ⏰**
-
-<details>
-  <summary markdown='span'><strong> 💡 Hint </strong></summary>
-
-
-  You can time the duration of a command by prefixing it with the `time` command:
-
-  ``` bash
-  time python -m taxifare_model.interface.main
-  ```
-
-  The timing appears after the command output (more help on the _time_ command with `man time`).
-</details>
-
-👉 observe how the training with data from Cloud Storage takes more time than training using data on your machine. This is because your code is fetching data over the network for each chunk
-
 ## Build your first data warehouse
 
 Training our model from the CSV stored in Cloud Storage is a perfectly valid option.
