@@ -53,7 +53,23 @@ First, let's have a look at this new directory:
 </details>
 <br>
 
-Now, navigate into the `/model` directory
+Now, navigate into the `/model` directory, have a look at the `requirements.txt`. You can see new comers:
+```txt
+# API
+fastapi         # API framework
+pytz            # Timezones management
+uvicorn         # Web server
+# tests
+httpx           # HTTP client
+pytest-asyncio  # Asynchronous I/O support for pytest
+```
+⚠️ Make sure perform a **clean install** of the package.
+
+<details>
+    <summary markdown='span'>❓ How?</summary>
+
+`make reinstall_package` of course 😉
+</details>
 
 ### Running the API with FastAPI and a Uvicorn server
 
