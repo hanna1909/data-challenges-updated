@@ -69,6 +69,7 @@ pytest-asyncio  # Asynchronous I/O support for pytest
     <summary markdown='span'>❓ How?</summary>
 
 `make reinstall_package` of course 😉
+
 </details>
 
 ### Running the API with FastAPI and a Uvicorn server
@@ -83,6 +84,7 @@ We provide you with with a FastAPI skeleton in the `fast.py` file.
 You probably need a `uvicorn` web server..., with a 🔥 reloading...
 
 In case you can't find the proper syntax, keep calm and look at your   `Makefile`, we provided you with a new task `run_api`.
+
 </details>
 <br>
 
@@ -93,6 +95,7 @@ In case you can't find the proper syntax, keep calm and look at your   `Makefile
 
 💡 Your API is available on a local port, `8000` probably 👉 [http://localhost:8000](http://localhost:8000).
 Go visit it!
+
 </details>
 <br>
 
@@ -103,6 +106,7 @@ You probably would not have seen much.
     <summary markdown='span'>Answer</summary>
 
 There is only one endpoint _partially_ implemented at the moment, the root endpoint `/`.
+
 </details>
 
 ## Build the API
@@ -173,6 +177,7 @@ def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
             passenger_count: int):
     pass # YOUR CODE HERE
 ```
+
 </details>
 
 <details>
@@ -192,6 +197,7 @@ Ask yourselves the following questions:
 1. Of course you must re-use the `taxifare_model.interface.main.pred()` or the `taxifare_model.ml_logic.registry.load_model()` functions!
 1. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
 1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
+
 </details>
 <br>
 
