@@ -46,7 +46,7 @@ First, let's have a look at this new directory:
 **❓ What's inside that new directory?**
 
 <details>
-    <summary markdown='span'>Answer</summary>
+  <summary markdown='span'>Answer</summary>
 
 🎁 As you can see, it contains a new **module** named **`taxifare_api`** you are going to implement!
 
@@ -66,7 +66,7 @@ pytest-asyncio  # Asynchronous I/O support for pytest
 ⚠️ Make sure perform a **clean install** of the package.
 
 <details>
-    <summary markdown='span'>❓ How?</summary>
+  <summary markdown='span'>❓ How?</summary>
 
 `make reinstall_package` of course 😉
 
@@ -79,7 +79,7 @@ We provide you with with a FastAPI skeleton in the `fast.py` file.
 **💻 Launch the API**
 
 <details>
-    <summary markdown='span'>💡 Hint</summary>
+  <summary markdown='span'>💡 Hint</summary>
 
 You probably need a `uvicorn` web server..., with a 🔥 reloading...
 
@@ -91,7 +91,7 @@ In case you can't find the proper syntax, keep calm and look at your   `Makefile
 **❓ How do you consult your running API?**
 
 <details>
-    <summary markdown='span'>Answer</summary>
+  <summary markdown='span'>Answer</summary>
 
 💡 Your API is available on a local port, `8000` probably 👉 [http://localhost:8000](http://localhost:8000).
 Go visit it!
@@ -103,7 +103,7 @@ You probably would not have seen much.
 **❓ Which endpoints are available?**
 
 <details>
-    <summary markdown='span'>Answer</summary>
+  <summary markdown='span'>Answer</summary>
 
 There is only one endpoint _partially_ implemented at the moment, the root endpoint `/`.
 
@@ -164,7 +164,7 @@ Example response:
 **❓ How would you proceed to implement the `/predict` endpoint? 💬 Discuss with your buddy.**
 
 <details>
-    <summary markdown='span'>⚡️ Kickstart pack</summary>
+  <summary markdown='span'>⚡️ Kickstart pack</summary>
 Here is a piece of code you can use to kickstart the implementation:
 
 ```Python
@@ -181,7 +181,7 @@ def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
 </details>
 
 <details>
-    <summary markdown='span'>💡 Hints</summary>
+  <summary markdown='span'>💡 Hints</summary>
 
 Ask yourselves the following questions:
 - How should we handle the query parameters?
@@ -191,7 +191,7 @@ Ask yourselves the following questions:
 </details>
 
 <details>
-    <summary markdown='span'>🍔 Food for thought</summary>
+  <summary markdown='span'>🍔 Food for thought</summary>
 
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
 1. Of course you must re-use the `taxifare_model.interface.main.pred()` or the `taxifare_model.ml_logic.registry.load_model()` functions!
