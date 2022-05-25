@@ -32,7 +32,7 @@ First, let's have a look at this new directory:
 ├── MANIFEST.in         # 🆕 Config file for production purpose
 ├── Makefile            # Good old task manager
 ├── README.md           # Package documentation
-├── Dockerfile          # 🆕 Deployment instructions
+├── Dockerfile          # 🆕 Building instructions
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare_api        # 🆕 API directory
@@ -210,4 +210,128 @@ Once and _only once_ your API responds as required:
 
 **🚀 Commit and push your code!**
 
-**👏 Congrats, you build your first ML API!**
+**👏 Congrats, you build your first ML predictive API!**
+
+## Build a Docker image for our API
+
+We now have a working **predictive API** which can be queried from our local machine.
+
+We want to make it available to the world. In order to do that, the first step is to create a **Docker image** that contains the environment required to run the API and make it run _locally_ on Docker.
+
+**❓ What are the 3 steps to run the API on Docker?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+1. **Create** a `Dockerfile` containing the the instructions to build the API
+1. **Build** the image locally on Docker
+1. **Run** the API on Docker locally to check it is responding as required
+
+</details>
+
+### Setup
+
+You need Docker daemon to run on your machine so you  will be able to build and run the image locally.
+
+**💻 Launch Docker daemon**
+
+<details>
+  <summary markdown='span'>MacOSX</summary>
+
+Launch the Docker Desktop app, you should see a whale in your menu bar.
+
+<img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running">
+</details>
+
+<details>
+  <summary markdown='span'>Windows WSL2 & Ubuntu</summary>
+
+``` bash
+sudo service docker start
+```
+</details>
+<br>
+
+**✅ Check Docker daemon is up and running with `docker info` in your terminal**
+
+A nice stack of logs should print:
+<a href="https://github.com/lewagon/data-setup/raw/master/images/docker_info.png" target="_blank"><img src='https://github.com/lewagon/data-setup/raw/master/images/docker_info.png' width=150></a>
+
+
+### `Dockerfile`
+
+As a reminder, here is the `/model` directory structure:
+
+```bash
+.
+├── MANIFEST.in         # 🆕 Config file for production purpose
+├── Makefile            # Good old task manager
+├── README.md           # Package documentation
+├── Dockerfile          # 👉 Building instructions
+├── requirements.txt    # All the dependencies you need to run the package
+├── setup.py            # Package installer
+├── taxifare_api        # ✅ API directory
+│   ├── __init__.py
+│   └── fast.py         # ✅ Where the API lays
+├── taxifare_flow       # DAG stuff
+├── taxifare_model      # ML logic
+└── tests               # Your favorite 🍔
+```
+
+**❓ What are the key ingredients a `Dockerfile` needs to cook a delicious Docker image?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+Here the most common instructions of good `Dockerfile`:
+- `FROM`: select a base image for our image (the environment in which we will run our code), this is usually the first instruction
+- `COPY`: copy files and directories inside of our image (our package and the associated files for example)
+- `RUN`: execute a command **inside** of the image being built (for example, install the package dependencies)
+- `CMD`: execute the **main** command that will be executed when we run our **Docker image**. There can be only one `CMD` instruction inside of a `Dockerfile`. It is usually the last instruction
+
+</details>
+<br>
+
+**❓ What the base image should contain to build our image on top of it?**
+
+<details>
+  <summary markdown='span'>💡 Hints</summary>
+
+Choosing an image with Python already installed could be a nice start...
+</details>
+<br>
+
+**💻 Write the instructions needed to build the API image in the `Dockerfile` with the following specifications:**
+
+- [ ] it should contain the same Python version of your virtual env
+- [ ] it should contain the necessary directories from the `/model` directory to allow the API to run
+- [ ] it should contain the dependencies list
+- [ ] the API depencies should be installed
+- [ ] the web server should be launched
+- [ ] the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
+- [ ] the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
+
+<details>
+  <summary markdown='span'>⚡️ Kickstart pack</summary>
+
+Here is the skeleton of the `Dockerfile`:
+
+```Dockerfile
+FROM image
+COPY api
+COPY model
+COPY dependencies
+RUN install dependencies
+CMD launch API web server
+```
+
+</details>
+<br>
+
+**❓ How would you check if the `Dockerfile` instructions will execute what you wanted?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+You can't at this point! 😁 You need to build the image and check if it contains everything required to run the API. Go to the next section: Build the API image.
+</details>
