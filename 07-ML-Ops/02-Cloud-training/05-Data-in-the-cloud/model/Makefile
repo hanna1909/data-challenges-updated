@@ -1,8 +1,6 @@
 
-default: pylint pytest
-
-pylint:
-	find . -iname "*.py" -not -path "./tests/test_*" | xargs -n1 -I {}  pylint --output-format=colorized {}; true
+#default: pytest
+default: test_api_root test_api_predict
 
 pytest:
 	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
@@ -109,3 +107,4 @@ list:
 	@echo "            Print a report on code style."
 	@echo "\n        $(fbold)pytest$(ccreset)"
 	@echo "            Run the tests and print a test report."
+

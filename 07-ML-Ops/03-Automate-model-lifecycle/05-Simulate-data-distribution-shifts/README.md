@@ -110,6 +110,33 @@ Use the `first_row` and `row_count` parameters in the mlflow database in order t
   Not unlike every other command, `psql` also supports the `exit` command...
 </details>
 
+<details>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+
+  In order to query the mlflow database from your code, you need a package able to connect to a _Postgres_ database. Let's use the _psycopg_ package that we have installed earlier.
+
+  Here is how you can query the database:
+
+  ``` bash
+  import psycopg2
+  import psycopg2.extras
+
+  tracking_db_uri = os.environ.get("MLFLOW_TRACKING_DB")
+
+  conn = psycopg2.connect(tracking_db_uri)
+
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+  mlflow_query = """
+  SELECT * FROM experiments;
+  """
+
+  cur.execute(mlflow_query)
+
+  results = cur.fetchall()
+  ```
+</details>
+
 ## Simulate the passing of time
 
 Where do we go from there ?
