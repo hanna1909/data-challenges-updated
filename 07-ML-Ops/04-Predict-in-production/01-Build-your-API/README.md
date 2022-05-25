@@ -335,3 +335,155 @@ CMD launch API web server
 
 You can't at this point! 😁 You need to build the image and check if it contains everything required to run the API. Go to the next section: Build the API image.
 </details>
+
+### Build the API image
+
+Now is the time to **build** the API image on Docker so you can check if it satisfies the requirements and be able to run it on Docker.
+
+**❓ How do you build an image with Docker?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+Make sure you are in the directory of the `Dockefile` then:
+```bash
+docker build --tag=image-name .
+```
+where `image-name` is the name of your image.
+</details>
+<br>
+
+**💻 Choose a meaningful name for the API image then build it**
+
+Once built, the image should be visible in the list of images built with the following command:
+
+``` bash
+docker images
+```
+
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/docker_images.png'>
+
+**🕵️‍♀️ The image you are looking for does not appear in the list? Ask for help 🙋‍♂️**
+
+### Check the API image
+
+Now the image is built let's check it satisfies the specifications to run the predictive API. Docker comes with a handy command to **iteractively** communicate with the shell of the image:
+
+``` bash
+docker run -it -e PORT=8000 -p 8000:8000 image-name sh
+```
+
+<details>
+  <summary markdown='span'>🤖 Decrypt</summary>
+
+- `docker run image-name` runs the image name `image-name`
+- `-it` enable the intercative mode
+- `-e PORT=8000` specify the environment variable `$PORT` the image should listen to
+- `sh` launch a shell console
+</details>
+<br>
+
+A shell console should open, you are inside the image 👏.
+
+**💻 Check the image is correctly set up:**
+
+- [ ] The python version is the same as your virtual env
+- [ ] Presence of the `/taxifare_api` and `taxifare_model` directories
+- [ ] Presence of the `requirements.txt`
+- [ ] The dependencies are all installed
+
+<details>
+  <summary markdown='span'>🙈 Solution</summary>
+
+- `python --version` to check the Python version
+- `ls` to check the presence of the files and directories
+- `pip list` to check the requirements are installed
+</details>
+<br>
+
+Exit the terminal and stop the container at any moment with:
+
+``` bash
+exit
+```
+
+**✅ ❌ All good? If something is missing, you  would probably need to fix your `Dockerfile` and re-build the image again**
+
+### Run the API image
+
+In the previous section you learned how to interact with the image shell. Now is the time to run the predictive API image and
+test if the API responds as it should.
+
+**💻 Run the image**
+
+<details>
+  <summary markdown='span'>💡 Hints</summary>
+
+You should probably remove the interactivity mode and forget the `sh` command...
+</details>
+<br>
+
+**🐛 Unless you fing the correct command to run the image, it is probably crashing with errors involving environment variable.**
+
+**❓ What is the difference between your local environment and image environment? 💬 Discuss with your buddy.**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+There is **no** `.env` in the image!!! The image has **no** access to the environment variables 😈
+</details>
+
+**💻 Using the `docker run --help` documentation, adapt the run command so the `.env` is send to the image**
+
+<details>
+  <summary markdown='span'>🙈 Solution</summary>
+
+The `--env-file` parameter to the rescue!
+
+```bash
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env image_name
+```
+</details>
+<br>
+
+**❓ How would check the image runs correctly?**
+
+<details>
+  <summary markdown='span'>💡 Hints</summary>
+
+The API should respond in your browser, go visit it!
+
+Also you can check the image runs with:
+``` bash
+docker ps
+```
+</details>
+<br>
+
+It's Alive! 😱 🎉
+
+**👀 Inspect your browser response 👉 ['http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
+
+## Once you are done with Docker...
+
+You may stop (or kill) the image...
+
+``` bash
+docker stop 152e5b79177b  # ⚠️ use the correct CONTAINER ID
+docker kill 152e5b79177b  # ☢️ only if the image refuses to stop (did someone create an ∞ loop?)
+```
+Remember to stop the Docker daemon in order to free ressources on your machine once you are done using it...
+
+<details>
+  <summary markdown='span'>MacOSX</summary>
+
+Stop the `Docker.app` with **Quit Docker Desktop** in the menu ba
+</details>
+
+<details>
+  <summary markdown='span'>Windows WSL2/Ubuntu</summary>
+
+``` bash
+sudo service docker stop
+```
+</details>
