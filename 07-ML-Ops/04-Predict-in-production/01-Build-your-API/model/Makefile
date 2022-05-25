@@ -1,8 +1,6 @@
 
-default: pytest
-
-pylint:
-	find . -iname "*.py" -not -path "./tests/test_*" | xargs -n1 -I {}  pylint --output-format=colorized {}; true
+#default: pytest
+default: test_api_root test_api_predict
 
 pytest:
 	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
@@ -13,6 +11,15 @@ test_train_at_scale:
 dev_test:
 	@make write_results
 	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
+
+run_api:
+	uvicorn taxifare_api.fast:app --reload
+
+test_api_root:
+	PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_root' -v --color=yes --asyncio-mode=strict -W "ignore"
+
+test_api_predict:
+	PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_predict' -v --color=yes --asyncio-mode=strict -W "ignore"
 
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 
@@ -121,3 +128,4 @@ list:
 	@echo "            Print a report on code style."
 	@echo "\n        $(fbold)pytest$(ccreset)"
 	@echo "            Run the tests and print a test report."
+
