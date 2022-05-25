@@ -107,11 +107,11 @@ def load_model(
         model_uri = f"models:/{mlflow_model_name}/{stage}"
         print(f"- uri: {model_uri}")
 
-        model = mlflow.keras.load_model(model_uri=model_uri)
-        print("\n✅ model loaded from mlflow")
-
+        try:
+            model = mlflow.keras.load_model(model_uri=model_uri)
+            print("\n✅ model loaded from mlflow")
+        except:
         # raise exception if no model exists
-        if model is None:
             raise NameError(f"No {mlflow_model_name} model in {stage} stage stored in mlflow")
 
         return model
