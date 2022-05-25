@@ -462,7 +462,137 @@ docker ps
 
 It's Alive! 😱 🎉
 
-**👀 Inspect your browser response 👉 ['http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
+**👀 Inspect your browser response 👉 [http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
+
+**👏 Congrats, you build your first ML predictive API inside a Docker container!**
+
+## Deploy the API
+
+Now we have built a **predictive API** Docker image that we are able to run on our local machine, we are 2 steps away from deploying:
+- Push the **Docker image** to **Google Container Registry**
+- Deploy the image on **Google Cloud Run** so that it gets instantiated into a **Docker container**
+
+
+### Push our prediction API image to Google Container Registry
+
+**❓ What is the purpose of Google Container Registry ?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+**Google Container Registry** is a service storing Docker images on the cloud with the purpose of allowing **Cloud Run** or **Kubernetes Engine** to serve them.
+
+It is in a way similar to **GitHub** allowing you to store your git repositories in the cloud (except for the lack of a dedicated user interface and additional services such as `forks` and `pull requests`).
+
+</details>
+<br>
+
+#### Setup
+
+First, let's make sure to enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart) for your project in GCP.
+
+Once this is done, let's ensure that your GCP credentials are correctly registered for the command line.
+
+``` bash
+gcloud auth list
+```
+
+If your account is not listed then you have to authenticate:
+
+``` bash
+gcloud auth login
+```
+
+Now let's configure the `gcloud` command for the usage of Docker.
+
+``` bash
+gcloud auth configure-docker
+```
+
+And verify your config. You should see your GCP account and default project.
+
+``` bash
+gcloud config list
+```
+
+Define an environment variable for the name of your project.
+
+``` bash
+export PROJECT_ID=replace-with-your-gcloud-project-id
+echo $PROJECT_ID # print the PROJECT_ID
+gcloud config set project $PROJECT_ID
+```
+
+And an environment variable for the name of your docker image.
+This environment variable will be used accross the following commands.
+
+``` bash
+export DOCKER_IMAGE_NAME=define-some-container-image-name
+echo $DOCKER_IMAGE_NAME
+```
+
+#### Build and push the image on GCR
+
+Now we are going to build our image again.
+This should be pretty fast since Docker is pretty smart and is going to reuse all the building blocks used previously in order to build the prediction API image.
+
+``` bash
+docker build -t eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME .
+```
+
+Again, let's make sure that our image runs correctly, so that we avoid spending the time on pushing an image that is not working to the cloud.
+
+``` bash
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+```
+Visit [http://localhost:8000/](http://localhost:8000/) and check the API is running as expected.
+
+We can now push our image to Google Container Registry.
+
+``` bash
+docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+```
+
+The image should be visible in the GCP console [here](https://console.cloud.google.com/gcr/).
+
+### Deploy the Container Registry image to Google Cloud Run
+
+**❓ What is the purpose of Cloud Run?**
+<details>
+  <summary markdown='span'>Answer</summary>
+
+Cloud Run will instantiate the image into a container and run the `CMD` instruction inside of the `Dockerfile` of the image. This last step will start the `uvicorn` server serving our **predictive API** to the world 🌍
+
+</details>
+<br>
+
+Let's run one last command 🤞
+
+``` bash
+gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
+```
+
+After confirmation, you should see a similar output indicating that the service is live 🎉
+
+``` txt
+Service name (wagon-data-tpl-image):
+Allow unauthenticated invocations to [wagon-data-tpl-image] (y/N)?  y
+
+Deploying container to Cloud Run service [wagon-data-tpl-image] in project [le-wagon-data] region [europe-west1]
+✓ Deploying new service... Done.
+  ✓ Creating Revision... Revision deployment finished. Waiting for health check to begin.
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [wagon-data-tpl-image] revision [wagon-data-tpl-image-00001-kup] has been deployed and is serving 100 percent of traffic.
+Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
+```
+
+Any developer in the world 🌍 is now able to browse to the deployed url and make a prediction using the API 🤖!
+
+⚠️ Keep in mind that you pay for the service as long as it is up 💸
+
+**👏 Congrats, you deployed your first ML predictive API!**
 
 ## Once you are done with Docker...
 
