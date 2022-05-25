@@ -23,18 +23,24 @@ In order to do so, we will:
 
 ### API directory
 
-We will start with a clean slate for these challenges. The project on which we will be working is similar to the codebase you worked with until now, but now you have a new directory: `/api`.
+We will start with a clean slate for these challenges. The project on which we will be working is similar to the codebase you worked with until now, but now you have a new directory `/taxifare_api` and new files within the `model` project directory.
 
 First, let's have a look at this new directory:
 
 ```bash
 .
-├── Makefile            # Good all task manager
-├── requirements.txt    # All you need to pip install
-├── setup.py            # The package installer
-└── taxifare_api        # Package directory
-    ├── __init__.py
-    └── fast.py         # Where the API lays
+├── MANIFEST.in         # 🆕 Config file for production purpose
+├── Makefile            # Good old task manager
+├── README.md           # Package documentation
+├── Dockerfile          # 🆕 Deployment instructions
+├── requirements.txt    # All the dependencies you need to run the package
+├── setup.py            # Package installer
+├── taxifare_api        # 🆕 API directory
+│   ├── __init__.py
+│   └── fast.py         # 🆕 Where the API lays
+├── taxifare_flow       # DAG stuff
+├── taxifare_model      # ML logic
+└── tests               # Your favorite 🍔
 ```
 
 **❓ What's inside that new directory?**
@@ -42,20 +48,12 @@ First, let's have a look at this new directory:
 <details>
     <summary markdown='span'>Answer</summary>
 
-🎁 As you can see, it contains a new **package** named **`taxifare_api`** you are going to implement!
+🎁 As you can see, it contains a new **module** named **`taxifare_api`** you are going to implement!
 
 </details>
 <br>
 
-Now, navigate into the `/api` directory, your terminal may pop you with some **errors or warnings**.
-
-**❓ How would you solve these errors or warnings?**
-
-<details>
-    <summary markdown='span'>💡 Hints</summary>
-
-A new package means a new virtual env...
-</details>
+Now, navigate into the `/model` directory
 
 ### Running the API with FastAPI and a Uvicorn server
 
@@ -66,13 +64,11 @@ We provide you with with a FastAPI skeleton in the `fast.py` file.
 <details>
     <summary markdown='span'>💡 Hint</summary>
 
-You probably need a `uvicorn` web server..., with a hot reloading...
+You probably need a `uvicorn` web server..., with a 🔥 reloading...
+
+In case you can't find the proper syntax, keep calm and look at your   `Makefile`, we provided you with a new task `run_api`.
 </details>
 <br>
-
-**🐛 The server logs may throw some errors, try to fix them before moving forward.**
-
-**💻 Once you find the right command and the API runs without crashing, feel free to fill in your `Makefile` with a `run_api` task.**
 
 **❓ How do you consult your running API?**
 
@@ -80,10 +76,11 @@ You probably need a `uvicorn` web server..., with a hot reloading...
     <summary markdown='span'>Answer</summary>
 
 💡 Your API is available on a local port, `8000` probably 👉 [http://localhost:8000](http://localhost:8000).
-
+Go visit it!
 </details>
 <br>
 
+You probably would not have seen much.
 **❓ Which endpoints are available?**
 
 <details>
@@ -147,12 +144,27 @@ Example response:
 **❓ How would you proceed to implement the `/predict` endpoint? 💬 Discuss with your buddy.**
 
 <details>
+    <summary markdown='span'>⚡️ Kickstart pack</summary>
+Here is a piece of code you can use to kickstart the implementation:
+
+```Python
+@app.get("/predict")
+def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
+            pickup_longitude: float,    # -73.950655
+            pickup_latitude: float,     # 40.783282
+            dropoff_longitude: float,   # -73.984365
+            dropoff_latitude: float,    # 40.769802
+            passenger_count: int):
+    pass # YOUR CODE HERE
+```
+</details>
+
+<details>
     <summary markdown='span'>💡 Hints</summary>
 
 Ask yourselves the following questions:
 - How should we handle the query parameters?
 - How can we re-use the `taxifare_model` package?
-- How can we import the `taxifare_model` package?
 - How should we build `X_pred`? What does it look like?
 - How to render the correct response?
 </details>
@@ -162,7 +174,6 @@ Ask yourselves the following questions:
 
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
 1. Of course you must re-use the `taxifare_model.interface.main.pred()` or the `taxifare_model.ml_logic.registry.load_model()` functions!
-1. Did you know that you can install a requirement from a package stored in a GitHub repository? Use the last available solution.
 1. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
 1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
 </details>

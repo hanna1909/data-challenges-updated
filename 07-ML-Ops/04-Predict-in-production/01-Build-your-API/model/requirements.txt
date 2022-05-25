@@ -22,4 +22,10 @@ prefect
 prefect[viz]
 psycopg2-binary
 
-
+# API
+fastapi
+pytz
+uvicorn
+# tests
+httpx
+pytest-asyncio
