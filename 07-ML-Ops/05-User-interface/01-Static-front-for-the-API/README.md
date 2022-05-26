@@ -5,7 +5,7 @@
 
 Throughout this module, you where able to train a powerful prediction model, and put in production an API to expose it to the world.
 
-It time to create an interface to allow regular Internet users to play with your predictions 🌍
+It is time to create an interface to allow regular Internet users to play with your predictions 🌍
 
 In this unit, you will learn how to create a website leveraging your **TaxiFare** 🚕 API in order to allow anyone to anticipate the cost of a ride in NYC.
 
@@ -59,7 +59,7 @@ Actually, the package for our website will not require to contain any Data Scien
 Splitting the code between training/prediction and website has several benefits:
 - We will be able to deploy our small package on light hosting solutions such as **GitHub Pages** and **Heroku**, which can operate for free 💵
 - Splitting the complexity will allow other team of developers (for example web developers) to work with us without requiring any Data Science related knowledge
-- It follows to popular web development pattern of separating the **Front-End** code (the website) from the **Back-End** code (the service), both communicating through an **API**
+- It follows the web development pattern of separating the **Front-End** code (the website) from the **Back-End** code (the service), both communicating through an **API**
 
 In this exercise, we are going to clone a repository containing an existing Taxi Fare website and modify it in order to plug it to our **Prediction API**.
 
@@ -111,16 +111,17 @@ Let's:
 python -m http.server
 ```
 
-⚠ If you can see an error related to CORS, you may want to verify several things:
-- is your API endpoint __defined correctly__? You can use the Le Wagon one (look at the bottom of the challenge description)
-- is the endpoint starting with __https__ - secure protocol?
-- go to Inspect element :point_right:  Network :point_right: click on __disable cache__ (will look differently on different browsers, but you should see a checkbox just below the tabs) - you will not store any memory from previous loads of the page within your browser
-- try it out in the __incognito window__ - if it works, it means the request is affected by your browser settings or extensions, don't worry about it for now
+⚠️ If you can see an error related to CORS, you may want to verify several things:
+- Is your API endpoint __defined correctly__? You can use the Le Wagon one (look at the bottom of the challenge description)
+- Is the endpoint starting with __https__ - secure protocol?
+- Go to Inspect element :point_right:  Network :point_right: click on __disable cache__ (will look differently on different browsers, but you should see a checkbox just below the tabs) - you will not store any memory from previous loads of the page within your browser
+- Try it out in the __incognito window__ - if it works, it means the request is affected by your browser settings or extensions, don't worry about it for now
 
 👉 Deploy our Front-End on **Github Pages**.
 
-⚠ Getting a 404 error on GH pages? Let it take 5 minutes, sometimes it needs time to find the `index.html` and display it as main root file.
-To see it quicker, try `http://yourgithuburl.com/yourapp/index.html` :ok_hand:
+⚠️ Getting a 404 error on GH pages? Wait for 5 minutes, sometimes GitHub needs time in order to detect the `index.html` and deploy it as the main root file of the static website.
+
+Head towards `http://yourgithuburl.com/yourapp/index.html` :ok_hand:
 
 *Hint*: alternatively, you may use this Le Wagon **Prediction API** if you you do not have one in production:
 
