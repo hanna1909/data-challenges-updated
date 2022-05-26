@@ -390,8 +390,8 @@ docker run -it -e PORT=8000 -p 8000:8000 $IMAGE sh
 <details>
   <summary markdown='span'>🤖 Decrypt</summary>
 
-- `docker run $IMAGE` runs the image
-- `-it` enable the intercative mode
+- `docker run $IMAGE` run the image
+- `-it` enable the interactive mode
 - `-e PORT=8000` specify the environment variable `$PORT` the image should listen to
 - `sh` launch a shell console
 </details>
