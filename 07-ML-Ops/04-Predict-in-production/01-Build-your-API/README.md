@@ -160,6 +160,7 @@ Example response:
     'fare_amount': 5.93
 }
 ```
+
 **❓ How would you proceed to implement the `/predict` endpoint? 💬 Discuss with your buddy.**
 
 <details>
@@ -190,6 +191,18 @@ Ask yourselves the following questions:
 </details>
 
 <details>
+  <summary markdown='span'>💡 Hints</summary>
+
+Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration:
+
+``` bash
+MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
+MLFLOW_EXPERIMENT=taxifare_experiment_recap
+MLFLOW_MODEL_NAME=my_taxifare
+```
+</details>
+
+<details>
   <summary markdown='span'>🍔 Food for thought</summary>
 
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
@@ -204,7 +217,7 @@ Ask yourselves the following questions:
 **🐛 Inspect the server logs and add some `breakpoint()` to debug**
 
 Once and _only once_ your API responds as required:
-**🧪 Test your implementation with `make test_predict`**
+**🧪 Test your implementation with `make test_api_predict`**
 
 **🚀 Commit and push your code!**
 

@@ -45,14 +45,14 @@ async def test_predict_is_dict():
 async def test_predict_has_key():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
-    assert response.json().get('fare', False)
+    assert response.json().get('fare_amount', False)
 
 
 @pytest.mark.asyncio
 async def test_predict_val_is_float():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
-    assert isinstance(response.json()['fare'], float)
+    assert isinstance(response.json()['fare_amount'], float)
 
 
 # @pytest.mark.asyncio
