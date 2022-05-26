@@ -6,7 +6,7 @@
 
 Use **FastAPI** in order to create an API for your model.
 
-Run that API on your machine.
+Run that API on your machine. Then put it in production.
 
 ## Context
 
@@ -29,10 +29,10 @@ First, let's have a look at this new directory:
 
 ```bash
 .
+├── Dockerfile          # 🆕 Building instructions
 ├── MANIFEST.in         # 🆕 Config file for production purpose
 ├── Makefile            # Good old task manager
 ├── README.md           # Package documentation
-├── Dockerfile          # 🆕 Building instructions
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare_api        # 🆕 API directory
@@ -54,7 +54,8 @@ First, let's have a look at this new directory:
 <br>
 
 Now, navigate into the `/model` directory, have a look at the `requirements.txt`. You can see new comers:
-```txt
+
+``` bash
 # API
 fastapi         # API framework
 pytz            # Timezones management
