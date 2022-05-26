@@ -381,16 +381,16 @@ docker images
 
 ### Check the API image
 
-Now the image is built let's check it satisfies the specifications to run the predictive API. Docker comes with a handy command to **iteractively** communicate with the shell of the image:
+Now the image is built let's check it satisfies the specifications to run the predictive API. Docker comes with a handy command to **interactively** communicate with the shell of the image:
 
 ``` bash
-docker run -it -e PORT=8000 -p 8000:8000 image-name sh
+docker run -it -e PORT=8000 -p 8000:8000 $IMAGE sh
 ```
 
 <details>
   <summary markdown='span'>🤖 Decrypt</summary>
 
-- `docker run image-name` runs the image name `image-name`
+- `docker run $IMAGE` runs the image
 - `-it` enable the intercative mode
 - `-e PORT=8000` specify the environment variable `$PORT` the image should listen to
 - `sh` launch a shell console
