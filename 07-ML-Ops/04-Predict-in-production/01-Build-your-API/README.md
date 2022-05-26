@@ -51,7 +51,6 @@ First, let's have a look at this new directory:
 🎁 As you can see, it contains a new **module** named **`taxifare_api`** you are going to implement!
 
 </details>
-<br>
 
 Now, navigate into the `/model` directory, have a look at the `requirements.txt`. You can see new comers:
 
@@ -84,10 +83,9 @@ We provide you with with a FastAPI skeleton in the `fast.py` file.
 
 You probably need a `uvicorn` web server..., with a 🔥 reloading...
 
-In case you can't find the proper syntax, keep calm and look at your   `Makefile`, we provided you with a new task `run_api`.
+In case you can't find the proper syntax, keep calm and look at your `Makefile`, we provided you with a new task `run_api`.
 
 </details>
-<br>
 
 **❓ How do you consult your running API?**
 
@@ -98,7 +96,6 @@ In case you can't find the proper syntax, keep calm and look at your   `Makefile
 Go visit it!
 
 </details>
-<br>
 
 You probably would not have seen much.
 **❓ Which endpoints are available?**
@@ -200,7 +197,6 @@ Ask yourselves the following questions:
 1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
 
 </details>
-<br>
 
 **👀 Inspect your browser response 👉 ['http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
 
@@ -251,7 +247,6 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
 sudo service docker start
 ```
 </details>
-<br>
 
 **✅ Check Docker daemon is up and running with `docker info` in your terminal**
 
@@ -291,7 +286,6 @@ Here the most common instructions of good `Dockerfile`:
 - `CMD`: execute the **main** command that will be executed when we run our **Docker image**. There can be only one `CMD` instruction inside of a `Dockerfile`. It is usually the last instruction
 
 </details>
-<br>
 
 **❓ What the base image should contain to build our image on top of it?**
 
@@ -300,7 +294,6 @@ Here the most common instructions of good `Dockerfile`:
 
 Choosing an image with Python already installed could be a nice start...
 </details>
-<br>
 
 **💻 Write the instructions needed to build the API image in the `Dockerfile` with the following specifications:**
 
@@ -327,7 +320,6 @@ CMD launch API web server
 ```
 
 </details>
-<br>
 
 **❓ How would you check if the `Dockerfile` instructions will execute what you wanted?**
 
@@ -352,7 +344,6 @@ docker build --tag=image-name .
 ```
 where `image-name` is the name of your image.
 </details>
-<br>
 
 **💻 Choose a meaningful name for the API image then build it**
 
@@ -382,7 +373,6 @@ docker run -it -e PORT=8000 -p 8000:8000 image-name sh
 - `-e PORT=8000` specify the environment variable `$PORT` the image should listen to
 - `sh` launch a shell console
 </details>
-<br>
 
 A shell console should open, you are inside the image 👏.
 
@@ -400,7 +390,6 @@ A shell console should open, you are inside the image 👏.
 - `ls` to check the presence of the files and directories
 - `pip list` to check the requirements are installed
 </details>
-<br>
 
 Exit the terminal and stop the container at any moment with:
 
@@ -422,7 +411,6 @@ test if the API responds as it should.
 
 You should probably remove the interactivity mode and forget the `sh` command...
 </details>
-<br>
 
 **🐛 Unless you fing the correct command to run the image, it is probably crashing with errors involving environment variable.**
 
@@ -445,7 +433,6 @@ The `--env-file` parameter to the rescue!
 docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env image_name
 ```
 </details>
-<br>
 
 **❓ How would check the image runs correctly?**
 
@@ -459,7 +446,6 @@ Also you can check the image runs with:
 docker ps
 ```
 </details>
-<br>
 
 It's Alive! 😱 🎉
 
@@ -486,7 +472,6 @@ Now we have built a **predictive API** Docker image that we are able to run on o
 It is in a way similar to **GitHub** allowing you to store your git repositories in the cloud (except for the lack of a dedicated user interface and additional services such as `forks` and `pull requests`).
 
 </details>
-<br>
 
 #### Setup
 
@@ -565,7 +550,6 @@ The image should be visible in the GCP console [here](https://console.cloud.goog
 Cloud Run will instantiate the image into a container and run the `CMD` instruction inside of the `Dockerfile` of the image. This last step will start the `uvicorn` server serving our **predictive API** to the world 🌍
 
 </details>
-<br>
 
 Let's run one last command 🤞
 
