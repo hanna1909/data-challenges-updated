@@ -47,13 +47,13 @@ You will store monitoring data 🔎 to ensure that your model continues to perfo
 
 [//]: # ( challenge instructions )
 
+## Configure your project for mlflow
+
 First let's install some additional package required in order to connect to the mlflow database. It will allow the tests to run correctly.
 
 ``` bash
 pip install psycopg2-binary
 ```
-
-## Configure your project for mlflow
 
 The **WagonCab** tech team put in production a **mlflow** server located at https://mlflow.lewagon.ai. This will be useful in order to track your experiments and store your trained models.
 
