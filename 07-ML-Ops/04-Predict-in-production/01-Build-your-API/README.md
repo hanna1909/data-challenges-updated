@@ -257,9 +257,7 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
 <details>
   <summary markdown='span'>Windows WSL2 & Ubuntu</summary>
 
-``` bash
-sudo service docker start
-```
+Launch the Docker app.
 </details>
 
 **✅ Check Docker daemon is up and running with `docker info` in your terminal**
@@ -274,10 +272,10 @@ As a reminder, here is the `/model` directory structure:
 
 ```bash
 .
+├── Dockerfile          # 👉 Building instructions
 ├── MANIFEST.in         # 🆕 Config file for production purpose
 ├── Makefile            # Good old task manager
 ├── README.md           # Package documentation
-├── Dockerfile          # 👉 Building instructions
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare_api        # ✅ API directory
@@ -606,13 +604,11 @@ Remember to stop the Docker daemon in order to free ressources on your machine o
 <details>
   <summary markdown='span'>MacOSX</summary>
 
-Stop the `Docker.app` with **Quit Docker Desktop** in the menu ba
+Stop the `Docker.app` with **Quit Docker Desktop** in the menu bar.
 </details>
 
 <details>
   <summary markdown='span'>Windows WSL2/Ubuntu</summary>
 
-``` bash
-sudo service docker stop
-```
+Stop the Docker app.
 </details>
