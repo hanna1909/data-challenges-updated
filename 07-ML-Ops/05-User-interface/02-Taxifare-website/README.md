@@ -60,6 +60,10 @@ Then, let's copy the `Makefile` that is provided inside of the project... It wil
 - `heroku_create_app` : create an app on **Heroku** for our website
 - `deploy_heroku` : deploy our app when we are satisfied with its content
 
+``` bash
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Streamlit-for-restitution/*
+```
+
 You project should look like this:
 
 ``` bash
@@ -211,7 +215,7 @@ Let's copy the files provided in the challenge to your web project...
   <summary markdown='span'><strong> 💡 Hint: how to copy `setup.py` and other provided files to the web project ? </strong></summary>
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/05-User-interface/02-Streamlit-for-restitution/* ~/code/<user.github_nickname>/taxifare-website
+cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Streamlit-for-restitution/* ~/code/<user.github_nickname>/taxifare-website
 ```
 
 </details>
