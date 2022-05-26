@@ -348,13 +348,23 @@ Now is the time to **build** the API image on Docker so you can check if it sati
 **❓ How do you build an image with Docker?**
 
 <details>
+  <summary markdown='span'>⚙️ Configuration</summary>
+
+You may add a variable to your project configuration for the docker image name. You will be able to reuse it in the `docker` commands:
+
+``` bash
+IMAGE=image-name
+```
+</details>
+
+<details>
   <summary markdown='span'>Answer</summary>
 
 Make sure you are in the directory of the `Dockefile` then:
+
 ```bash
-docker build --tag=image-name .
+docker build --tag=$IMAGE .
 ```
-where `image-name` is the name of your image.
 </details>
 
 **💻 Choose a meaningful name for the API image then build it**
