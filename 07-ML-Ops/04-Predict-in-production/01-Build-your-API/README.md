@@ -97,7 +97,8 @@ Go visit it!
 
 </details>
 
-You probably would not have seen much.
+You have probably not seen much.
+
 **❓ Which endpoints are available?**
 
 <details>
@@ -131,7 +132,7 @@ Status: 200
 **🐛 Inspect the server logs and add some `breakpoint()` to debug**
 
 Once and _only once_ your API responds as required:
-**🧪 Test your implementation with `make test_root`**
+**🧪 Test your implementation with `make test_api_root`**
 
 **🚀 Commit and push your code!**
 
