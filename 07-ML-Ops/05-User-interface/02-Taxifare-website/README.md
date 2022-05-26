@@ -3,7 +3,7 @@
 
 [//]: # ( challenge instructions )
 
-We saw in the previous challenge how to plug a website to our **Prediction API** in order to allow regular users to make prediction.
+We saw in the previous challenge how to plug a website to our **Prediction API** in order to allow regular users to make predictions.
 
 Now let's create our own website ! 🔥
 
@@ -15,12 +15,12 @@ We will create a new project directory for the code of our website.
 
 Again, this directory will be located inside of our *projects directory*: `~/code/<user.github_nickname>`.
 
-Create a new project directory named `TaxiFareWebsite`.
+Create a new project directory named `taxifare-website`.
 
 ```bash
 cd ~/code/<user.github_nickname>
-mkdir TaxiFareWebsite
-cd TaxiFareWebsite
+mkdir taxifare-website
+cd taxifare-website
 ```
 
 Initialise a new git repository:
@@ -211,7 +211,7 @@ Let's copy the files provided in the challenge to your web project...
   <summary markdown='span'><strong> 💡 Hint: how to copy `setup.py` and other provided files to the web project ? </strong></summary>
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/05-User-interface/02-Streamlit-for-restitution/* ~/code/<user.github_nickname>/TaxiFareWebsite
+cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/05-User-interface/02-Streamlit-for-restitution/* ~/code/<user.github_nickname>/taxifare-website
 ```
 
 </details>
