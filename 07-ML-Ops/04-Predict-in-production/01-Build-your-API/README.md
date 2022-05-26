@@ -258,6 +258,8 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
   <summary markdown='span'>Windows WSL2 & Ubuntu</summary>
 
 Launch the Docker app.
+
+<img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running">
 </details>
 
 **✅ Check Docker daemon is up and running with `docker info` in your terminal**
