@@ -191,7 +191,7 @@ Ask yourselves the following questions:
 </details>
 
 <details>
-  <summary markdown='span'>💡 Hints</summary>
+  <summary markdown='span'>⚙️ Configuration</summary>
 
 Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration:
 
