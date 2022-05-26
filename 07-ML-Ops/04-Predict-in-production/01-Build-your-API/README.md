@@ -501,66 +501,33 @@ It is in a way similar to **GitHub** allowing you to store your git repositories
 
 First, let's make sure to enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart) for your project in GCP.
 
-Once this is done, let's ensure that your GCP credentials are correctly registered for the command line.
-
-``` bash
-gcloud auth list
-```
-
-If your account is not listed then you have to authenticate:
-
-``` bash
-gcloud auth login
-```
-
-Now let's configure the `gcloud` command for the usage of Docker.
+Once this is done, let's allow the `docker` command to push an image to GCP.
 
 ``` bash
 gcloud auth configure-docker
 ```
 
-And verify your config. You should see your GCP account and default project.
-
-``` bash
-gcloud config list
-```
-
-Define an environment variable for the name of your project.
-
-``` bash
-export PROJECT_ID=replace-with-your-gcloud-project-id
-echo $PROJECT_ID # print the PROJECT_ID
-gcloud config set project $PROJECT_ID
-```
-
-And an environment variable for the name of your docker image.
-This environment variable will be used accross the following commands.
-
-``` bash
-export DOCKER_IMAGE_NAME=define-some-container-image-name
-echo $DOCKER_IMAGE_NAME
-```
-
 #### Build and push the image on GCR
 
-Now we are going to build our image again.
-This should be pretty fast since Docker is pretty smart and is going to reuse all the building blocks used previously in order to build the prediction API image.
+Now we are going to build our image again. This should be pretty fast since Docker is pretty smart and is going to reuse all the building blocks used previously in order to build the prediction API image.
+
+Add a `MULTI_REGION` variable to your project configuration and set it to `eu.gcr.io`.
 
 ``` bash
-docker build -t eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME .
+docker build -t $MULTI_REGION/$PROJECT/$IMAGE .
 ```
 
 Again, let's make sure that our image runs correctly, so that we avoid spending the time on pushing an image that is not working to the cloud.
 
 ``` bash
-docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $MULTI_REGION/$PROJECT/$IMAGE
 ```
 Visit [http://localhost:8000/](http://localhost:8000/) and check the API is running as expected.
 
 We can now push our image to Google Container Registry.
 
 ``` bash
-docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+docker push $MULTI_REGION/$PROJECT/$IMAGE
 ```
 
 The image should be visible in the GCP console [here](https://console.cloud.google.com/gcr/).
@@ -568,6 +535,7 @@ The image should be visible in the GCP console [here](https://console.cloud.goog
 ### Deploy the Container Registry image to Google Cloud Run
 
 **❓ What is the purpose of Cloud Run?**
+
 <details>
   <summary markdown='span'>Answer</summary>
 
@@ -578,7 +546,7 @@ Cloud Run will instantiate the image into a container and run the `CMD` instruct
 Let's run one last command 🤞
 
 ``` bash
-gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
+gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --platform managed --region $REGION
 ```
 
 After confirmation, you should see a similar output indicating that the service is live 🎉
