@@ -444,7 +444,7 @@ You should probably remove the interactivity mode and forget the `sh` command...
 There is **no** `.env` in the image!!! The image has **no** access to the environment variables 😈
 </details>
 
-**💻 Using the `docker run --help` documentation, adapt the run command so the `.env` is send to the image**
+**💻 Using the `docker run --help` documentation, adapt the run command so the `.env` is sent to the image**
 
 <details>
   <summary markdown='span'>🙈 Solution</summary>
@@ -452,7 +452,7 @@ There is **no** `.env` in the image!!! The image has **no** access to the enviro
 The `--env-file` parameter to the rescue!
 
 ```bash
-docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env image_name
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $IMAGE
 ```
 </details>
 
