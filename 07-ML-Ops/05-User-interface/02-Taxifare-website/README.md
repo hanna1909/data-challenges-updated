@@ -188,25 +188,26 @@ heroku login
 
 ## Deploy
 
-Now that we checked our app works locally, we might want it to run free on a remote server.
+Let's setup the project for **Heroku**.
 
-We will see once again how **Heroku** is easy to use, here we simply need to:
+❓ **What do we need to deploy our website to Heroku ?**
 
-Copy the provided `Procfile` and `setup.sh` inside of our project.
-
-Are we not missing something ?
-
-🤔 How are the packages that `app.py` is using going to be installed on **Heroku** ?
-
-We need to add a `setup.py`, a `MANIFEST.in`, and a `requirements.txt` containing the name of the required packages to our project! We also need a `Procfile` and a `setup.sh` in order for Heroku to know how to run our website. As well as a `Makefile` to ease the use of the command line.
+We need to add a few configurations files to our project:
+- `setup.py` to tell heroku how to install the package of our website
+- `MANIFEST.in` + `requirements.txt` for the website dependencies
+- `Procfile` + `setup.sh` in order for Heroku to know how to run our website
 
 Let's copy the files provided in the challenge to your web project...
 
 <details>
-  <summary markdown='span'><strong> 💡 Hint: how to copy `setup.py` and other provided files to the web project ? </strong></summary>
+  <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/* ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/setup.py ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/MANIFEST.in ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/requirements.txt ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/Procfile ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/setup.sh ~/code/<user.github_nickname>/taxifare-website
 ```
 
 </details>
