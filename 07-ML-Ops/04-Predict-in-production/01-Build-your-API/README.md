@@ -313,7 +313,7 @@ Choosing an image with Python already installed could be a nice start...
 - [ ] it should contain the necessary directories from the `/model` directory to allow the API to run
 - [ ] it should contain the dependencies list
 - [ ] the API depencies should be installed
-- [ ] the web server should be launched
+- [ ] the web server should be launched when the container is started from the image
 - [ ] the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
 - [ ] the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
 
