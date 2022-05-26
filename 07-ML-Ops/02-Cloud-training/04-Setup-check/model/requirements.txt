@@ -10,4 +10,4 @@ pytest
 seaborn
 sklearn
 yapf
-tensorflow
+# tensorflow
