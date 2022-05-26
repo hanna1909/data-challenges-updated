@@ -173,20 +173,11 @@ Once we are satisfied, let's push the code to production! 🔥
 
 </details>
 <details>
-  <summary markdown='span'><strong> Ubuntu </strong></summary>
+  <summary markdown='span'><strong> Windows WSL or Ubuntu </strong></summary>
 
   ``` bash
   curl https://cli-assets.heroku.com/install.sh | sh
   ```
-
-</details>
-<details>
-  <summary markdown='span'><strong> WSL2 </strong></summary>
-
-  ``` bash
-  curl https://cli-assets.heroku.com/install.sh | sh
-  ```
-
 </details>
 
 - Login the CLI
