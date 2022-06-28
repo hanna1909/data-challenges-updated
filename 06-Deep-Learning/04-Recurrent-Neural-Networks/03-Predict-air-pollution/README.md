@@ -1,5 +1,5 @@
 ### Week 06 - Deep Learning - Day 4 - Predict air pollution
 
-In this exercise, you will have sequence of weather features based on which you will predict the air pollution on the next day.
+In this exercise, you will predict air pollution levels 1 day in the future based on past sequences of weather features.
 
-The exercise is also design to learn how to prepare data in real-life scenario where their are not in the right format. Moreover, you will see how to stack multiple RNN layers.
+This exercise is also designed to help you learn how to prepare data in real-life scenarios where its not in the right format. Lastly, you will see how to stack multiple RNN layers.
