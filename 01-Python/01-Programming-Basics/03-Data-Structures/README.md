@@ -17,9 +17,9 @@ All done? Let's code!
 Let's build a currency converter in the `currencies.py` file. In this exercise, we will manipulate lists, dictionaries and tuples.
 
 1. Create a new constant dictionary called `RATES` at the top of `currencies.py`. Keys will be 6-letter strings like `"USDEUR"`, `"GBPEUR"`, `"CHFEUR"`, and the values will be their rate stored as a simple Python [`float` number](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex). You can find this information on [Google](https://www.google.com/search?q=USDEUR)
-1. Implement the `convert(amount, currency)` function. The first parameter is a **tuple** of two elements: a float and a currency (e.g. `(100, "USD")`). The second parameter is a `String`, the currency you want to convert the amount into.
-1. To simplify, we will consider amounts as cents and _round_ the result.
-1. When called with an unknown rate (e.g. `"RMBEUR"`), the `convert` function should return `None`.
+2. Implement the `convert(amount, currency)` function. The first parameter is a **tuple** of two elements: a float and a currency (e.g. `(100, "USD")`). The second parameter is a `String`, the currency you want to convert the amount into.
+3. We will _round_ the results.
+4. When called with an unknown rate (e.g. `"RMBEUR"`), the `convert` function should return `None`.
 
 Run the tests with:
 

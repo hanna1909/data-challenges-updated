@@ -282,7 +282,8 @@ Let's put our new skills to the test.  To practice loading multiple CSVs and mer
 - `summer.csv`
 - `winter.csv`
 
-Note, that the files are located in the _same folder_ as the notebook you are working on.
+1. Download these three files from Kaggle
+2. Place them in your current folder (which should be `/Users/[username]/code/[github_usernmae]/data-/02-Data-Toolkit/01-Data-Analysis/04-Multiple-Files-With-Pandas`)
 
 Let's continue to keep our work clean and insert a new **markdown** cell in your notebook:
 

@@ -5,7 +5,7 @@ There is no `make` for this challenge as all will happen in the Notebook. You wi
 In your terminal, please run:
 
 ```bash
-jupyter notebook Challenge.ipynb
+jupyter notebook numpy_warm-up.ipynb
 ```
 
 Have fun!
@@ -15,7 +15,7 @@ Have fun!
 Once you are done with this challenge do not forget to commit & push!
 
 ```bash
-git add Challenge.ipynb
+git add numpy_warm-up.ipynb
 git commit -m "Numpy 101 Challenge completed"
 git push origin master
 ```
