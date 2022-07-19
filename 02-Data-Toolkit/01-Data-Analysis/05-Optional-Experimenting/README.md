@@ -8,7 +8,7 @@ The previous challenges were purposefully **very guided**. It's a good way to le
 
 For this second exercise, we'd like you to pick up a dataset of your choice on [Kaggle](https://www.kaggle.com/datasets) and download it to your hard drive. You can also pick up personal or professional datasets you want to explore.
 
-Create a new notebook (we don't provide an empty file), load the CSV and start exploring your dataset following the same course of actions that you've been shown in the first exercise.
+Open the `experiment.ipynb` notebook, load the CSV and start exploring your dataset following the same course of actions that you've been shown in the first exercise.
 
 Don't hesitate to ask for help from TAs, they will try their best to help you on your specific dataset! Remember, there's no "good answer", only questions worth **exploring the data** for!
 
