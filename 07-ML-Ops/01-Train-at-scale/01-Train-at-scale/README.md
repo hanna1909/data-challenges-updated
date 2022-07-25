@@ -69,11 +69,11 @@ On VS code, open any python file and check that taxifare-model is also activated
 │       ├── registry.py     # save and load models
 │       └── utils.py        # useful python functions
 ├── tests  # Tests to run using make pytest
-    ├── ...
-    ├── ...
+│   ├── ...
+│   └── ...
 └── training_outputs # local storage for trained model
     ├── metrics
-    └── models
+    ├── models
     └── params
 ```
 

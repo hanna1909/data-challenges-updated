@@ -3,6 +3,8 @@
 
 **💻 Install the package of the current challenge with `make reinstall_package`**
 
+**💻 Do not forget to handle your `.env` file (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
+
 [//]: # ( challenge instructions )
 
 You have completed your work on the `taxifare_model` package. You have transformed the notebook provided by the WagonCab Data Science team into a cloud ready package. Your code is able to train from various data sources (your local disk, Cloud Storage or Big Query) depending on the value of the `.env` variable `DATA_SOURCE`. The code can also save the trained model on your local disk or in mlflow depending on the value of the `MODEL_TARGET` environment variable.

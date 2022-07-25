@@ -3,7 +3,7 @@
 
 [//]: # ( challenge presentation )
 
-Now that the dataset is in the cloud, we are ready to move the training of the model itself to the cloud.
+We have stored the training and validation datasets in the cloud in our first data warehouse. We updated the package in order to be able to consume and update the data by chunks from the data warehouse. We are ready to move the training of the model itself to the cloud.
 
 In this challenge, we will discover the third pillar product of the **Google Cloud Platform** suite:
 
@@ -23,6 +23,8 @@ In this challenge, we will discover the third pillar product of the **Google Clo
 </details>
 
 **💻 As always, first install the package of the challenge with `make reinstall_package`**
+
+**💻 You know the `.env` drill (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
 
 [//]: # ( challenge instructions )
 
@@ -105,7 +107,7 @@ You can easily start and stop a vm instance from the GCP console, which allows t
   ```
 </details>
 
-🚨 Computing power does not grow on trees 🌳, do not forget to switch the VM off when you stop using it 💸
+🚨 Computing power does not grow on trees 🌳, do not forget to switch the VM off whenever you stop using it 💸
 
 ## Setup your VM
 
@@ -119,32 +121,43 @@ The GCP console allows you to connect to the VM instance through a web interface
 
 You can disconnect by typing `exit` or closing the window.
 
+A nice alternative is to connect to the virtual machine right from your command line 🤩
+
+<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
+
+All you need to do is to `gcloud compute ssh` on a running instance and to run `exit` when you want to disconnect 🎉
+
+``` bash
+INSTANCE=taxi-instance
+
+gcloud compute ssh ${INSTANCE}
+```
+
 <details>
-  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+  <summary markdown='span'><strong> 💡 Connecting with a different user </strong></summary>
 
 
   You can change the user the web interface connects with if you need to:
 
   <a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-web-ssh-switch-login.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-web-ssh-switch-login.png" width="120" alt="gce web ssh switch login"></a>
 
-  A nice alternative is to connect to the virtual machine command line right from your command line 🤩
-
-  <a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
-
-  All you need to do is to `gcloud compute ssh` on a running instance and to run `exit` when you want to disconnect 🎉
+  You can also specify the user to connect with when using the command line:
 
   ``` bash
-  INSTANCE=taxi-instance
-
-  gcloud compute ssh ${INSTANCE}
+  gcloud compute ssh ${USERNAME}@${INSTANCE}
   ```
+</details>
 
-  You can also specify the user to connect with (`gcloud compute ssh ${USERNAME}@${INSTANCE}`).
+<details>
+  <summary markdown='span'><strong> 💡 Error 22 </strong></summary>
+
 
   If you encounter a `port 22: Connection refused` error, just wait a little more for the VM instance to complete its startup.
 
   Just run `pwd` or `hostname` if you ever wonder on which machine you are running your commands.
 </details>
+
+You have allocated a _virtual machine_ with custom characteristics able to run tasks in the cloud. And you are able to connect to it using `ssh` and run commands as you do on your local machine. You can drive the machine remotely using the _cli_, but what do you need to do in order to be able to run your code on it ? You need to create an execution environment for your code, install python and the package dependencies for your code.
 
 You are a step away from being able to train your model: you need a development environment to have a data science ready vm 🧪
 
@@ -158,7 +171,7 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   <summary markdown='span'><strong> ⚙️ <code>zsh</code> and <code>omz</code> </strong></summary>
 
 
-  The **zsh** shell and its **Oh My Zsh** framework are the configuration you are already familiar with. Accept to make zsh the default shell.
+  The **zsh** shell and its **Oh My Zsh** framework are the _command line interface_ configuration you are already familiar with. Accept to make zsh the default shell when prompted to.
 
   ``` bash
   sudo apt update
@@ -166,6 +179,8 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   ```
 </details>
+
+👉 Now the _cli_ of the remote machine starts to look a little more like the _cli_ of your local machine
 
 <details>
   <summary markdown='span'><strong> ⚙️ <code>pyenv</code> and <code>pyenv-virtualenv</code> </strong></summary>
@@ -175,13 +190,19 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 
   ``` bash
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+  git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
   ```
 
-  Add `pyenv` and `ssh-agent` to the `plugins=(git)` line in the `~/.zshrc`: `plugins=(git pyenv ssh-agent)`, then exit and save:
+  Add `pyenv`, `ssh-agent` and `direnv` to the list of `zsh` plugins in the line `plugins=(git)` in the `~/.zshrc`: you should have `plugins=(git pyenv ssh-agent direnv)`. Then exit and save (`Ctrl + X`, `Y`, `Enter`) and save:
 
   ``` bash
   nano ~/.zshrc
+  ```
+
+  Make sure that the modifications are saved:
+
+  ``` bash
+  cat ~/.zshrc | grep "plugins="
   ```
 
   Add the pyenv initialization script to your `~/.zprofile`:
@@ -193,9 +214,9 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   eval "\$(pyenv init --path)"
   EOF
   ```
-
-  ℹ️ Ignore the `zsh: command not found: pyenv` error
 </details>
+
+👉 Now we are ready to install python
 
 <details>
   <summary markdown='span'><strong> ⚙️ <code>python</code> </strong></summary>
@@ -214,7 +235,22 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
 
   <a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png" width="150" alt="gce apt services restart"></a>
 
-  Install python `3.8.12` and create a `lewagon` virtual env:
+  Now we need to start a new user session so that the updates in the `~/.zshrc` and `~/.zprofile` are taken into account.
+
+  Exit the _virtual machine_: you need to `exit` from `zsh` (since you just installed it), then `exit` from the _vm_:
+
+  ``` bash
+  exit
+  exit
+  ```
+
+  Then reconnect:
+
+  ``` bash
+  gcloud compute ssh ${INSTANCE}
+  ```
+
+  Install python `3.8.12` and create a `lewagon` virtual env. This can take a while and look like it is stuck, but it is not:
 
   ``` bash
   pyenv install 3.8.12
@@ -224,13 +260,15 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   ```
 </details>
 
+👉 See how you can easily experiment with new environment configurations on a recyclable _virtual machine_ without putting your local development environment at risk
+
 <details>
   <summary markdown='span'><strong> ⚙️ <code>git</code> authentication to GitHub </strong></summary>
 
 
-  Git will be pretty handy to share our code between the vm and your machine. Create a directory to store your git credentials:
+  Git will be pretty handy to share our code between the vm and your machine. Let's copy your git credentials from your machine to the _vm_:
 
-  Copy your private key 🔑 to the vm in order to allow it to access to your GitHub account.
+  Copy your private key 🔑 to the _vm_ in order to allow it to access to your GitHub account.
 
   ⚠️ Run this single command on your machine, not in the vm ⚠️
 
@@ -251,11 +289,13 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   Enter your *passphrase* if asked to.
 </details>
 
+👉 You are now able to interact with your **GitHub** account from your the _virtual machine_
+
 <details>
   <summary markdown='span'><strong> ⚙️ <em>python</em> code authentication to GCP </strong></summary>
 
 
-  The code of your package will need to access your data stored in the cloud in Cloud Storage or Big Query.
+  The code of your package needs to be able to access to your Big Query data warehouse.
 
   In order to do that we will copy your service account json key file 🔑 to the vm. A more secure option is to create a dedicated *service account* with the appropriate access for your app and upload its json key file to the vm.
 
@@ -275,7 +315,31 @@ Let's run a light version of the [Le Wagon setup](https://github.com/lewagon/dat
   ``` bash
   source ~/.zshrc
   ```
+
+  Let's verify that python code can now access your GCP resources. First install some packages:
+
+  ``` bash
+  pip install google-cloud-storage
+  ````
+
+  Then [run python code from the _cli_](https://stackoverflow.com/questions/3987041/run-function-from-the-command-line). This should list your GCP projects:
+
+  ``` bash
+  python -c "from google.cloud import storage; \
+      buckets = storage.Client().list_buckets(); \
+      [print(b.name) for b in buckets]"
+  ```
+
 </details>
+
+👉 That's it 🎉
+
+Your _vm_ is now fully operational with:
+- An environment (python + package dependencies) to run your code
+- The credentials to connect to your _GitHub_ account
+- The credentials to connect to your _GCP_ account
+
+The only thing that is missing is the code of your project... Let's run a few tests before we install it.
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -312,19 +376,84 @@ Let's run your first training in the cloud!
   You can copy your code to the vm by cloning your GitHub project with this syntax (adapt the name of your GitHub repository):
 
   ``` bash
-  git clone git@github.com:<user.github_nickname>/taxi-fare
+  git clone git@github.com:<user.github_nickname>/repository_name
   ```
 
-  Install the python packages required by your code...
+  Enter the directory of your package (adapt the command):
 
   ``` bash
+  cd <path/to/the/package/model/dir>
+  ```
+
+  Create directories to save the model to:
+
+  ``` bash
+  mkdir -p data
+  mkdir -p training_outputs/models
+  mkdir -p training_outputs/params
+  mkdir -p training_outputs/metrics
+  ```
+
+  Create a `.env` file with all required parameters to drive your package:
+
+  ``` bash
+  cp .env.sample .env
+  ```
+
+  Fill the content of the `.env` (complete the missing values):
+
+  ``` bash
+  nano .env
+  ```
+
+  ``` bash
+  DATA_SOURCE=big query
+  LOCAL_DATA_PATH=data
+  LOCAL_REGISTRY_PATH=training_outputs
+  ```
+
+  Install `direnv` to load your `.env`:
+
+  ``` bash
+  sudo apt update
+  sudo apt install -y direnv
+  ```
+
+  ℹ️ If a window pops up to ask you which services to restart, just press *Enter*.
+
+  Disconnect from the _vm_ then reconnect (so that `direnv` works):
+
+  ``` bash
+  exit
+  ```
+
+  ``` bash
+  gcloud compute ssh ${INSTANCE}
+  ```
+
+  Allow your `.envrc`:
+
+  ``` bash
+  direnv allow .
+  ```
+
+  Remove the existing local environment:
+
+  ``` bash
+  rm .python-version
+  ```
+
+  Install the dependencies of the package:
+
+  ``` bash
+  pip install pyarrow tensorflow  # this should be in your requirements.txt
   pip install -r requirements.txt
   ```
 
   And run the training!
 
   ``` bash
-  python -m taxifare_model.interface.main
+  make run_model  # python -m taxifare_model.interface.main
   ```
 </details>
 

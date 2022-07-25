@@ -1,0 +1,170 @@
+
+# ⚠️ Show the help with `make -f Makefile_teachers list`
+
+# °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
+
+# conf
+
+TRAINING_PREFIX=train
+TRAINING_PROCESSED_PREFIX=train_processed
+VALIDATION_PREFIX=val
+
+ROOT_DIR=~/.lewagon/mlops
+DATA_DIR=~/.lewagon/mlops/data
+NB_DIR=~/.lewagon/mlops/notebooks
+OUT_PARAM_DIR=~/.lewagon/mlops/training_outputs/params
+OUT_METRIC_DIR=~/.lewagon/mlops/training_outputs/metrics
+OUT_MODEL_DIR=~/.lewagon/mlops/training_outputs/model
+RAW_DIR=raw
+PROC_DIR=processed
+TMP_DIR=tmp
+
+# default dataset size
+
+DATASET_SIZE=10k
+VALIDATION_DATASET_SIZE=10k
+
+# default cloud storage params (🚨 change the bucket name if you want to use it)
+
+BUCKET_NAME=le-wagon-bucket
+
+# default big query params
+
+DATASET=taxifare_dataset
+
+# tmp vars
+
+TRAINING_FILE=${TRAINING_PREFIX}_${DATASET_SIZE}.csv
+VALIDATION_FILE=${VALIDATION_PREFIX}_${VALIDATION_DATASET_SIZE}.csv
+
+TRAINING_TABLE=${TRAINING_PREFIX}_${DATASET_SIZE}
+TRAINING_PROC_TABLE=${TRAINING_PROCESSED_PREFIX}_${DATASET_SIZE}
+VALIDATION_TABLE=${VALIDATION_PREFIX}_${VALIDATION_DATASET_SIZE}
+
+# color
+
+fbold=$(shell echo "\033[1m")
+fnormal=$(shell echo "\033[0m")
+
+ccred=$(shell echo "\033[0;31m")
+ccgreen=$(shell echo "\033[0;32m")
+ccblue=$(shell echo "\033[0;34m")
+ccreset=$(shell echo "\033[0;39m")
+
+list:
+	@echo "\nHelp for the \`taxifare-model\` package teachers 🧞 \`Makefile\`"
+
+	@echo "\nInstall and activate [direnv](https://github.com/direnv/direnv)."
+	@echo "Setup your \`.env\` from the \`.env.sample\`."
+
+	@echo "\nThen run the following commands to get your data sources up to speed."
+	@echo "The first local and Cloud Storage 10 rows should be the same."
+	@echo "Note however that the order of the rows is not preserved when the data is uploaded to Big Query."
+
+	@echo "\n$(ccblue)$(fbold)GLOBAL$(ccreset)"
+
+	@echo "\n    $(ccblue)$(fbold)all data sources:$(ccreset)"
+	@echo "\n        $(fbold)delete_all$(ccreset)"
+	@echo "            Delete all data sources."
+	@echo "\n        $(fbold)create_all$(ccreset)"
+	@echo "            Create all data sources from the Le Wagon bucket."
+	@echo "\n        $(fbold)show_all$(ccreset)"
+	@echo "            Show all data sources."
+
+	@echo "\n$(ccblue)$(fbold)DATA$(ccreset)"
+
+	@echo "\n    $(ccblue)$(fbold)local data source:$(ccreset)"
+	@echo "\n        $(fbold)delete_local$(ccreset)"
+	@echo "            Delete local CSV files."
+	@echo "\n        $(fbold)create_local$(ccreset)"
+	@echo "            Create local CSV files from the Le Wagon bucket."
+	@echo "\n        $(fbold)show_local$(ccreset)"
+	@echo "            Show local CSV files."
+
+	@echo "\n    $(ccblue)$(fbold)Cloud Storage source:$(ccreset)"
+	@echo "\n        $(fbold)delete_gcs$(ccreset)"
+	@echo "            Delete cloud storage CSV files."
+	@echo "\n        $(fbold)create_gcs$(ccreset)"
+	@echo "            Create cloud storage CSV files from the Le Wagon bucket."
+	@echo "\n        $(fbold)show_gcs$(ccreset)"
+	@echo "            Show cloud storage CSV files."
+
+	@echo "\n    $(ccblue)$(fbold)Big Query data source:$(ccreset)"
+	@echo "\n        $(fbold)delete_bq$(ccreset)"
+	@echo "            Delete big query dataset tables."
+	@echo "\n        $(fbold)create_bq$(ccreset)"
+	@echo "            Create big query dataset tables from the Le Wagon bucket."
+	@echo "\n        $(fbold)show_bq$(ccreset)"
+	@echo "            Show big query dataset tables."
+
+delete_all: delete_local delete_gcs delete_bq
+
+create_all: create_local create_gcs create_bq
+
+show_all: show_local show_gcs show_bq
+
+delete_local:
+	@echo "\n$(ccred)delete local data sources:$(ccreset)"
+	-rm ${DATA_DIR}/${RAW_DIR}/${TRAINING_FILE}
+	-rm ${DATA_DIR}/${RAW_DIR}/${VALIDATION_FILE}
+
+create_local:
+	@echo "\n$(ccgreen)create local data sources:$(ccreset)"
+	mkdir -p ${DATA_DIR} ${DATA_DIR}/${RAW_DIR} ${DATA_DIR}/${PROC_DIR} ${NB_DIR} ${OUT_PARAM_DIR} ${OUT_METRIC_DIR} ${OUT_MODEL_DIR}
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${TRAINING_FILE} > ${DATA_DIR}/${RAW_DIR}/${TRAINING_FILE}
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${VALIDATION_FILE} > ${DATA_DIR}/${RAW_DIR}/${VALIDATION_FILE}
+
+show_local:
+	@echo "\n$(ccblue)show local data sources:$(ccreset)"
+	tree ${ROOT_DIR}
+	ls -la ${DATA_DIR}/${RAW_DIR}/*.csv
+	head -n 10 ${DATA_DIR}/${RAW_DIR}/${TRAINING_FILE}
+	head -n 10 ${DATA_DIR}/${RAW_DIR}/${VALIDATION_FILE}
+
+delete_gcs:
+	@echo "\n$(ccred)delete cloud storage data sources:$(ccreset)"
+	-gsutil rm gs://${BUCKET_NAME}/${BLOB_LOCATION}/${TRAINING_FILE}
+	-gsutil rm gs://${BUCKET_NAME}/${BLOB_LOCATION}/${VALIDATION_FILE}
+
+create_gcs:
+	@echo "\n$(ccgreen)create cloud storage data sources:$(ccreset)"
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${TRAINING_FILE} > ${TRAINING_FILE}
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${VALIDATION_FILE} > ${VALIDATION_FILE}
+	gsutil cp ${TRAINING_FILE} gs://${BUCKET_NAME}/${BLOB_LOCATION}/${TRAINING_FILE}
+	gsutil cp ${VALIDATION_FILE} gs://${BUCKET_NAME}/${BLOB_LOCATION}/${VALIDATION_FILE}
+	rm ${TRAINING_FILE}
+	rm ${VALIDATION_FILE}
+
+show_gcs:
+	@echo "\n$(ccblue)show cloud storage data sources:$(ccreset)"
+	gsutil ls -la gs://${BUCKET_NAME}/${BLOB_LOCATION}/*.csv
+	gsutil cat -r "0-1000" gs://${BUCKET_NAME}/${BLOB_LOCATION}/${TRAINING_FILE}
+	gsutil cat -r "0-1000" gs://${BUCKET_NAME}/${BLOB_LOCATION}/${VALIDATION_FILE}
+
+delete_bq:
+	@echo "\n$(ccred)delete big query data sources:$(ccreset)"
+	-bq rm -r -f ${DATASET}
+
+create_bq:
+	@echo "\n$(ccgreen)create big query data sources:$(ccreset)"
+	bq mk --sync --location=${REGION} ${DATASET}
+	bq mk --sync --location=${REGION} ${DATASET}.${TRAINING_TABLE}
+	bq mk --sync --location=${REGION} ${DATASET}.${TRAINING_PROC_TABLE}
+	bq mk --sync --location=${REGION} ${DATASET}.${VALIDATION_TABLE}
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${TRAINING_FILE} > ${TRAINING_FILE}
+	curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/${VALIDATION_FILE} > ${VALIDATION_FILE}
+	bq load --autodetect --replace ${DATASET}.${TRAINING_TABLE} ${TRAINING_FILE}
+	bq load --autodetect --replace ${DATASET}.${VALIDATION_TABLE} ${VALIDATION_FILE}
+	rm ${TRAINING_FILE}
+	rm ${VALIDATION_FILE}
+
+show_bq:
+	@echo "\n$(ccblue)show big query data sources:$(ccreset)"
+	bq ls
+	bq ls ${DATASET}
+	bq show ${DATASET}.${TRAINING_TABLE}
+	bq show ${DATASET}.${TRAINING_PROC_TABLE}
+	bq show ${DATASET}.${VALIDATION_TABLE}
+	bq query "SELECT * from ${DATASET}.${TRAINING_TABLE} LIMIT 10"
+	bq query "SELECT * from ${DATASET}.${VALIDATION_TABLE} LIMIT 10"
+	bq query --nouse_legacy_sql "SELECT * from ${DATASET}.INFORMATION_SCHEMA.PARTITIONS"

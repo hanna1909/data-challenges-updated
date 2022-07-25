@@ -3,6 +3,8 @@
 
 **💻 Install the package of the current challenge with `make reinstall_package`**
 
+**💻 Do not forget to handle your `.env` file (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
+
 [//]: # ( challenge instructions )
 
 Ever been stranded on a spot with low connectivity but still want to work on your data science project?
@@ -17,7 +19,7 @@ Let's say a customer wants to estimate the cost of a ride for 3 persons on March
 
 Start your vm and make a prediction for the customer with your latest trained model.
 
-Store the result in `~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/07-Predict-in-the-cloud/model/tests/cloud_prediction/pred.txt`
+Store the result in `~/code/<user.github_nickname>/{{local_path_to("07-ML-Ops/02-Cloud-training/07-Predict-in-the-cloud")}}/model/tests/cloud_prediction/pred.txt`
 
 **💻 Predict the cost of the ride and store it in the `pred.txt` file**
 

@@ -3,6 +3,8 @@
 
 **💻 Install the package of the current challenge with `make reinstall_package`**
 
+**💻 Do not forget to handle your `.env` file (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
+
 [//]: # ( challenge instructions )
 
 The `taxifare_flow` package is not ready for production. But before pushing it live, we want to make sure that everything works fine when running a complete lifecycle on several iterations of new incomings data.
@@ -156,7 +158,7 @@ If you configured your `.env` so that your code sources the data from your local
 
 If your code sources the data from Big Query:
 - `make reset_bq_tables` will reset the Big Query dataset specified in your `.env`
-- `make show_bq_tables` will show the state of your Biq Query dataset tables
+- `make show_bq_tables` will show the state of your Big Query dataset tables
 - `make push_month_to_bq` will inject one month worth of new data in your Big Query dataset table
 
 Use either of those however you prefer.
@@ -165,7 +167,7 @@ Use either of those however you prefer.
 - `make list` to list all the available commands (including those new ones)
 - `make show_env` to have a glance at the configuration of your project
 
-Si now your goal will be to alternate for example `make get_new_month` and `make run_flow` to inject new data and run a whole workflow lifecycle.
+Now your goal will be to alternate for example `make get_new_month` and `make run_flow` to inject new data and run a whole workflow lifecycle.
 
 **💻 Run the `make get_new_month` and `make run_flow` commands until there is no more data to process**
 

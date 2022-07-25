@@ -4,14 +4,18 @@
 [//]: # ( challenge presentation )
 
 In this challenge, we will discover:
-- How to handle the configuration for the _WagonCab_ project
-- How to load environment variables in your code and in the terminal
+- How to handle the configuration for the _WagonCab_ project through a `.env` file
+- How to load environment variables in your _code_ 📝 and in the _terminal_ 💻
+
+🚨 You will need to create and customize a `.env` file at the start of each challenge in the module
+
+👉 Do not worry, we provide a template and will remind you to do so
 
 [//]: # ( challenge instructions )
 
 ## Configuration setup
 
-Our goal is to be able to configure the behavior of our project based on variables defined in a `.env` project configuration file.
+Our goal is to be able to configure the behavior of our _package_ 📦 depending on the value of the variables defined in a `.env` project configuration file.
 
 In order to do so, we will install the `direnv` shell extension. Its job is to locate the nearest `.env` file in the parent directory structure of the project and load its content into the environment.
 
@@ -38,15 +42,17 @@ Once `direnv` is installed, we need to tell `zsh` to load `direnv` whenever it s
 
 **❓ How do you configure `zsh` ?**
 
-Edit your `~/.zshrc` with your favorite editor. The `~/.zshrc` is interpreted by `zsh` whenever a new terminal window or tab is opened or if you create a new session by running `zsh` in the terminal.
+The `zsh` resource file (`~/.zshrc`) contains scripts and parameters for `zsh` and is interpreted whenever a new _terminal_ window or tab is opened, or when you create a new [shell](https://en.wikipedia.org/wiki/Shell_(computing)) session by running `zsh` in the terminal.
 
-**💻 Add `direnv` to the list of plugins**
+You need to update your `~/.zshrc` file in order to tell it to load `direnv`.
+
+**💻 Add `direnv` to the list of `zsh` plugins**
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 
-  Open the ressources files:
+  Open the resources files:
 
   ``` bash
   code ~/.zshrc
@@ -61,15 +67,13 @@ Edit your `~/.zshrc` with your favorite editor. The `~/.zshrc` is interpreted by
 
 **💻 Start a new `zsh` window in order to load `direnv`**
 
-## Adding configuration variables
+👉 At this point `direnv` is still not able to load anything: there is no `.env` file
 
-Let's add a few configuration variables to the project. We provide a `07-ML-Ops/.env.sample` template configuration file for the project. Copy it and rename it as `07-ML-Ops/.env`.
+## Add a `.env` configuration file
+
+We provide a `.env.sample` template configuration file for each of the challenges. Copy it and rename it as `.env`.
 
 This configuration file will be read by `direnv` and the variables it declares will be loaded into the environment.
-
-``` bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/.env.sample ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/.env
-```
 
 👉 We will continue to add variables to this file in the next challenges and units in order to configure further our project
 
@@ -94,24 +98,6 @@ cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/.env.s
   ``` bash
   direnv --help
   ```
-
-  In order to activate your `.env` project configuration file, go to the `.env` directory:
-
-  ``` bash
-  cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops
-  ```
-
-  Allow `direnv` to load the `.env`:
-
-  ``` bash
-  direnv allow .
-  ```
-
-  Go back to the challenge directory:
-
-  ``` bash
-  cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/02-Cloud-training/03-Environment/model
-  ```
 </details>
 
 ## Update your `.env` project configuration
@@ -133,32 +119,20 @@ echo $DIRENV_DIR
 👉 `test_environment_hello` should be ✅
 
 <details>
-  <summary markdown='span'><strong> 💡 Hint </strong></summary>
+  <summary markdown='span'><strong> 💡 `direnv` does not load the content of my `.env` </strong></summary>
 
 
-  Whenever you want to update your `.env` project configuration file, you need to open a dedicated editor, since it is located in a parent directory of your challenge.
-
-  Either use the `DIRENV_FILE` environment variable, which contains the path to the `.envrc` file (which is right next to the `.env` we want to edit):
-
-  ``` bash
-  code $DIRENV_FILE
-  ```
-
-  Or use the `DIRENV_DIR` environment variable (and remove the first `-` character of the output in order to have a correct path as a parameter):
-
-  ``` bash
-  code ${DIRENV_DIR:1}
-  ```
+  Try to refresh `direnv` with `direnv reload`.
 </details>
 
 Let's store something a little more useful in the configuration...
 
-Remember how we want to store our datasets in a single location for all the challenges ?
+Remember how we moved our datasets to a single location for all the challenges ?
 
-Its location is output by the following command:
+The location of the data shared by all the challenges is:
 
 ``` bash
-python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/data'))"
+~/.lewagon/mlops/data
 ```
 
 **📝 Fill the `LOCAL_DATA_PATH` variable in the `.env` project configuration with this path**
@@ -167,19 +141,10 @@ python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<p
 
 👉 `test_local_data_path` should be ✅
 
-<details>
-  <summary markdown='span'><strong> 💡 Why do we need to run a python command to retrieve the location ? </strong></summary>
-
-
-  It seems that the pickle package is unable to write files to a file path containing a `~`. The consequence is that the environment variable storing the path on which to store your pickles files cannot contain a `~`. Hence the conversion to an absolute path with `os.path.expanduser`.
-</details>
-
-Last, let's fill the path to the centralized registry directory that will store our trained models, params and metrics.
-
-Its location is output by the following command:
+Last, let's fill the path to the shared `training_outputs` directory that will store our trained models, params and metrics:
 
 ``` bash
-python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/registry'))"
+~/.lewagon/mlops/training_outputs
 ```
 
 **📝 Fill the `LOCAL_REGISTRY_PATH` variable in the `.env` project configuration with this path**
@@ -187,5 +152,20 @@ python -c "import os; print(os.path.expanduser('~/code/<user.github_nickname>/<p
 **🧪 Run the tests with `make dev_test`**
 
 👉 `test_local_registry_path` should be ✅
+
+🤔 Are all the tests still not green ? Remember to always `make reinstall_package` so that the code that you use is the one of the challenge in which you sit
+
+<details>
+  <summary markdown='span'><strong> 💡 How can I make sure that `direnv` loaded the variables in my `.env` without running my code ? </strong></summary>
+
+
+  This is the time to use the commands provided in the `Makefile` and verify that the variables are correctly loaded into the environment whenever you feel like it:
+
+  ``` bash
+  make show_env
+  ```
+
+  👉 How does that work ? Very simple: the `show_env` command in the `Makefile` just runs an `echo` (a `print` in the _terminal_) of the content of the varialbes of the project loaded by `direnv`
+</details>
 
 🏁 You are ready to go!

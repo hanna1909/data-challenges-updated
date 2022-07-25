@@ -45,6 +45,8 @@ You will store monitoring data 🔎 to ensure that your model continues to perfo
 
 **💻 Install the package of the current challenge with `make reinstall_package`**
 
+**💻 Do not forget to handle your `.env` file (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
+
 [//]: # ( challenge instructions )
 
 ## Configure your project for mlflow
