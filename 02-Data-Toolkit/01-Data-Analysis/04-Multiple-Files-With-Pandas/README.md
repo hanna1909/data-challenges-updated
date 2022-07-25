@@ -282,7 +282,7 @@ Let's put our new skills to the test.  To practice loading multiple CSVs and mer
 - `summer.csv`
 - `winter.csv`
 
-Note, that the files are located in the _same folder_ as the notebook you are working on.
+Go ahead and download the 3 CSVs into the _same folder_ as the jupyter notebook.
 
 Let's continue to keep our work clean and insert a new **markdown** cell in your notebook:
 

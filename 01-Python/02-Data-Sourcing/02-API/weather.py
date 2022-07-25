@@ -4,15 +4,17 @@ import sys
 import urllib.parse
 import requests
 
-BASE_URI = "https://www.metaweather.com"
+BASE_URI = "https://weather.lewagon.com"
 
 
 def search_city(query):
-    '''Look for a given city and disambiguate between several candidates. Return one city (or None)'''
+    '''Look for a given city. If multiple options are returned, have the user choose between them.
+       Return one city (or None)
+    '''
     pass  # YOUR CODE HERE
 
-def weather_forecast(woeid):
-    '''Return a 5-element list of weather forecast for a given woeid'''
+def weather_forecast(lat, lon):
+    '''Return a 5-day weather forecast for the city, given its latitude and longitude.'''
     pass  # YOUR CODE HERE
 
 def main():

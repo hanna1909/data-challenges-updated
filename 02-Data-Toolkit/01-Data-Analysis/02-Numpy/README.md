@@ -5,7 +5,7 @@ There is no `make` for this challenge as all will happen in the Notebook. You wi
 In your terminal, please run:
 
 ```bash
-jupyter notebook Challenge.ipynb
+jupyter notebook numpy_warm-up.ipynb
 ```
 
 Have fun!

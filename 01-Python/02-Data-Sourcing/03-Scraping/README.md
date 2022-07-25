@@ -67,6 +67,6 @@ In order to get to this final result, there are a few functions to implement in 
 - `main()` Update the method so that `scrape_from_internet` is called instead of `scrape_from_file`. Run a few tests like `python recipe.py chocolate` or `python recipe.py strawberry`. After each run, check the `recipes` folder and open the created CSV file. Does it look OK to you?
 - `main()` with **pagination**: you now need to update the `main` and the `scrape_from_internet` functions so that the program does not stop at the first page of search results but downloads the first 3 pages of recipes if available!
 
-💡 **Hint**: Check-out [`requests.history`](https://2.python-requests.org/en/master/user/quickstart/#redirection-and-history). How might you use this to stop your scrape early if there aren't 3 pages?
+💡 **Hint**: Check-out [`requests.Response.history`](https://requests.readthedocs.io/en/latest/api/#requests.Response.history). How might you use this to stop your scrape early if there aren't 3 pages?
 
 🙌 Have fun scraping!
