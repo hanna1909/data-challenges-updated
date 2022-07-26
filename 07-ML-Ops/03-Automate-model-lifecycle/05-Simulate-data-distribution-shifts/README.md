@@ -7,7 +7,7 @@
 
 [//]: # ( challenge instructions )
 
-The `taxifare_flow` package is not ready for production. But before pushing it live, we want to make sure that everything works fine when running a complete lifecycle on several iterations of new incomings data.
+The `taxifare.flow` package is not ready for production. But before pushing it live, we want to make sure that everything works fine when running a complete lifecycle on several iterations of new incomings data.
 
 How can we do that ? 🤔
 
@@ -53,13 +53,13 @@ Once the codes are in your `.env`, find an appropriate way to destroy the small 
 
 👉 `test_shifts_parameters` should be ✅
 
-Now heads back towards the code of the `taxifare_model` package and fill the function that retrieves the index of the latest row having been trained by the model (the function should return `0` if no training was ever done).
+Now heads back towards the code of the `taxifare` package and fill the function that retrieves the index of the latest row having been trained by the model (the function should return `0` if no training was ever done).
 
 ❓ **How do retrieve the index of the latest trained row ?**
 
 Use the `first_row` and `row_count` parameters in the mlflow database in order to process the index of the latest trained row.
 
-**💻 Complete the `get_latest_trained_row` function in `taxifare_model.ml_logic` module**
+**💻 Complete the `get_latest_trained_row` function in `taxifare.ml_logic` module**
 
 **🧪 Run the tests with `make dev_test`**
 

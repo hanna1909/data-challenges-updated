@@ -1,7 +1,7 @@
 
-from taxifare_model.ml_logic.registry_db import get_latest_trained_row
+from taxifare.ml_logic.registry_db import get_latest_trained_row
 
-from taxifare_model.interface.main import (preprocess_and_train,
+from taxifare.interface.main import (preprocess_and_train,
                                            preprocess,
                                            train,
                                            evaluate)
@@ -18,7 +18,7 @@ def get_next_training_params(experiment):
     """
     retrieve the parameters for the next training
 
-    the `taxifare_model` package saves after each training the run parameters
+    the `taxifare` package saves after each training the run parameters
     in mlflow: `row_index` and `row_count` identifying the range of data used
 
     for the next training we want to determine the `first_row`

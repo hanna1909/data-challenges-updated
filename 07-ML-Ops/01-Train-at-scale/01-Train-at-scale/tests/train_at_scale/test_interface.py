@@ -2,23 +2,18 @@ from unittest.mock import patch
 
 from tests.test_base import TestBase
 
-import os
-import pytest
 import numpy as np
 
-TEST_ENV = os.getenv("TEST_ENV")
-
-
-@patch("taxifare_model.ml_logic.params.DATASET_SIZE", new="1k")
+# Override DATASET_SIZE just for this test to speed up results
+@patch("taxifare.ml_logic.params.DATASET_SIZE", new="1k")
 class TestInterface(TestBase):
     """Assert that code logic run and output the correct type.
     Do not check model performance
     """
 
-    @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_preprocess_and_train_pass(self):
 
-        from taxifare_model.interface.main_local import preprocess_and_train
+        from taxifare.interface.main_local import preprocess_and_train
 
         preprocess_and_train()
 
@@ -29,10 +24,9 @@ class TestInterface(TestBase):
 
         assert isinstance(mae, float)
 
-    @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_pred_pass(self):
 
-        from taxifare_model.interface.main_local import pred
+        from taxifare.interface.main_local import pred
 
         pred()
 
@@ -43,10 +37,9 @@ class TestInterface(TestBase):
 
         assert isinstance(y_pred, float)
 
-    @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_preprocess_pass(self):
 
-        from taxifare_model.interface.main_local import preprocess
+        from taxifare.interface.main_local import preprocess
 
         preprocess(training_set=True)
 
@@ -92,10 +85,9 @@ class TestInterface(TestBase):
 
         assert np.allclose(data_processed_head, expected, atol=1e-5)
 
-    @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_train_pass(self):
 
-        from taxifare_model.interface.main_local import train
+        from taxifare.interface.main_local import train
 
         train()
 

@@ -1,5 +1,5 @@
 
-from taxifare_flow.flow import build_flow
+from taxifare.flow import build_flow
 
 import os
 

@@ -7,7 +7,7 @@
 
 [//]: # ( challenge instructions )
 
-You have completed your work on the `taxifare_model` package. You have transformed the notebook provided by the WagonCab Data Science team into a cloud ready package. Your code is able to train from various data sources (your local disk, Cloud Storage or Big Query) depending on the value of the `.env` variable `DATA_SOURCE`. The code can also save the trained model on your local disk or in mlflow depending on the value of the `MODEL_TARGET` environment variable.
+You have completed your work on the `taxifare` package. You have transformed the notebook provided by the WagonCab Data Science team into a cloud ready package. Your code is able to train from various data sources (your local disk, Cloud Storage or Big Query) depending on the value of the `.env` variable `DATA_SOURCE`. The code can also save the trained model on your local disk or in mlflow depending on the value of the `MODEL_TARGET` environment variable.
 
 The WagonCab tech team is amazed by your work and decides to assign to you a new challenging task: automating the complete workflow of the model lifecycle.
 
@@ -24,24 +24,23 @@ Here are the new files added by the intern:
     ├── Makefile
     ├── requirements.txt
     ├── setup.py
-    ├── taxifare_flow
+    ├── flow
     │   ├── flow.py                               # ♻️ workflow lifecycle code
     │   └── main.py                               # 🚀 workflow launcher
-    └── taxifare_model
-        ├── data_sources
-        │   ├── big_query.py
-        │   └── local_disk.py
-        ├── interface
-        │   └── main.py
-        └── ml_logic
-            ├── data.py
-            ├── encoders.py
-            ├── model.py
-            ├── params.py
-            ├── preprocessor.py
-            ├── registry.py
-            ├── registry_db.py                    # 📦 mlflow database interface
-            └── utils.py
+    ├── data_sources
+    │   ├── big_query.py
+    │   └── local_disk.py
+    ├── interface
+    │   └── main.py
+    └── ml_logic
+        ├── data.py
+        ├── encoders.py
+        ├── model.py
+        ├── params.py
+        ├── preprocessor.py
+        ├── registry.py
+        ├── registry_db.py                    # 📦 mlflow database interface
+        └── utils.py
 ```
 
 The new code is still located inside of the `taxifare-model` package because it is so tightly coupled with the code that handles the model training that it would not make sense to separate both in different packages.
@@ -62,7 +61,7 @@ The intern provided an entry point allowing you to trigger **ONE** run of the mo
 
 They also added a new `Makefile` _directive_ callable with `make run_flow` (test it now).
 
-Each time you run `make run_flow` the `taxifare_flow.main` module is ran once, triggering a single full lifecycle of training for your model.
+Each time you run `make run_flow` the `taxifare.flow.main` module is ran once, triggering a single full lifecycle of training for your model.
 
 ### `registry_db.py`
 
@@ -98,9 +97,9 @@ We want our worflow to:
 - Train the latest model in _Production_ with the new data an see how the performance improves
 - Communicate to the team the performance of the past and new models on the new data in order to decide whether to put the newly trained model in _Production_
 
-Luckily for us, all the features are already backed in our existing `taxifare_model` package, so we only have to do the wiring and make sure that everything works correctly !
+Luckily for us, all the features are already backed in our existing `taxifare` package, so we only have to do the wiring and make sure that everything works correctly !
 
-**💻 Complete the `taxifare_flow.main` and all the functions in the `taxifare_flow.flow` module (look for `# YOUR CODE HERE`)**
+**💻 Complete the `taxifare.flow.main` and all the functions in the `taxifare.flow.flow` module (look for `# YOUR CODE HERE`)**
 
 **🧪 Run the tests with `make dev_test`**
 

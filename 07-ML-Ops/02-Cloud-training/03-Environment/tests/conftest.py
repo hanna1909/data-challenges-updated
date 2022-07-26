@@ -43,6 +43,6 @@ def X_processed_1k() -> np.ndarray:
 
 @pytest.fixture(scope='session')
 def y_1k() -> pd.Series:
-    with open(os.path.join(os.path.dirname(__file__), "fixtures", "y_1k.pickle"), "rb") as f:
-        y = pickle.load(f)
+    with open(os.path.join(os.path.dirname(__file__), "fixtures", "y_1k.npy"), "rb") as f:
+        y = np.load(f)
     return y

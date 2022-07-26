@@ -38,8 +38,8 @@ for env, valid_options in env_valid_options.items():
 
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 
-
-ROOT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+HOME = os.getenv('HOME')
+LOCAL_STORAGE_PATH = os.path.join(HOME, ".lewagon", "mlops")
 
 DATA_RAW_DTYPES_OPTIMIZED = {
     "key": "O",

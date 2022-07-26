@@ -17,7 +17,7 @@ TEST_ENV = os.getenv("TEST_ENV")
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_root_is_up():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/")
     assert response.status_code == 200
@@ -26,7 +26,7 @@ async def test_root_is_up():
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_root_returns_greeting():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/")
     assert response.json() == {"greeting": "Hello"}
@@ -35,7 +35,7 @@ async def test_root_returns_greeting():
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_predict_is_up():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
     assert response.status_code == 200
@@ -44,7 +44,7 @@ async def test_predict_is_up():
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_predict_is_dict():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
     assert isinstance(response.json(), dict)
@@ -54,7 +54,7 @@ async def test_predict_is_dict():
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_predict_has_key():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
     assert response.json().get('fare_amount', False)
@@ -63,7 +63,7 @@ async def test_predict_has_key():
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 @pytest.mark.asyncio
 async def test_predict_val_is_float():
-    from taxifare_api.fast import app
+    from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
     assert isinstance(response.json()['fare_amount'], float)
@@ -72,7 +72,7 @@ async def test_predict_val_is_float():
 # @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
 # @pytest.mark.asyncio
 # async def test_predict_val_is_in_range():
-#     from taxifare_api.fast import app
+#     from taxifare.api.fast import app
 #     async with AsyncClient(app=app, base_url="http://test") as ac:
 #         response = await ac.get("/predict", params=test_params)
 #     popularity = response.json()['popularity']
@@ -102,7 +102,7 @@ async def test_predict_val_is_float():
 #         "valence": 0.356,
 #         "artist": "Pink Floyd"
 #     }
-#     from taxifare_api.fast import app
+#     from taxifare.api.fast import app
 #     async with AsyncClient(app=app, base_url="http://test") as ac:
 #         response = await ac.get("/predict", params=test_params)
 #         alt_response = await ac.get("/predict", params=alt_params)

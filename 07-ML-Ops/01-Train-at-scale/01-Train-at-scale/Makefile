@@ -1,19 +1,29 @@
-## MAKEFILE OLD ##
+default:
+	@echo 'tests are only executed locally for this challenge'
 
-default: pytest
+test_train_at_scale: test_train_at_scale_3 \
+	test_train_at_scale_5 \
+	test_train_at_scale_6
 
-# default: pylint pytest
+test_train_at_scale_3:
+	@pytest \
+	tests/train_at_scale/test_data.py \
+	tests/train_at_scale/test_preprocessing.py \
+	tests/train_at_scale/test_model.py \
+	tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_and_train_pass \
+	tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_and_train_value \
+	tests/train_at_scale/test_interface.py::TestInterface::test_pred_pass \
+	tests/train_at_scale/test_interface.py::TestInterface::test_pred_value
 
-# pylint:
-# 	find . -iname "*.py" -not -path "./tests/test_*" | xargs -n1 -I {}  pylint --output-format=colorized {}; true
+test_train_at_scale_5:
+	@pytest \
+	tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_pass \
+	tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_value
 
-pytest:
-	cd model && PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-
-## MAKEFILE OLD END ##
-
-test_train_at_scale:
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
+test_train_at_scale_6:
+	@pytest \
+	tests/train_at_scale/test_interface.py::TestInterface::test_train_pass \
+	tests/train_at_scale/test_interface.py::TestInterface::test_train_value
 
 dev_test:
 	@make write_results
@@ -39,7 +49,7 @@ ccblue=$(shell echo "\033[0;34m")
 ccreset=$(shell echo "\033[0;39m")
 
 run_model:
-	python -m taxifare_model.interface.main
+	python -m taxifare.interface.main
 
 reinstall_package:
 	@pip uninstall -y taxifare-model || :
@@ -56,7 +66,7 @@ list:
 
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
 	@echo "\n        $(fbold)run_model$(ccreset)"
-	@echo "            Run the package (\`taxifare_model.interface.main\` module)."
+	@echo "            Run the package (\`taxifare.interface.main\` module)."
 
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 

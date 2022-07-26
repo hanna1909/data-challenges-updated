@@ -1,4 +1,4 @@
-from taxifare_model.ml_logic.params import (DATA_RAW_COLUMNS,
+from taxifare.ml_logic.params import (DATA_RAW_COLUMNS,
                                             DATA_RAW_DTYPES_OPTIMIZED,
                                             DATA_PROCESSED_DTYPES_OPTIMIZED)
 

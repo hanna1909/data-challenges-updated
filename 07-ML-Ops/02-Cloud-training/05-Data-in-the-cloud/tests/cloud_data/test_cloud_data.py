@@ -93,9 +93,9 @@ class TestCloudData(TestBase):
         verify the value of the `fare_amount` column for the first 10 observations of the training dataset table
         """
 
-        from taxifare_model.data_sources.big_query import get_bq_chunk
+        from taxifare.data_sources.big_query import get_bq_chunk
 
-        from taxifare_model.ml_logic.params import DATA_RAW_DTYPES_OPTIMIZED
+        from taxifare.ml_logic.params import DATA_RAW_DTYPES_OPTIMIZED
 
         source = self.load_results()
         source = source.split("\n")[3:13]

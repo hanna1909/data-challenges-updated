@@ -176,7 +176,7 @@ def write_mlflow_pred_model():
     make prediction with latest production model
     """
 
-    from taxifare_model.interface.main import pred
+    from taxifare.interface.main import pred
 
     import os
 

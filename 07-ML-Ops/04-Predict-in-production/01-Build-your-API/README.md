@@ -23,7 +23,7 @@ In order to do so, we will:
 
 ### API directory
 
-We will start with a clean slate for these challenges. The project on which we will be working is similar to the codebase you worked with until now, but now you have a new directory `/taxifare_api` and new files within the `model` project directory.
+We will start with a clean slate for these challenges. The project on which we will be working is similar to the codebase you worked with until now, but now you have a new directory `/api` and new files within the `model` project directory.
 
 First, let's have a look at this new directory:
 
@@ -35,11 +35,12 @@ First, let's have a look at this new directory:
 ├── README.md           # Package documentation
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
-├── taxifare_api        # 🆕 API directory
-│   ├── __init__.py
-│   └── fast.py         # 🆕 Where the API lays
-├── taxifare_flow       # DAG stuff
-├── taxifare_model      # ML logic
+├── taxifare
+    ├── api             # 🆕 API directory
+    │   ├── __init__.py
+    │   └── fast.py     # 🆕 Where the API lays
+    ├── flow            # DAG stuff
+    ├── model           # ML logic
 └── tests               # Your favorite 🍔
 ```
 
@@ -48,11 +49,11 @@ First, let's have a look at this new directory:
 <details>
   <summary markdown='span'>Answer</summary>
 
-🎁 As you can see, it contains a new **module** named **`taxifare_api`** you are going to implement!
+🎁 As you can see, it contains a new **module** named **`taxifare.api`** you are going to implement!
 
 </details>
 
-Now, navigate into the `/model` directory, have a look at the `requirements.txt`. You can see new comers:
+Now, have a look at the `requirements.txt`. You can see new comers:
 
 ``` bash
 # API
@@ -185,7 +186,7 @@ def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
 
 Ask yourselves the following questions:
 - How should we handle the query parameters?
-- How can we re-use the `taxifare_model` package?
+- How can we re-use the `taxifare` model package?
 - How should we build `X_pred`? What does it look like?
 - How to render the correct response?
 </details>
@@ -206,7 +207,7 @@ MLFLOW_MODEL_NAME=my_taxifare
   <summary markdown='span'>🍔 Food for thought</summary>
 
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
-1. Of course you must re-use the `taxifare_model.interface.main.pred()` or the `taxifare_model.ml_logic.registry.load_model()` functions!
+1. Of course you must re-use the `taxifare.interface.main.pred()` or the `taxifare.ml_logic.registry.load_model()` functions!
 1. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
 1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
 
@@ -270,7 +271,7 @@ A nice stack of logs should print:
 
 ### `Dockerfile`
 
-As a reminder, here is the `/model` directory structure:
+As a reminder, here is the project directory structure:
 
 ```bash
 .
@@ -280,11 +281,12 @@ As a reminder, here is the `/model` directory structure:
 ├── README.md           # Package documentation
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
-├── taxifare_api        # ✅ API directory
-│   ├── __init__.py
-│   └── fast.py         # ✅ Where the API lays
-├── taxifare_flow       # DAG stuff
-├── taxifare_model      # ML logic
+├── taxifare
+    ├── api        # ✅ API directory
+    │   ├── __init__.py
+    │   └── fast.py     # ✅ Where the API lays
+    ├── flow             # DAG stuff
+    ├── model            # ML logic
 └── tests               # Your favorite 🍔
 ```
 
@@ -312,7 +314,7 @@ Choosing an image with Python already installed could be a nice start...
 **💻 Write the instructions needed to build the API image in the `Dockerfile` with the following specifications:**
 
 - [ ] it should contain the same Python version of your virtual env
-- [ ] it should contain the necessary directories from the `/model` directory to allow the API to run
+- [ ] it should contain the necessary directories from the `/taxifare` directory to allow the API to run
 - [ ] it should contain the dependencies list
 - [ ] the API depencies should be installed
 - [ ] the web server should be launched when the container is started from the image
@@ -326,8 +328,7 @@ Here is the skeleton of the `Dockerfile`:
 
 ```Dockerfile
 FROM image
-COPY api
-COPY model
+COPY taxifare
 COPY dependencies
 RUN install dependencies
 CMD launch API web server
@@ -403,7 +404,7 @@ A shell console should open, you are inside the image 👏.
 **💻 Check the image is correctly set up:**
 
 - [ ] The python version is the same as your virtual env
-- [ ] Presence of the `/taxifare_api` and `taxifare_model` directories
+- [ ] Presence of the `/taxifare` directory
 - [ ] Presence of the `requirements.txt`
 - [ ] The dependencies are all installed
 

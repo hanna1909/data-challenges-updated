@@ -15,14 +15,16 @@ As lead ML Engineer for the project, your first role is to setup a local working
 
 💡 Packaging notebooks is a key ML Engineer skill. It allows
 - Other users to collaborate on the code
-- To call the code locally or on a remote machine in order for example to train the `taxifare_model` on a bigger machine
+- To call the code locally or on a remote machine in order for example to train the `taxifare` on a bigger machine
 - To put the code in production (on a server that never stops running) in order to expose it as an **API** or through a **website**
 - Render the code operable so that it can be ran manually or plugged to an automation workflow
 
 ### 1.1) Create new pyenv [🐍 taxifare-model]
 
+❓ Create the virtual env
+
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Train-at-scale/01-Train-at-scale/model
+cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-OPS/01-Train-at-scale/01-Train-at-scale")}}
 python --version # First, check your <YOUR_PYTHON_VERSION>. For example: 3.8.12
 ```
 
@@ -33,32 +35,28 @@ pyenv local taxifare-model
 code .
 ```
 
-Then, make sure both your OS terminal, your VS-code integrated terminal display well [🐍 taxifare-model] when in `model` folder.
-On VS code, open any python file and check that taxifare-model is also activated by clicking on the bottom right pyenv section as below
+Then, make sure both your OS terminal, your VS-code integrated terminal display well [🐍 taxifare-model].
+On VS code, open any `.py` file and check that taxifare-model is also activated by clicking on the bottom right pyenv section as below
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-setup.png'>
 
-### 1.2) Get familiar with the model package boilerplate
+### 1.2) Get familiar with the taxifare package stucture
 
-👇 Take 15 min to understand the boilerplate we've prepared for you
+❓ Take 10 min to understand the structure of the boilerplate we've prepared for you (don't go into detai. It's entry is `taxifare.interface.main_local`
 
 ```bash
-. # ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Train-at-scale/01-Train-at-scale/model
+. # Challenge folder root
 ├── Makefile          # Main "interface" with your project. Use to launch tests, or start trainings etc... from the CLI
-├── README.md         # A readme that explains the project to your teammates
-├── data              # empty folder that will be gitignored
-│   ├── processed     # You will store intermediate processed data here as need be
-│   └── raw           # You will download samples of the raw data from the internet to work/prototype locally
+├── README.md         # The file you are reading right now!
 ├── notebooks
-│   ├── datascientist_deliverable.ipynb # The deliverable from the DS team!
-│   └── recap.ipynb
+│   └── datascientist_deliverable.ipynb # The deliverable from the DS team!
 ├── pytest.ini        # test configuration file (do not touch)
 ├── requirements.txt  # list all third party packages to add to your local environment
 ├── setup.py          # allow to `pip install` your package
-├── taxifare_model          # the code logic for this package
+├── taxifare          # the code logic for this package
 │   ├── __init__.py
 │   ├── interface
 │   │   ├── __init__.py
-│   │   └── main_local.py   # Your main python entry point that contains all the "routes" that will be accessible from outside.
+│   │   └── main_local.py   # Your main python entry point that contains all the "routes" that will be accessible from "outside"
 │   └── ml_logic
 │       ├── __init__.py
 │       ├── data.py         # save, load and clean data
@@ -67,44 +65,74 @@ On VS code, open any python file and check that taxifare-model is also activated
 │       ├── params.py       # global project params
 │       ├── preprocessor.py # sklearn preprocessing pipelines
 │       ├── registry.py     # save and load models
-│       └── utils.py        # useful python functions
+│       └── utils.py        # useful python functions that can be shared accross the taxifare package
 ├── tests  # Tests to run using make pytest
 │   ├── ...
 │   └── ...
-└── training_outputs # local storage for trained model
-    ├── metrics
-    ├── models
-    └── params
+├── .gitignore
 ```
 
-👉 Let's install your package on this new virtual env.
+❓ Install your package on this new virtual env.
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Train-at-scale/01-Train-at-scale/model
+cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-OPS/01-Train-at-scale/01-Train-at-scale")}}
 pip install -e .
 ```
 
 Make sure the package is installed by running `pip list | grep taxifare-model`. It should print the absolute path to the package.
 
 
-### 1.3) Download raw data locally on your drive
+### 1.3) Let's store all our data locally at `~/.lewagon/mlops/`
 
-```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-OPS/01-Train-at-scale/01-Train-at-scale/model
-# 3 train sets
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > data/raw/train_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > data/raw/train_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > data/raw/train_100k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_500k.csv > data/raw/train_500k.csv
+❓ Let's store our `data` folder *outside* of this challenge folder, so that it can be accessible by all other challenges during the whole MLOPS module. We don't want it to be git tracked anyway!
 
-# 3 val sets
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > data/raw/val_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > data/raw/val_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > data/raw/val_100k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > data/raw/val_500k.csv
+``` bash
+mkdir -p ~/.lewagon/mlops/data
+mkdir -p ~/.lewagon/mlops/data/raw
+mkdir -p ~/.lewagon/mlops/data/processed
 ```
 
-❗️ And only if you have excellent internet connexion and 6Go free space on your computer (it's not mandatory for the week)
+❓ While we are here, let's also create a storage folder for our `training_outputs` that will also be shared by all challenges
+
+```bash
+mkdir -p ~/.lewagon/mlops/training_outputs
+mkdir -p ~/.lewagon/mlops/training_outputs/metrics
+mkdir -p ~/.lewagon/mlops/training_outputs/models
+mkdir -p ~/.lewagon/mlops/training_outputs/params
+```
+
+You can now see that the data for the challenges to come is stored in `~/.lewagon/mlops/` along with the notebooks of the data science team and the model outputs:
+
+``` bash
+tree -a ~/.lewagon/mlops/
+
+# YOU SHOULD SEE THIS
+├── data              # This is where
+│   ├── processed     # You will store intermediate processed data
+│   └── raw           # You will download samples of the raw data
+└── training_outputs
+    ├── metrics       # trained model metrics
+    ├── models        # trained model weights (can be large!)
+    └── params        # trained model hyper parameters
+```
+
+❓ Now, download the raw datasets
+
+```bash
+# 3 train sets
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > ~/.lewagon/mlops/data/raw/train_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/raw/train_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > ~/.lewagon/mlops/data/raw/train_100k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_500k.csv > ~/.lewagon/mlops/data/raw/train_500k.csv
+
+# 3 val sets
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > ~/.lewagon/mlops/data/raw/val_1k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/raw/val_10k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > ~/.lewagon/mlops/data/raw/val_100k.csv
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > ~/.lewagon/mlops/data/raw/val_500k.csv
+```
+
+❗️ And only if you have excellent internet connexion and 6Go free space on your computer (not mandatory)
 
 ```bash
 curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
@@ -117,14 +145,13 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.z
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
-Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for this module)
+*⏱ Duration:  spend 1 hour max on this*
+
+❓ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for this module), and run all cells carefully while understanding them. This handover between you and the DS team is the perfect time to interact with them (i.e your buddy or a TA).
 
 ❗️ Make sure to use `taxifare_model` as ipykernel venv
 
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-notebook.png'>
-
-- Run all cells carefully while understanding them. This handover between you and the DS team is the perfect time to interact with them.
-- If some packages are missing, add them to your `requirements.txt` and `pip install -e .` again
 
 </details>
 
@@ -134,21 +161,21 @@ Open `datascientist_deliverable.ipynb` within VScode (forget about Jupyter for t
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
 
-🎯 Your goal is to be able to run the `taxifare_model.interface.main_local` module as per below
+🎯 Your goal is to be able to run the `taxifare.interface.main_local` module as per below
 
 ```bash
 # -> model
-python -m taxifare_model.interface.main_local
+python -m taxifare.interface.main_local
 ```
 
-To do so, please code the missing code marked `# YOUR CODE HERE` in the following files
+❓ To do so, please code the missing code marked `# YOUR CODE HERE` in the following files. It should follow the Notebook pretty closely!
 
 ```markdown
-├── taxifare_model
+├── taxifare
 │   ├── __init__.py
 │   ├── interface
 │   │   ├── __init__.py
-│   │   └── main_local.py   # ❓ Start by here: code `preprocess_and_train`, `pred`
+│   │   └── main_local.py   # ❓ Start here: code `preprocess_and_train`, `pred`
 │   └── ml_logic
 │       ├── __init__.py
 │       ├── data.py         # ❓ `clean data`
@@ -160,24 +187,20 @@ To do so, please code the missing code marked `# YOUR CODE HERE` in the followin
 │       └── utils.py        # ✅ keep for later
 ```
 
-👉 To mimic Data Scientist setup, please check your logic at least once with the following DATASET_SIZE. But feel free to keep `'1k'` or `'10k'` datasets to iterate faster in debug mode 🐞 !
-
-```python
-# taxifare_model/ml_logic/params.py
-DATASET_SIZE = '100k'
-```
-
 **🧪 Test your code**
 
-```bash
-# First, make sure your package runs properly. Debug it until it runs!
-python -m taxifare_model.interface.main_local
+❓ First, make sure your package runs properly with `python -m taxifare.interface.main_local`.
+- Debug it until it runs!
+- Use the following dataset size
 
-# Then only, try to pass tests (don't make before !)
-make test_train_at_scale
+```python
+# taxifare/ml_logic/params.py
+DATASET_SIZE = '1k' # To iterate faster in debug mode 🐞
+DATASET_SIZE = '100k' # Should work at least once with it
 ```
 
-<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/070101_tests_to_validate.png' width=600>
+❓ Then only, try to pass tests with `make test_train_at_scale_3`
+
 
 </details>
 
@@ -185,6 +208,8 @@ make test_train_at_scale
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
+
+*⏱ Duration:  spend 20 minutes max on this here*
 
 Now that you managed to make the package work for a small dataset, time to see how it will handle the real dataset!
 
@@ -199,15 +224,15 @@ Now that you managed to make the package work for a small dataset, time to see h
 💡 Hint: Use `ml_logic.utils.simple_time_and_memory_tracker` to decorate the methods of your choice as below
 
 ```python
-# taxifare_model.ml_logic.data.py
-from taxifare_model.ml_logic.utils import simple_time_and_memory_tracker
+# taxifare.ml_logic.data.py
+from taxifare.ml_logic.utils import simple_time_and_memory_tracker
 
 @simple_time_and_memory_tracker
 def clear_data() -> pd.DataFrame:
     ...
 ```
 
-And make sure to understand exactly how decorators work. Refer to lecture [0405-Communicate](https://kitt.lewagon.com/camps/<user.batch_slug>/lectures/content/04-Decision-Science_05-Communicate.slides.html?title=Communicate#/6/3)
+(💡 Optional) If you don't remember exactly how decorators work, refer to our lecture [0405-Communicate](https://kitt.lewagon.com/camps/<user.batch_slug>/lectures/content/04-Decision-Science_05-Communicate.slides.html?title=Communicate#/6/3)
 
 </details>
 
@@ -234,30 +259,28 @@ From previous challenge, we've seen that we have memory and time constraints:
 2. Another could be to load each column of the `raw_data` individually, and prepare some preprocessing on it, **column by column**
 ```python
 for col in column_names:
-    df_col = pd.read_csv("raw_data.csv.zip", usecols=col)
+    df_col = pd.read_csv("raw_data.csv", usecols=col)
     # do preprocessing on the single column here
 ```
-3. But you may always encounter datasets "too big to load anyway"! By the way, the [real NYC dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) is even bigger than 55M rows and actually weight about 156GB !
+
+However, you may encounter datasets whose individual columns are "too big to load anyway"! By the way, the [real NYC dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) is even bigger than 55M rows and actually weight about 156GB !
 
 **Proposed solution: incremental preprocessing 🔪 chunk-by-chunk 🔪**
 
 Did you notice our preprocessing is **stateless**?
-- We don't need to store (fit) any information on the train set such as _standard deviation_ for each columns, to apply it (transform) on the test set.
-- We can therefore decouple/split the preprocessing from the training instead of grouping everything into a pipeline `preprocess_and_train`. We will `preprocess` and store `data_processed` once-for-all on our hard drive, then `train` our model from that `data_processed` later on. When new data will arrive, we'll simply apply the preprocessing to it as a pure python function.
+- We don't need to store (_fit_) any information about columns of the train set (such as _standard deviation_), to apply it (_transform_) on the test set.
+- We can therefore decouple the _preprocessing_ from the _training_ instead of grouping everything into a pipeline `preprocess_and_train`.
+  - We will `preprocess` and store `data_processed` once-for-all on our hard drive
+  - Then `train` our model from that `data_processed` later on.
+  - When new data will arrive, we'll simply apply the preprocessing to it as a pure python function.
 
 Secondly, as we do not need to compute _column-wise-statistics_ but only perform _row-by-row preprocessing_, we can do the preprocessing **chunk by chunk**, with chunks of limited size (e.g 100_000 rows), each chunk fitting nicely in memory! And then simply append each _processed chunk_ at the end of a CSV on our local disk. It won't make it faster but at least it will compute without crashing. And you only need to do it once.
 
-```python
-data_chunk = pd.read_csv(
-        data_raw_path,
-        skiprows=...
-        nrows=...
-        )
-```
+<img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/process_by_chunk.png">
 
-### 5.2) Your turn ❓
+### 5.2) Your turn
 
-❓ First, bring back smaller dataset sizes while you try to make it work.
+❓ **First, bring back smaller dataset sizes while you try to make it work.**
 
 ```python
 # params.py
@@ -266,10 +289,14 @@ VALIDATION_DATASET_SIZE = '1k'
 CHUNK_SIZE = 200
 ```
 
-**❓ Then, copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
+❓ **Then, copy-paste and code this new route given below `def preprocess()` in your `ml_logic.interface.main_local` module**
 
+[//]: # (  🚨 Code below is NOT the single source of truth. Original is in data-solutions repo 🚨 )
 
-[//]: # (  🚨 Code below is not the single source of truth 🚨 )
+<br>
+
+<details>
+    <summary markdown='span'><strong>👇 Code to copy 👇</strong></summary>
 
 ```python
 def preprocess(training_set=True):
@@ -290,9 +317,9 @@ def preprocess(training_set=True):
         destination_name = f"val_processed_{VALIDATION_DATASET_SIZE}.csv"
 
     data_raw_path = os.path.abspath(os.path.join(
-        ROOT_PATH, "data", "raw", source_name))
+        LOCAL_STORAGE_PATH, "data", "raw", source_name))
     data_processed_path = os.path.abspath(os.path.join(
-        ROOT_PATH, "data", "processed", destination_name))
+        LOCAL_STORAGE_PATH, "data", "processed", destination_name))
 
     # iterate on the dataset, by chunks
     chunk_id = 0
@@ -302,7 +329,6 @@ def preprocess(training_set=True):
 
         # load in memory the chunk numbered `chunk_id` of size CHUNK_SIZE
         # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=...)
-
         # YOUR CODE HERE
 
         # clean chunk
@@ -314,46 +340,45 @@ def preprocess(training_set=True):
         # create X_processed_chunk and concatenate (X_processed_chunk, y_chunk) into data_processed_chunk
         # YOUR CODE HERE
 
-        # Save the chunk of the dataset to local disk (append to existing csv to build it chunk by chunk)
+        # Save data_processed_chunk to local disk by appending rows to previous chunk
         # 🎯 Hints1: check out pd.to_csv(mode=...)
         # YOUR CODE HERE
 
         chunk_id += 1
 
-    # 🧪 Write tests. Check your results with `make test_train_at_scale`
-    data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
-    write_result(name="test_preprocess", subdir="train_at_scale",
-                 data_processed_head=data_processed[0:2])
+    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    if training_set:
+        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
+        write_result(name="test_preprocess", subdir="train_at_scale",
+                    data_processed_head=data_processed[0:2])
 
     print("✅ data processed saved entirely")
 ```
 
+</details>
 
+<br>
 
 **🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale`.
-You should pass the two tests:
-- `tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_pass  PASSED
-- tests/train_at_scale/test_interface.py::TestInterface::test_preprocess_value PASSED
+Only after you are able to run your newly created code, test it with `make test_train_at_scale_5`.
 
-**❓ Create and store the 4 large preprocessed datasets**
+
+**❓ Finally, create and store the 2 large preprocessed datasets that will be used for our training**
 - `data/processed/train_processed_500k.csv`
 - `data/processed/val_processed_500k.csv`
 
-By changing `params.py` as below 👇
-
+It shouldn't create memory problems anymore if you use the chunk size below!
 ```python
 # params.py
 DATASET_SIZE = '500k'
 VALIDATION_DATASET_SIZE = '500k'
-CHUNK_SIZE = 100000
+CHUNK_SIZE = 100,000
 ```
+🎉 Given few hours of computation, we could easily process the 55 Millions rows too, but let's not do it today!
 
 </details>
 
-
 # 6️⃣ INCREMENTAL LEARNING
-
 
 <details>
   <summary markdown='span'><strong>❓ instructions (expand me)</strong></summary>
@@ -362,9 +387,9 @@ CHUNK_SIZE = 100000
 
 ### 6.1) Discussion
 
-We cannot load such dataset in RAM all at once, but we can load it chunk by chunk.
+We cannot load such dataset of shape (55M, 65) in RAM all at once, but we can load it chunk by chunk.
 
-How do we train a model "chunk by chunk" ?
+**How do we train a model "chunk by chunk" ?**
 
 This is called **incremental learning** or **partial_fit**
 - We initialize a model with random weights ${\theta_0}$
@@ -381,12 +406,19 @@ This is called **incremental learning** or **partial_fit**
 ❗️ Do not confuse `chunk_size` with `batch_size` from deep learning
 - For each chunk (big), your model will read data batch-per-batch (small) many times over (epochs)
 
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.png'>
+
+
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
 
-<details>
-  <summary markdown='span'><strong>Do we really need chunks with tensorflow?</strong></summary>
+👎 **Cons**: The model will be biased towards fitting the *latest chunk* better than the *first* ones. In our case, it is not a problem as our training dataset is shuffled, but it is important to keep that in mind when we will do a partial-fit of our model with newer data once it is in production.
 
-Granted, thanks to tensorflow `Datasets` you will not always need "chunks" as you can use batch-per-batch dataset loading as below (we will see it in recap)
+<br>
+
+<details>
+  <summary markdown='span'><strong>🤔 Do we really need chunks with tensorflow?</strong></summary>
+
+Granted, thanks to tensorflow `Datasets` you will not always need "chunks" as you can use batch-per-batch dataset loading as below
 
 ```python
 import tensorflow as tf
@@ -397,14 +429,15 @@ model.fit(ds)
 However, we would like to teach you the universal method of incremental fit by chunk in this challenge, as it applies to any framework, and will prove useful to *partially retrain* your model with newer data once it is put in production.
 </details>
 
-👎 **Cons**: The model will be biased towards fitting the *latest chunk* better than the *first* ones. In our case, it is not a problem as our training dataset is shuffled, but it is important to keep that in mind when we will do a partial-fit of our model with newer data once it is in production.
+<br>
 
+### 6.2) Your turn
 
-### 6.2) Your turn ❓
-
-**❓ Copy paste and try to code this new route in your `ml_logic.interface.main_local` module**
+**❓ Copy paste and try to code this new route `def train()` below in your `ml_logic.interface.main_local` module**
 
 [//]: # (  🚨 Code below is not the single source of truth 🚨 )
+<details>
+    <summary markdown='span'><strong>👇 Code to copy 👇</strong></summary>
 
 ```python
 def train():
@@ -416,8 +449,11 @@ def train():
     """
     print("\n ⭐️ use case: train")
 
-    # Validation Set: Load a validation set common to all chunks and create X_val, y_val
-    # YOUR CODE HERE
+    # First, load a validation set common to all chunks and create (X_val, y_val)
+    data_val_processed_path = os.path.abspath(os.path.join(
+        LOCAL_STORAGE_PATH, "data", "processed", f"val_processed_{VALIDATION_DATASET_SIZE}.csv"))
+    # YOUR CODE BELOW
+
 
     # Iterate on the full training dataset chunk per chunks. Break out of the loop if you receive no data to train upon!
     model = None
@@ -430,42 +466,32 @@ def train():
         # Load chunk of preprocess data and create (X_train_chunk, y_train_chunk)
         # YOUR CODE HERE
 
-        # Train a model incrementally
+        # Train a model incrementally and print validation metrics for this chunk
         learning_rate = 0.001
         batch_size = 256
         # YOUR CODE HERE
 
         chunk_id += 1
 
+    # Save model and training params
     params = dict(
         learning_rate=learning_rate,
         batch_size=batch_size,
         incremental=True,
         chunk_size=CHUNK_SIZE)
 
-    # process metrics
-    metrics_val_mean_all_chunks = None
-    # YOUR CODE HERE
+    metrics_val_mean_all_chunks = np.mean(np.array(metrics_val_list))
     metrics = dict(mean_val=metrics_val_mean_all_chunks)
 
-    # Save model
     save_model(model, params=params, metrics=metrics)
 
-    pass
+    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    write_result(name="test_train", subdir="train_at_scale",
+                 metrics=metrics)
+
+    print("✅ model trained and saved")
 ```
-
-**🧪 Test your code**
-When you are happy with your results, test your code with `make test_train_at_scale` and push your results!
-Everything tests should be green by now!
-
-**Give it a try with the full dataset!**
-
-```python
-# params.py
-DATASET_SIZE = '500k'
-VALIDATION_DATASET_SIZE = '500k'
-CHUNK_SIZE = 100000
-```
+</details>
 
 🏁 Congratulations! 🏁
 

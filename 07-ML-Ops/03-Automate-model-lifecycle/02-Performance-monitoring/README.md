@@ -85,9 +85,9 @@ You will also need to set in the project configuration the tracking URI of the m
 
 Let's update the code to push the experiment parameters to mlflow once the training it done.
 
-Make sure to push either `learning_rate`, `batch_size` or `context` (the `if __name__ == '__main__': code` in the `taxifare_model.interface.main` module already does that)
+Make sure to push either `learning_rate`, `batch_size` or `context` (the `if __name__ == '__main__': code` in the `taxifare.interface.main` module already does that)
 
-**💻 Append the `save_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -109,7 +109,7 @@ Let's now push the metrics to mlflow. The code should be almost the same as for 
 
 Make sure to push either `val_mae`, `mean_val` or `mae` (the code already does that)
 
-**💻 Append the `save_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -123,7 +123,7 @@ Now for the better part: mlflow allows us to store the trained model so that we 
 
 This will allow you colleagues to use smoothly the model you have trained !
 
-**💻 Complete the `save_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+**💻 Complete the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
 
 **💻 Put your model in Production in the mlflow UI**
 
@@ -144,7 +144,7 @@ What use is it to store my model in mlflow you say ? Well for starters mlflow al
 
 ❓ **How do you make a prediction from a trained model stored in mlflow ?**
 
-**💻 Complete the `load_model` function in the `taxifare_model.ml_logic.registry` module, then run a training**
+**💻 Complete the `load_model` function in the `taxifare.ml_logic.registry` module, then run a training**
 
 **🧪 Run the tests with `make dev_test`**
 

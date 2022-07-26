@@ -1,20 +1,20 @@
 
-from taxifare_model.ml_logic.data import (clean_data,
+from taxifare.ml_logic.data import (clean_data,
                                           get_chunk,
                                           save_chunk)
 
-from taxifare_model.ml_logic.params import (CHUNK_SIZE,
+from taxifare.ml_logic.params import (CHUNK_SIZE,
                                             DATASET_SIZE,
                                             VALIDATION_DATASET_SIZE)
 
-from taxifare_model.ml_logic.preprocessor import preprocess_features
+from taxifare.ml_logic.preprocessor import preprocess_features
 
-from taxifare_model.ml_logic.model import (initialize_model,
+from taxifare.ml_logic.model import (initialize_model,
                                            compile_model,
                                            train_model,
                                            evaluate_model)
 
-from taxifare_model.ml_logic.registry import (save_model,
+from taxifare.ml_logic.registry import (save_model,
                                               load_model)
 
 import numpy as np

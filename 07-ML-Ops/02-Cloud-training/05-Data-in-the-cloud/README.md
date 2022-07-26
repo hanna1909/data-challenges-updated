@@ -131,7 +131,7 @@ The code of the model iterative training is detailed below. Take the time to rea
 **❓ How do you train your model incrementally from Big Query ?**
 
 Let's have a look at the new structure of the code:
-- The `taxifare_model.interface.main` module is the entry point of the package. In order to run an iterative training, it provides the `preprocess` and `train` _functions_.
+- The `taxifare.interface.main` module is the entry point of the package. In order to run an iterative training, it provides the `preprocess` and `train` _functions_.
 - The `preprocess` function is responsible for preprocessing the full dataset from the data source chunk by chunk. For each chunk of data in the data source, it retrieves it, preprocesses it, and stores it back in the data source in a different location.
 - The `train` function on its end retrieves all the _preprocessed data_ from the data source chunk by chunk, and trains the model with each chunk.
 
@@ -178,10 +178,10 @@ Each call to the `get_chunk` function takes as parameter:
 
 **The name of the data source to use**
 
-The `DATASET_SIZE` variable in `main.py` is imported from the `taxifare_model.ml_logic.params` module:
+The `DATASET_SIZE` variable in `main.py` is imported from the `taxifare.ml_logic.params` module:
 
 ``` python
-from taxifare_model.ml_logic.params import (CHUNK_SIZE,
+from taxifare.ml_logic.params import (CHUNK_SIZE,
                                             DATASET_SIZE,
                                             VALIDATION_DATASET_SIZE)
 ```
@@ -399,31 +399,31 @@ Note that `get_bq_chunk` takes as parameter a `dtypes` which is a dictionary of 
 The `get_pandas_chunk` _function_ is located in the `local_disk` _module_. You will need to add imports for the `get_bq_chunk` _function_ yourself:
 
 ``` python
-from taxifare_model.data_sources.local_disk import (get_pandas_chunk,
+from taxifare.data_sources.local_disk import (get_pandas_chunk,
                                                     save_local_chunk)
 ```
 
 In the design that we choose the `data_py` only acts as a switch. It is not aware of the context in which the `get_chunk` and `save_chunk` functions are called by `preprocess` or `train` in `main.py`. Its does not know the details of implementation of retrieving or saving data from or to a data source.
 
 The goal here was to split the logic in several pieces in order to simplify the problem that we solve:
-- `taxifare_model.interface.main` handles the global logic
-- `taxifare_model.ml_logic.data` determines which data source should be used
-- `taxifare_model.data_sources.big_query` is responsible for exchanging data with _Big Query_
-- `taxifare_model.data_sources.local_disk` is responsible for exchanging data with the local disk using `pandas`
+- `taxifare.interface.main` handles the global logic
+- `taxifare.ml_logic.data` determines which data source should be used
+- `taxifare.data_sources.big_query` is responsible for exchanging data with _Big Query_
+- `taxifare.data_sources.local_disk` is responsible for exchanging data with the local disk using `pandas`
 
-We provide you with the code of the `taxifare_model.data_sources.local_disk` _module_ so you can see how the `get_pandas_chunk` and `save_local_chunk` are working.
+We provide you with the code of the `taxifare.data_sources.local_disk` _module_ so you can see how the `get_pandas_chunk` and `save_local_chunk` are working.
 
 👉 Go have a look at the code in `local_disk.py`
 
 ### Step 5: `big_query.py` is where to code
 
-At last here is the place where you should work: the `taxifare_model.data_sources.big_query` _module_ contains the `get_bq_chunk` and `save_bq_chunk` methods that you need to implement.
+At last here is the place where you should work: the `taxifare.data_sources.big_query` _module_ contains the `get_bq_chunk` and `save_bq_chunk` methods that you need to implement.
 
 These methods are called by `get_chunk` and `save_chunk` in `data.py` when the `.env` file contains the variable `DATA_SOURCE` set to `big query`.
 
 The role of `get_bq_chunk` is to retrieve a chunk of data from a Big Query table given its first row _index_ and the number of rows (_chunk_size_) to retrieve. The function also takes a `dtypes` argument containing a dictionnary of expected data types in the returned `DataFrame`.
 
-**💻 Set the `DATA_SOURCE` variable in the `.env` file to source data from Big Query. Complete the `get_bq_chunk` and `save_bq_chunk` functions in the `taxifare_model.data_sources.big_query` module. Add the required imports in `data.py`**
+**💻 Set the `DATA_SOURCE` variable in the `.env` file to source data from Big Query. Complete the `get_bq_chunk` and `save_bq_chunk` functions in the `taxifare.data_sources.big_query` module. Add the required imports in `data.py`**
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -447,7 +447,7 @@ You can now train you model from the cloud using data chunks retrieved from Big 
   You can time the duration of a command by prefixing it with the `time` command:
 
   ``` bash
-  time python -m taxifare_model.interface.main
+  time python -m taxifare.interface.main
   ```
 
   The timing appears after the command output (more help on the _time_ command with `man time`).

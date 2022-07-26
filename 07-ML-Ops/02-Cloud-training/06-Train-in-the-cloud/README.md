@@ -44,7 +44,7 @@ Find the `gcloud` command allowing you to enable a **service**.
 
 ## Create your first Virtual Machine
 
-The `taxifare_model` package is ready to train on a machine in the cloud. Let's create our first *Virtual Machine* instance!
+The `taxifare` package is ready to train on a machine in the cloud. Let's create our first *Virtual Machine* instance!
 
 **❓ How do you create a virtual machine ?**
 
@@ -453,7 +453,7 @@ Let's run your first training in the cloud!
   And run the training!
 
   ``` bash
-  make run_model  # python -m taxifare_model.interface.main
+  make run_model  # python -m taxifare.interface.main
   ```
 </details>
 

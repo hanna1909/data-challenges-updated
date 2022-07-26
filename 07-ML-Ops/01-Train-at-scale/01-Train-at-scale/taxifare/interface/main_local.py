@@ -1,22 +1,22 @@
 from tests.test_base import write_result
 
-from taxifare_model.ml_logic.data import clean_data
+from taxifare.ml_logic.data import clean_data
 
-from taxifare_model.ml_logic.params import (CHUNK_SIZE,
+from taxifare.ml_logic.params import (CHUNK_SIZE,
                                             DATA_RAW_DTYPES_OPTIMIZED,
                                             DATA_PROCESSED_DTYPES_OPTIMIZED,
                                             DATA_RAW_COLUMNS,
-                                            DATASET_SIZE,
+                                            DATASET_SIZE, LOCAL_STORAGE_PATH,
                                             VALIDATION_DATASET_SIZE,
-                                            ROOT_PATH)
+                                            LOCAL_STORAGE_PATH)
 
-from taxifare_model.ml_logic.preprocessor import preprocess_features
+from taxifare.ml_logic.preprocessor import preprocess_features
 
-from taxifare_model.ml_logic.model import (initialize_model,
+from taxifare.ml_logic.model import (initialize_model,
                                            compile_model,
                                            train_model)
 
-from taxifare_model.ml_logic.registry import (save_model,
+from taxifare.ml_logic.registry import (save_model,
                                               load_model)
 
 import numpy as np
@@ -35,7 +35,7 @@ def preprocess_and_train():
 
 
     # Retrieve raw data
-    data_raw_path = os.path.join(ROOT_PATH, "data", "raw", f"train_{DATASET_SIZE}.csv")
+    data_raw_path = os.path.join(LOCAL_STORAGE_PATH, "data", "raw", f"train_{DATASET_SIZE}.csv")
     data = pd.read_csv(data_raw_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
 
     # Clean data using ml_logic.data.clean_data
@@ -100,7 +100,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 if __name__ == '__main__':
     try:
         preprocess_and_train()
-        #pred()
+        pred()
     except:
         import ipdb, traceback, sys
         extype, value, tb = sys.exc_info()

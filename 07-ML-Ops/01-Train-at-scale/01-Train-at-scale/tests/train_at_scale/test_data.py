@@ -1,4 +1,4 @@
-from taxifare_model.ml_logic.data import clean_data
+from taxifare.ml_logic.data import clean_data
 
 
 def test_clean_data(train_1k, train_1k_cleaned):

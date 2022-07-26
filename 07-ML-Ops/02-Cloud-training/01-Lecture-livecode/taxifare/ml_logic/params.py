@@ -13,8 +13,8 @@ CHUNK_SIZE = 2000               # ["200", "2000", "20000", "100000", "1000000"]
 
 os.environ["LOCAL_DATA_PATH"] = "data"
 os.environ["LOCAL_REGISTRY_PATH"] = "training_outputs"
-
-ROOT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+HOME = os.getenv('HOME')
+LOCAL_STORAGE_PATH = os.path.join(HOME, ".lewagon", "mlops")
 
 DATA_RAW_DTYPES_OPTIMIZED = {
     "key": "O",

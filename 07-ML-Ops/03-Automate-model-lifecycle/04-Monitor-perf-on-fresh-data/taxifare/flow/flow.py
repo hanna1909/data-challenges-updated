@@ -9,7 +9,7 @@ def get_next_training_params(experiment):
     """
     retrieve the parameters for the next training
 
-    the `taxifare_model` package saves after each training the run parameters
+    the `taxifare` package saves after each training the run parameters
     in mlflow: `row_index` and `row_count` identifying the range of data used
 
     for the next training we want to determine the `first_row`

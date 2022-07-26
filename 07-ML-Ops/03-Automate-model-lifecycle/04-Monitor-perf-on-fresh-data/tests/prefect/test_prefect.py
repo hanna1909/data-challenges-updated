@@ -29,7 +29,7 @@ class TestPrefect(TestBase):
 
 def write_prefect_flow():
 
-    from taxifare_flow.flow import build_flow
+    from taxifare.flow import build_flow
 
     import os
 

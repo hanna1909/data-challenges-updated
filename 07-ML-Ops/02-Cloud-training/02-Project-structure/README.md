@@ -74,7 +74,7 @@ The structure of the project that you discovered during the previous unit will r
     ├── pytest.ini
     ├── requirements.txt
     ├── setup.py
-    ├── taxifare_model
+    ├── taxifare
     │   ├── __init__.py
     │   ├── data_sources
     │   │   ├── __init__.py
@@ -132,7 +132,7 @@ make list
 
 The other commands listed by `make list` will not be working for the moment:
 - `make show_env` lists the environment variables loaded by `direnv`. It will be empty for now since the `.env` file is empty
-- `make run_model` runs the `taxifare_model` package (it runs `python -m taxifare_model.interface.main`). It will fail at the moment, since you have not configured the `.env` file yet
+- `make run_model` runs `python -m taxifare.interface.main`. It will fail at the moment, since you have not configured the `.env` file yet
 - `make dev_test` allows you to run the tests ✅ (for now it will fail as well since you have not completed the challenge yet 😉)
 
 <details>
@@ -144,9 +144,9 @@ The other commands listed by `make list` will not be working for the moment:
 
 ### 🚪 `main.py`
 
-Bye bye `taxifare_model.interface.main_local` module, you served us well ❤️
+Bye bye `taxifare.interface.main_local` module, you served us well ❤️
 
-Long live `taxifare_model.interface.main`, our new package entry point ⭐️
+Long live `taxifare.interface.main`, our new package entry point ⭐️
 
 `main.py` works the same way as `main_local` did, and has the following functions:
 
