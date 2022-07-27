@@ -24,7 +24,7 @@ As lead ML Engineer for the project, your first role is to setup a local working
 ❓ Create the virtual env
 
 ```bash
-cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-OPS/01-Train-at-scale/01-Train-at-scale")}}
+cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-Ops/01-Train-at-scale/01-Train-at-scale")}}
 python --version # First, check your <YOUR_PYTHON_VERSION>. For example: 3.8.12
 ```
 
@@ -75,7 +75,7 @@ On VS code, open any `.py` file and check that taxifare-model is also activated 
 ❓ Install your package on this new virtual env.
 
 ```bash
-cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-OPS/01-Train-at-scale/01-Train-at-scale")}}
+cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-Ops/01-Train-at-scale/01-Train-at-scale")}}
 pip install -e .
 ```
 
@@ -175,7 +175,7 @@ python -m taxifare.interface.main_local
 │   ├── __init__.py
 │   ├── interface
 │   │   ├── __init__.py
-│   │   └── main_local.py   # ❓ Start here: code `preprocess_and_train`, `pred`
+│   │   └── main_local.py   # ❓ 💡 Start here: code `preprocess_and_train`, `pred`
 │   └── ml_logic
 │       ├── __init__.py
 │       ├── data.py         # ❓ `clean data`
@@ -280,7 +280,7 @@ Secondly, as we do not need to compute _column-wise-statistics_ but only perform
 
 ### 5.2) Your turn
 
-❓ **First, bring back smaller dataset sizes while you try to make it work.**
+❓ **First, bring back smaller dataset sizes for debug purpose**
 
 ```python
 # params.py
@@ -296,7 +296,7 @@ CHUNK_SIZE = 200
 <br>
 
 <details>
-    <summary markdown='span'><strong>👇 Code to copy 👇</strong></summary>
+  <summary markdown='span'>👇 Code to copy 👇</summary>
 
 ```python
 def preprocess(training_set=True):
@@ -327,18 +327,24 @@ def preprocess(training_set=True):
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the chunk numbered `chunk_id` of size CHUNK_SIZE
+        # load in memory the `data_chunk_raw` numbered `chunk_id` of size CHUNK_SIZE
         # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=...)
         # YOUR CODE HERE
+        data_raw_chunk = None
 
         # clean chunk
         # YOUR CODE HERE
+        data_clean_chunk = None
 
-        # create X_chunk,y_chunk
+        # create (X_chunk, y_chunk)
         # YOUR CODE HERE
+        X_chunk = None
+        y_chunk = None
 
         # create X_processed_chunk and concatenate (X_processed_chunk, y_chunk) into data_processed_chunk
         # YOUR CODE HERE
+        X_processed_chunk = None
+        data_processed_chunk = None
 
         # Save data_processed_chunk to local disk by appending rows to previous chunk
         # 🎯 Hints1: check out pd.to_csv(mode=...)
@@ -359,21 +365,28 @@ def preprocess(training_set=True):
 
 <br>
 
+**❓ Try create and store the following preprocessed datasets**
+
+- `data/processed/train_processed_1k.csv` by running `preprocess()`
+- `data/processed/val_processed_1k.csv` by running `preprocess(training_set=False)`
+
 **🧪 Test your code**
-Only after you are able to run your newly created code, test it with `make test_train_at_scale_5`.
 
+Test your code with `make test_train_at_scale_5`.
 
-**❓ Finally, create and store the 2 large preprocessed datasets that will be used for our training**
-- `data/processed/train_processed_500k.csv`
-- `data/processed/val_processed_500k.csv`
+**❓ Finally, create and store the real preprocessed datasets**
 
-It shouldn't create memory problems anymore if you use the chunk size below!
+Using:
 ```python
 # params.py
 DATASET_SIZE = '500k'
 VALIDATION_DATASET_SIZE = '500k'
 CHUNK_SIZE = 100,000
 ```
+To create:
+- `data/processed/train_processed_500k.csv` by running `preprocess()`
+- `data/processed/val_processed_500k.csv` by running `preprocess(training_set=False)`
+
 🎉 Given few hours of computation, we could easily process the 55 Millions rows too, but let's not do it today!
 
 </details>
@@ -394,7 +407,7 @@ We cannot load such dataset of shape (55M, 65) in RAM all at once, but we can lo
 This is called **incremental learning** or **partial_fit**
 - We initialize a model with random weights ${\theta_0}$
 - We load the first `data_processed_chunk` in memory (say, 100_000 rows)
-- We train model on the first chunk , and update its weights accordingly ${\theta_0} \rightarrow {\theta_1}$
+- We train model on the first chunk, and update its weights accordingly ${\theta_0} \rightarrow {\theta_1}$
 - We load the second `data_processed_chunk` in memory
 - We *retrain* model with this second chunk, this time updating previously computed weights ${\theta_1} \rightarrow {\theta_2}$!
 - etc... until the end of the entire dataset
@@ -407,6 +420,7 @@ This is called **incremental learning** or **partial_fit**
 - For each chunk (big), your model will read data batch-per-batch (small) many times over (epochs)
 
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.png'>
+[//]: # ( excalidraw file to edit https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.excalidraw )
 
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
@@ -435,9 +449,12 @@ However, we would like to teach you the universal method of incremental fit by c
 
 **❓ Copy paste and try to code this new route `def train()` below in your `ml_logic.interface.main_local` module**
 
+(Again, start with super-small dataset size, then finally train your model on 500k)
+
 [//]: # (  🚨 Code below is not the single source of truth 🚨 )
+
 <details>
-    <summary markdown='span'><strong>👇 Code to copy 👇</strong></summary>
+  <summary markdown='span'><strong>👇 Code to copy 👇</strong></summary>
 
 ```python
 def train():
@@ -455,7 +472,8 @@ def train():
     # YOUR CODE BELOW
 
 
-    # Iterate on the full training dataset chunk per chunks. Break out of the loop if you receive no data to train upon!
+    # Iterate on the full training dataset chunk per chunks.
+    # Break out of the loop if you receive no more data to train upon!
     model = None
     chunk_id = 0
     metrics_val_list = []  # store each metrics_val_chunk
@@ -465,6 +483,9 @@ def train():
 
         # Load chunk of preprocess data and create (X_train_chunk, y_train_chunk)
         # YOUR CODE HERE
+        data_processed_chunk = None
+        X_train_chunk = None
+        y_train_chunk = None
 
         # Train a model incrementally and print validation metrics for this chunk
         learning_rate = 0.001
@@ -486,13 +507,15 @@ def train():
     save_model(model, params=params, metrics=metrics)
 
     # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_train", subdir="train_at_scale",
-                 metrics=metrics)
+    write_result(name="test_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ model trained and saved")
 ```
+
 </details>
 
-🏁 Congratulations! 🏁
+**🧪 Test your code with `make test_train_at_scale_6`**
+
+🏁 🏁 🏁 🏁 Congratulations! 🏁 🏁 🏁 🏁
 
 </details>

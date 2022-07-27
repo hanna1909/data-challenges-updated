@@ -59,7 +59,7 @@ Luckily for us, the [Prefect doc](https://docs.prefect.io/orchestration/) is awe
 
 The intern provided an entry point allowing you to trigger **ONE** run of the model lifecycle.
 
-They also added a new `Makefile` _directive_ callable with `make run_flow` (test it now).
+They also added a new `Makefile` _directive_ callable with `make run_flow`.
 
 Each time you run `make run_flow` the `taxifare.flow.main` module is ran once, triggering a single full lifecycle of training for your model.
 
