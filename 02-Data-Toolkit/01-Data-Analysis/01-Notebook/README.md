@@ -13,4 +13,4 @@ The Jupyter Notebook is running at:
 
 You can then copy/paste this URL into a new tab of your browser.
 
-You can then click on the "Notebook-101" file to open the Notebook for this challenge. While you are working, do not close the terminal tab running `jupyter notebook`, or don't `Ctrl`-`C`, otherwise it will quit and you won't be able to work anymore!
+You can then click on the `notebook_101` file to open the Notebook for this challenge. While you are working, do not close the terminal tab running `jupyter notebook`, or don't `Ctrl`-`C`, otherwise it will quit and you won't be able to work anymore!
