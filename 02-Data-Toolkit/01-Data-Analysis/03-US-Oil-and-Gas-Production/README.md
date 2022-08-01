@@ -144,7 +144,7 @@ As we are starting a new block of exploration, insert a **Markdown** cell and ap
 
 Now that we have prepared the dataframe, we can try to answer a first business-related question:
 
-> How much gas has been produced yearly by each US state, and by the US as a whole country?
+> How much gas has been produced yearly by each US state, and by the US as a whole?
 
 To answer this question, we need to **aggregate** the rows based on the **year** of the `Month` column. Go ahead, insert a new code cell and code this aggregation.  Assign the resulting dataframe to a variable named `yearly_gas_df`.
 
