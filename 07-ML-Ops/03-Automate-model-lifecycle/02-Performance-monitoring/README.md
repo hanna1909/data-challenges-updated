@@ -59,7 +59,9 @@ pip install psycopg2-binary
 
 The **WagonCab** tech team put in production a **mlflow** server located at https://mlflow.lewagon.ai. This will be useful in order to track your experiments and store your trained models.
 
-We added a new variable to the `.env` project configuration file so that the `taxifare-model` package is able to push to **mlflow** the _trained model_ along with the training _parameters_ and _metrics_ once the training is over.
+We added a new `MODEL_TARGET` variable to the `.env` project configuration file. This variable defines how the `taxifare-model` package should save the _outputs of the training_ (the _trained model_ along with the training _parameters_ and _metrics_) once the training is over:
+- When `MODEL_TARGET` is set to `local`, the _outputs of the training_ should be saved to the local disk. This is the current behavior of the package
+- When `MODEL_TARGET` is set to `mlflow`, the _outputs of the training_ should be saved to **mlflow**
 
 ❓ **What parameters do you need to interact with mlflow ?**
 
@@ -85,9 +87,9 @@ You will also need to set in the project configuration the tracking URI of the m
 
 Let's update the code to push the experiment parameters to mlflow once the training it done.
 
-Make sure to push either `learning_rate`, `batch_size` or `context` (the `if __name__ == '__main__': code` in the `taxifare.interface.main` module already does that)
+The pushed params can include `learning_rate`, `batch_size`, and `context`. The code in the `taxifare_model.interface.main` module already pushes these for you.
 
-**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
+**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training using `make run_model`**
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -107,9 +109,9 @@ Make sure to push either `learning_rate`, `batch_size` or `context` (the `if __n
 
 Let's now push the metrics to mlflow. The code should be almost the same as for the parameters of the experiment.
 
-Make sure to push either `val_mae`, `mean_val` or `mae` (the code already does that)
+The pushed metrics can include `val_mae`, `mean_val` and `mae`. The code already does that.
 
-**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
+**💻 Append the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training using `make run_model`**
 
 **🧪 Run the tests with `make dev_test`**
 
@@ -123,7 +125,7 @@ Now for the better part: mlflow allows us to store the trained model so that we 
 
 This will allow you colleagues to use smoothly the model you have trained !
 
-**💻 Complete the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training**
+**💻 Complete the `save_model` function in the `taxifare.ml_logic.registry` module, then run a training using `make run_model`**
 
 **💻 Put your model in Production in the mlflow UI**
 
@@ -144,7 +146,7 @@ What use is it to store my model in mlflow you say ? Well for starters mlflow al
 
 ❓ **How do you make a prediction from a trained model stored in mlflow ?**
 
-**💻 Complete the `load_model` function in the `taxifare.ml_logic.registry` module, then run a training**
+**💻 Complete the `load_model` function in the `taxifare.ml_logic.registry` module, then run a training using `make run_model`**
 
 **🧪 Run the tests with `make dev_test`**
 

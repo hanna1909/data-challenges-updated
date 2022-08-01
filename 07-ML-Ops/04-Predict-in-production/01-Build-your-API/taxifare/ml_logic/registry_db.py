@@ -29,6 +29,7 @@ def get_latest_trained_row(experiment):
 
     conn = psycopg2.connect(tracking_db_uri)
 
+    # RealDictCursor allows to access values in the result rows using column names
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(mlflow_query)
 

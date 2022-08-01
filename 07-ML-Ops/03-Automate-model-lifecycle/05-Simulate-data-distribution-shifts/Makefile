@@ -150,13 +150,17 @@ show_env:
 	@echo "\n$(ccgreen)package behavior:$(ccreset)"
 	@env | grep -E "DATA_SOURCE|MODEL_TARGET" || :
 
+# $ONLY_FROM_setup_BEGIN
 	@echo "\n$(ccgreen)GCP:$(ccreset)"
 	@env | grep -E "PROJECT|REGION" || :
 	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
 	@env | grep -E "BUCKET_NAME|BLOB_LOCATION" || :
+# $ONLY_FROM_setup_END
 
+# $ONLY_FROM_cloud_data_BEGIN
 	@echo "\n$(ccgreen)Big Query:$(ccreset)"
 	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE" || :
+# $ONLY_FROM_cloud_data_END
 
 	@echo "\n$(ccgreen)Compute Engine:$(ccreset)"
 	@env | grep -E "INSTANCE" || :
@@ -173,9 +177,35 @@ reinstall_package:
 	@pip install -e .
 
 write_results:
+# $ONLY_FOR_setup_BEGIN
+	@echo "verify gcloud auth..."
+	@gcloud auth list > tests/setup/test_setup_cli_auth.txt 2>&1 || :
+	@echo "${PROJECT}" > tests/setup/test_setup_project_id.txt
+	@echo "verify gcp default project..."
+	@$(shell sh -c "echo Z2Nsb3VkIGNvbmZpZyBnZXQtdmFsdWUgcHJvamVjdAo= | base64 -d") > tests/setup/test_setup_env_project_id.txt || :
+	@echo "${BUCKET_NAME}" > tests/setup/test_setup_bucket_name.txt
+	@echo "verify bucket name..."
+	@$(shell sh -c "echo Z3N1dGlsIGxzCg== | base64 -d") > tests/setup/test_setup_env_bucket_name.txt || :
+# $ONLY_FOR_setup_END
 
-	@echo "verify installed packages versions"
-	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
+# $ONLY_FOR_cloud_data_BEGIN
+	@echo "retrieve bucket content..."
+	@gsutil stat "gs://${BUCKET_NAME}/data/train_10k.sample.csv" > tests/cloud_data/test_cloud_data_uploaded_blob.txt || :
+	@gsutil stat "gs://${BUCKET_NAME}/data/val_10k.sample.csv" > tests/cloud_data/test_cloud_data_uploaded_blob_val.txt || :
+	@echo "${DATASET}" > tests/cloud_data/test_cloud_data_create_dataset.txt
+	@echo "retrieve big query dataset list..."
+	@$(shell sh -c "echo YnEgbHMK= | base64 -d") > tests/cloud_data/test_cloud_data_create_dataset_source.txt || :
+	@echo "${TRAINING_PREFIX}" > tests/cloud_data/test_cloud_data_create_training_table.txt
+	@echo "${VALIDATION_PREFIX}" > tests/cloud_data/test_cloud_data_create_validation_table.txt
+	@echo "retrieve big query dataset table list..."
+	@$(shell sh -c "echo YnEgbHMK= | base64 -d") ${DATASET} > tests/cloud_data/test_cloud_data_create_table_source.txt || :
+	@echo "retrieve big query training table description..."
+	@$(shell sh -c "echo YnEgc2hvdwo= | base64 -d") ${DATASET}.${TRAINING_PREFIX} > tests/cloud_data/test_cloud_data_table_content_training.txt || :
+	@echo "retrieve big query validation table description..."
+	@$(shell sh -c "echo YnEgc2hvdwo= | base64 -d") ${DATASET}.${VALIDATION_PREFIX} > tests/cloud_data/test_cloud_data_table_content_validation.txt || :
+	@echo "retrieve big query training table first rows..."
+	@bq query --use_legacy_sql=false "SELECT fare_amount FROM ${DATASET}.${TRAINING_PREFIX} LIMIT 10" > tests/cloud_data/test_cloud_data_bq_chunks.txt || :
+# $ONLY_FOR_cloud_data_END
 
 	@echo "${MLFLOW_DB_USER}" > tests/shifts/test_shifts_db_user.txt
 	@echo "${MLFLOW_DB_PASSWORD}" > tests/shifts/test_shifts_db_password.txt
