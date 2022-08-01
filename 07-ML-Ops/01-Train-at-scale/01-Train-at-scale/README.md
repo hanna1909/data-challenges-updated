@@ -135,7 +135,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (not mandatory)
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > ~/.lewagon/mlops/data/raw/train_50M.csv.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
 ```
 
 </details>
@@ -151,7 +151,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.z
 
 ❗️ Make sure to use `taxifare_model` as ipykernel venv
 
-<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-notebook.png' width=400>
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-notebook.png'>
 
 </details>
 
@@ -381,7 +381,7 @@ Using:
 # params.py
 DATASET_SIZE = '500k'
 VALIDATION_DATASET_SIZE = '500k'
-CHUNK_SIZE = 100000
+CHUNK_SIZE = 100,000
 ```
 To create:
 - `data/processed/train_processed_500k.csv` by running `preprocess()`
@@ -420,6 +420,7 @@ This is called **incremental learning** or **partial_fit**
 - For each chunk (big), your model will read data batch-per-batch (small) many times over (epochs)
 
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.png'>
+[//]: # ( excalidraw file to edit https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.excalidraw )
 
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
