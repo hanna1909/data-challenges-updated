@@ -19,7 +19,7 @@ As lead ML Engineer for the project, your first role is to setup a local working
 - To put the code in production (on a server that never stops running) in order to expose it as an **API** or through a **website**
 - Render the code operable so that it can be ran manually or plugged to an automation workflow
 
-### 1.1) Create new pyenv [🐍 taxifare-model]
+### 1.1) Create new pyenv [🐍 taxifare-env]
 
 ❓ Create the virtual env
 
@@ -29,14 +29,14 @@ python --version # First, check your <YOUR_PYTHON_VERSION>. For example: 3.8.12
 ```
 
 ```bash
-pyenv virtualenv <YOUR_PYTHON_VERSION> taxifare-model
+pyenv virtualenv <YOUR_PYTHON_VERSION> taxifare-env
 pip install --upgrade pip
-pyenv local taxifare-model
+pyenv local taxifare-env
 code .
 ```
 
-Then, make sure both your OS terminal, your VS-code integrated terminal display well [🐍 taxifare-model].
-On VS code, open any `.py` file and check that taxifare-model is also activated by clicking on the bottom right pyenv section as below
+Then, make sure both your OS terminal, your VS-code integrated terminal display well [🐍 taxifare-env].
+On VS code, open any `.py` file and check that taxifare-env is also activated by clicking on the bottom right pyenv section as below
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-setup.png'>
 
 ### 1.2) Get familiar with the taxifare package stucture
@@ -79,7 +79,7 @@ cd ~/code/<user.github_nickname>/{{local_path_to("07-ML-Ops/01-Train-at-scale/01
 pip install -e .
 ```
 
-Make sure the package is installed by running `pip list | grep taxifare-model`. It should print the absolute path to the package.
+Make sure the package is installed by running `pip list | grep taxifare`. It should print the absolute path to the package.
 
 
 ### 1.3) Let's store all our data locally at `~/.lewagon/mlops/`
@@ -135,7 +135,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (not mandatory)
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > data/raw/train_50M.csv.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > ~/.lewagon/mlops/data/raw/train_50M.csv.zip
 ```
 
 </details>
@@ -151,7 +151,7 @@ curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.z
 
 ❗️ Make sure to use `taxifare_model` as ipykernel venv
 
-<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-notebook.png'>
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/pyenv-notebook.png' width=400>
 
 </details>
 
@@ -317,9 +317,9 @@ def preprocess(training_set=True):
         destination_name = f"val_processed_{VALIDATION_DATASET_SIZE}.csv"
 
     data_raw_path = os.path.abspath(os.path.join(
-        LOCAL_STORAGE_PATH, "data", "raw", source_name))
+        LOCAL_DATA_PATH, "raw", source_name))
     data_processed_path = os.path.abspath(os.path.join(
-        LOCAL_STORAGE_PATH, "data", "processed", destination_name))
+        LOCAL_DATA_PATH, "processed", destination_name))
 
     # iterate on the dataset, by chunks
     chunk_id = 0
@@ -381,7 +381,7 @@ Using:
 # params.py
 DATASET_SIZE = '500k'
 VALIDATION_DATASET_SIZE = '500k'
-CHUNK_SIZE = 100,000
+CHUNK_SIZE = 100000
 ```
 To create:
 - `data/processed/train_processed_500k.csv` by running `preprocess()`
@@ -420,7 +420,6 @@ This is called **incremental learning** or **partial_fit**
 - For each chunk (big), your model will read data batch-per-batch (small) many times over (epochs)
 
 <img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.png'>
-[//]: # ( excalidraw file to edit https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/train_by_chunk.excalidraw )
 
 
 👍 **Pros:**: This universal approach is framework independent. You can use it with scikit-learn, XGBoost, Tensorflow etc...
@@ -468,7 +467,7 @@ def train():
 
     # First, load a validation set common to all chunks and create (X_val, y_val)
     data_val_processed_path = os.path.abspath(os.path.join(
-        LOCAL_STORAGE_PATH, "data", "processed", f"val_processed_{VALIDATION_DATASET_SIZE}.csv"))
+        LOCAL_DATA_PATH, "processed", f"val_processed_{VALIDATION_DATASET_SIZE}.csv"))
     # YOUR CODE BELOW
 
 

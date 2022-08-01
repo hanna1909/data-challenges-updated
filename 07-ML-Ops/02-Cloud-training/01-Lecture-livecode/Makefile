@@ -25,10 +25,6 @@ test_train_at_scale_6:
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_pass \
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_value
 
-dev_test:
-	@make write_results
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 
 # conf
@@ -52,7 +48,7 @@ run_model:
 	python -m taxifare.interface.main
 
 show_env:
-	@echo "\nEnvironment variables used by the \`taxifare-model\` package loaded by \`direnv\` from your \`.env\` located at:"
+	@echo "\nEnvironment variables used by the \`taxifare\` package loaded by \`direnv\` from your \`.env\` located at:"
 	@echo ${DIRENV_DIR}
 
 	@echo "\n$(ccgreen)local storage:$(ccreset)"
@@ -63,29 +59,16 @@ show_env:
 	@env | grep -E "DATA_SOURCE|MODEL_TARGET" || :
 
 reinstall_package:
-	@pip uninstall -y taxifare-model || :
+	@pip uninstall -y taxifare || :
 	@pip install -e .
 
-write_results:
-
 list:
-	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
+	@echo "\nHelp for the \`taxifare\` package \`Makefile\`"
 
 	@echo "\n$(ccgreen)$(fbold)PACKAGE$(ccreset)"
-
-	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
-	@echo "\n        $(fbold)run_model$(ccreset)"
-	@echo "            Run the package (\`taxifare.interface.main\` module)."
 
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"
 	@echo "\n        $(fbold)reinstall_package$(ccreset)"
 	@echo "            Install the version of the package corresponding to the challenge."
-	@echo "\n    $(ccblue)$(fbold)internal rules:$(ccreset)"
-	@echo "\n        $(fbold)write_results$(ccreset)"
-	@echo "            Write the test results so they can be added and committed to git."
-	@echo "\n        $(fbold)pylint$(ccreset)"
-	@echo "            Print a report on code style."
-	@echo "\n        $(fbold)pytest$(ccreset)"
-	@echo "            Run the tests and print a test report."

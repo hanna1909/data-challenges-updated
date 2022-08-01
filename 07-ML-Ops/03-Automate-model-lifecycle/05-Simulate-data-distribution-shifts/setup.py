@@ -5,8 +5,8 @@ with open("requirements.txt") as f:
     content = f.readlines()
 requirements = [x.strip() for x in content if "git+" not in x]
 
-setup(name='taxifare-model',
-      version="0.0.11",
+setup(name='taxifare',
+      version="0.0.7",
       description="TaxiFare Model (shifts)",
       license="MIT",
       author="Le Wagon",

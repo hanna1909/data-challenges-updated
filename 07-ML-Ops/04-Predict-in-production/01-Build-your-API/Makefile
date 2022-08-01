@@ -25,10 +25,6 @@ test_train_at_scale_6:
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_pass \
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_value
 
-dev_test:
-	@make write_results
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-
 run_api:
 	uvicorn taxifare.api.fast:app --reload
 
@@ -149,7 +145,7 @@ push_month_to_bq:
 	@make show_bq_tables
 
 show_env:
-	@echo "\nEnvironment variables used by the \`taxifare-model\` package loaded by \`direnv\` from your \`.env\` located at:"
+	@echo "\nEnvironment variables used by the \`taxifare\` package loaded by \`direnv\` from your \`.env\` located at:"
 	@echo ${DIRENV_DIR}
 
 	@echo "\n$(ccgreen)local storage:$(ccreset)"
@@ -161,11 +157,9 @@ show_env:
 
 	@echo "\n$(ccgreen)GCP:$(ccreset)"
 	@env | grep -E "PROJECT|REGION" || :
-	@echo "\n$(ccgreen)Cloud Storage:$(ccreset)"
-	@env | grep -E "BUCKET_NAME|BLOB_LOCATION" || :
 
 	@echo "\n$(ccgreen)Big Query:$(ccreset)"
-	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE" || :
+	@env | grep -E "DATASET" | grep -Ev "DATASET_SIZE|VALIDATION_DATASET_SIZE" || :\
 
 	@echo "\n$(ccgreen)Compute Engine:$(ccreset)"
 	@env | grep -E "INSTANCE" || :
@@ -178,16 +172,11 @@ show_env:
 	@env | grep -E "PREFECT_BACKEND|PREFECT_FLOW_NAME|PREFECT_LOG_LEVEL" || :
 
 reinstall_package:
-	@pip uninstall -y taxifare-model || :
+	@pip uninstall -y taxifare || :
 	@pip install -e .
 
-write_results:
-
-	@echo "verify installed packages versions"
-	@pip show taxifare-model | grep 'Summary' > tests/all/test_package_version.txt || :
-
 list:
-	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
+	@echo "\nHelp for the \`taxifare\` package \`Makefile\`"
 
 	@echo "\n$(ccgreen)$(fbold)PACKAGE$(ccreset)"
 
@@ -223,13 +212,5 @@ list:
 	@echo "\n    $(ccgreen)$(fbold)student rules:$(ccreset)"
 	@echo "\n        $(fbold)reinstall_package$(ccreset)"
 	@echo "            Install the version of the package corresponding to the challenge."
-	@echo "\n        $(fbold)dev_test$(ccreset)"
+	@echo "\n        $(fbold)test_cloud_training$(ccreset)"
 	@echo "            Run the tests."
-
-	@echo "\n    $(ccblue)$(fbold)internal rules:$(ccreset)"
-	@echo "\n        $(fbold)write_results$(ccreset)"
-	@echo "            Write the test results so they can be added and committed to git."
-	@echo "\n        $(fbold)pylint$(ccreset)"
-	@echo "            Print a report on code style."
-	@echo "\n        $(fbold)pytest$(ccreset)"
-	@echo "            Run the tests and print a test report."

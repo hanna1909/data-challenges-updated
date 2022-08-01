@@ -25,10 +25,6 @@ test_train_at_scale_6:
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_pass \
 	tests/train_at_scale/test_interface.py::TestInterface::test_train_value
 
-dev_test:
-	@make write_results
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 
 # conf
@@ -52,21 +48,13 @@ run_model:
 	python -m taxifare.interface.main
 
 reinstall_package:
-	@pip uninstall -y taxifare-model || :
+	@pip uninstall -y taxifare || :
 	@pip install -e .
 
-write_results:
-
-	@python -m tests.notebook.write_train
-
 list:
-	@echo "\nHelp for the \`taxifare-model\` package \`Makefile\`"
+	@echo "\nHelp for the \`taxifare\` package \`Makefile\`"
 
 	@echo "\n$(ccgreen)$(fbold)PACKAGE$(ccreset)"
-
-	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
-	@echo "\n        $(fbold)run_model$(ccreset)"
-	@echo "            Run the package (\`taxifare.interface.main\` module)."
 
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"
 
@@ -75,10 +63,3 @@ list:
 	@echo "            Install the version of the package corresponding to the challenge."
 	@echo "\n        $(fbold)test_train_at_scale$(ccreset)"
 	@echo "            Run the package tests."
-	@echo "\n    $(ccblue)$(fbold)internal rules:$(ccreset)"
-	@echo "\n        $(fbold)write_results$(ccreset)"
-	@echo "            Write the test results so they can be added and committed to git."
-	@echo "\n        $(fbold)pylint$(ccreset)"
-	@echo "            Print a report on code style."
-	@echo "\n        $(fbold)pytest$(ccreset)"
-	@echo "            Run the tests and print a test report."
