@@ -10,10 +10,15 @@ pytest
 seaborn
 sklearn
 yapf
-# tensorflow
+# Trick to install the version of Tensorflow depeding on your processor: darwin == Mac, ARM == M1
+tensorflow-macos==2.8.0; sys_platform == 'darwin' and 'ARM' in platform_version
+tensorflow==2.8.0; sys_platform == 'darwin' and 'ARM' not in platform_version
+tensorflow==2.8.0; sys_platform != 'darwin'
 
+# $ONLY_FROM_cloud_data_BEGIN
 # prevent bq 3+ db-dtypes package error when running training from bq
 google-cloud-bigquery<3.0.0
 google-cloud-storage
+# $ONLY_FROM_cloud_data_END
 
 mlflow
