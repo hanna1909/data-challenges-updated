@@ -381,7 +381,7 @@ def pred(
 
 if __name__ == '__main__':
     preprocess_and_train()
-    #preprocess()
-    #train()
-    #pred()
-    #evaluate(first_row=9000)
+    preprocess()
+    train()
+    pred()
+    evaluate(first_row=9000)

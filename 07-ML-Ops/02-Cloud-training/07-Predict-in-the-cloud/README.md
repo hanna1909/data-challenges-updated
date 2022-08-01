@@ -1,30 +1,26 @@
 
-[//]: # ( challenge tech stack: compute-engine gcloud )
+# usage
 
-**💻 Install the package of the current challenge with `make reinstall_package`**
+``` bash
+challengify ite .                                 # generate all challenges
+challengify ite . -f                              # overwrite existing content
+challengify ite . -f -c api_pred..api_advanced    # generate range of challenges
 
-**💻 Do not forget to handle your `.env` file (_copy_ the `.env.sample`, _fill_ the `.env`, _allow_ `direnv`)**
+challengify ite . -vr -c api_pred                 # verbose dry run challenge version api
+```
 
-[//]: # ( challenge instructions )
+# content
 
-Ever been stranded on a spot with low connectivity but still want to work on your data science project?
+the `Makefile` at the root of the project is the glovebox Makefile (glovebox does not check challenge sub directories)
 
-Use your vm! You only need limited bandwidth to communicate with the vm, but you will still benefit from the high bandwith from the vm to rest of the Internet when you use it...
+challengify ite only generates
+- content from `${source}` in `${destination}[${label}]/${project_name}`
+- metadata in `${target}/${destination}[${label}]/${project_name}/.lewagon/challengify_generated.yml`
 
-Now that you have setup your vm for the WagonCab project, it is ready for you anytime! You can switch it on and off in a breathe to work on your project.
+# `data-challenges` challenge validation
 
-Let's say a customer wants to estimate the cost of a ride for 3 persons on March 4th, 2015 at 5:33PM from 40.7812198,-73.9709985 to 40.6412948,-73.7802589.
-
-**❓ How do you make a prediction with your vm ?**
-
-Start your vm and make a prediction for the customer with your latest trained model.
-
-Store the result in `~/code/<user.github_nickname>/{{local_path_to("07-ML-Ops/02-Cloud-training/07-Predict-in-the-cloud")}}/model/tests/cloud_prediction/pred.txt`
-
-**💻 Predict the cost of the ride and store it in the `pred.txt` file**
-
-**🧪 Run the tests with `make dev_test`**
-
-👉 `test_cloud_prediction_pred` should be ✅
-
-🏁 Congrats!
+``` bash
+make show_env
+make list
+make run_model
+```

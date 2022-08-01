@@ -29,10 +29,10 @@ run_api:
 	uvicorn taxifare.api.fast:app --reload
 
 test_api_root:
-	PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_root' -v --color=yes --asyncio-mode=strict -W "ignore"
+	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_root' -v --color=yes --asyncio-mode=strict -W "ignore"
 
 test_api_predict:
-	PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_predict' -v --color=yes --asyncio-mode=strict -W "ignore"
+	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_predict' -v --color=yes --asyncio-mode=strict -W "ignore"
 
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 

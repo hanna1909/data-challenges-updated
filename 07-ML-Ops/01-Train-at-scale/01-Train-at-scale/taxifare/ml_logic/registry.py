@@ -20,9 +20,9 @@ def save_model(model: Model = None,
     persist trained model, params and metrics
     """
 
-    print(Fore.BLUE + "\nSave model to local disk..." + Style.RESET_ALL)
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
 
-    suffix = time.strftime("%Y%m%d-%H%M%S")
+    print(Fore.BLUE + "\nSave model to local disk..." + Style.RESET_ALL)
 
     # save params
     if params is not None:
@@ -51,6 +51,8 @@ def save_model(model: Model = None,
         model.save(model_path)
 
     print("\n✅ data saved locally")
+
+    return None
 
 
 def load_model() -> Model:

@@ -23,7 +23,7 @@ In order to do so, we will:
 
 ### API directory
 
-We will start with a clean slate for these challenges. The project on which we will be working is similar to the codebase you worked with until now, but now you have a new directory `/api` and new files within the `model` project directory.
+A new `taxifare/api` directory has been added to the project to contain the code of the API.dand new files within the `model` project directory.
 
 First, let's have a look at this new directory:
 
@@ -36,11 +36,13 @@ First, let's have a look at this new directory:
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare
-    ├── api             # 🆕 API directory
-    │   ├── __init__.py
-    │   └── fast.py     # 🆕 Where the API lays
-    ├── flow            # DAG stuff
-    ├── model           # ML logic
+│   ├── api             # 🆕 API directory
+│   │   ├── __init__.py
+│   │   └── fast.py     # 🆕 Where the API lays
+│   ├── data_sources    # Data stuff
+│   ├── flow            # DAG stuff
+│   ├── interface       # Package entry point
+│   └── ml_logic        # ML logic
 └── tests               # Your favorite 🍔
 ```
 
@@ -49,7 +51,7 @@ First, let's have a look at this new directory:
 <details>
   <summary markdown='span'>Answer</summary>
 
-🎁 As you can see, it contains a new **module** named **`taxifare.api`** you are going to implement!
+🎁 As you can see, it contains a new **module** named **`taxifare.api.fast`** that you are going to implement!
 
 </details>
 
@@ -64,6 +66,7 @@ uvicorn         # Web server
 httpx           # HTTP client
 pytest-asyncio  # Asynchronous I/O support for pytest
 ```
+
 ⚠️ Make sure perform a **clean install** of the package.
 
 <details>
@@ -106,6 +109,7 @@ You have probably not seen much.
   <summary markdown='span'>Answer</summary>
 
 There is only one endpoint _partially_ implemented at the moment, the root endpoint `/`.
+The unimplemented root page is a little raw, remember you can always find more info on the API using the swagger endpoint 👉 [http://localhost:8000/docs](http://localhost:8000/docs)
 
 </details>
 
@@ -142,14 +146,14 @@ Once and _only once_ your API responds as required:
 - GET `/predict`
 - Query parameters
 
-| Name | Type |
-|---|---|
-| pickup_datetime | DateTime `2013-07-06 17:18:00` |
-| pickup_longitude | float `-73.950655` |
-| pickup_latitude | float `40.783282` |
-| dropoff_longitude | float `-73.950655` |
-| dropoff_latitude | float `40.783282` |
-| passenger_count | int `2` |
+| Name | Type | Sample |
+|---|---|---|
+| pickup_datetime | DateTime |  `2013-07-06 17:18:00` |
+| pickup_longitude | float |  `-73.950655` |
+| pickup_latitude | float |  `40.783282` |
+| dropoff_longitude | float |  `-73.950655` |
+| dropoff_latitude | float |  `40.783282` |
+| passenger_count | int |  `2` |
 
 - Response
 Status 200
@@ -197,10 +201,12 @@ Ask yourselves the following questions:
 Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration:
 
 ``` bash
+MODEL_TARGET=mlflow
 MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
 MLFLOW_EXPERIMENT=taxifare_experiment_recap
 MLFLOW_MODEL_NAME=my_taxifare
 ```
+
 </details>
 
 <details>
@@ -252,7 +258,8 @@ You need Docker daemon to run on your machine so you  will be able to build and 
 
 Launch the Docker Desktop app, you should see a whale in your menu bar.
 
-<img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running">
+<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running"></a>
+
 </details>
 
 <details>
@@ -260,7 +267,8 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
 
 Launch the Docker app.
 
-<img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running">
+<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running"></a>
+
 </details>
 
 **✅ Check Docker daemon is up and running with `docker info` in your terminal**
@@ -282,11 +290,13 @@ As a reminder, here is the project directory structure:
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare
-    ├── api        # ✅ API directory
-    │   ├── __init__.py
-    │   └── fast.py     # ✅ Where the API lays
-    ├── flow             # DAG stuff
-    ├── model            # ML logic
+│   ├── api             # ✅ API directory
+│   │   ├── __init__.py
+│   │   └── fast.py     # ✅ Where the API lays
+│   ├── data_sources    # Data stuff
+│   ├── flow            # DAG stuff
+│   ├── interface       # Package entry point
+│   └── ml_logic        # ML logic
 └── tests               # Your favorite 🍔
 ```
 
@@ -335,6 +345,14 @@ CMD launch API web server
 ```
 
 </details>
+
+**🚨 Apple Silicon users**
+
+🚨 You will not be able to test your container locally with the tensorflow package since the current version does not install properly on _Apple Silicon_ machines.
+
+The solution is to use one image to test your code locally and another one to push your code to production.
+
+👉 Refer to the commands in the `Dockerfile_silicon` file in order to build and test your **local image** and build and deploy to production your **production image**
 
 **❓ How would you check if the `Dockerfile` instructions will execute what you wanted?**
 
@@ -535,6 +553,53 @@ The image should be visible in the GCP console [here](https://console.cloud.goog
 
 ### Deploy the Container Registry image to Google Cloud Run
 
+Add a `MEMORY` variable to your project configuration and set it to `2Gi`.
+
+👉 This will allow your container to run with **2GB** of memory
+
+**❓ How does Cloud Run know the value of the environment variables to pass to your container? 💬 Discuss with your buddy.**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+It does not. You need to provide a list of environment variables to your container when you deploy it 😈
+
+</details>
+
+**💻 Using the `gcloud run deploy --help` documentation, identify a parameter allowing to pass environment variables to your container on deployment**
+
+<details>
+  <summary markdown='span'>🙈 Solution</summary>
+
+The `--env-vars-file` is the correct one!
+
+```bash
+gcloud run deploy --env-vars-file .env.yaml
+```
+
+Tough luck, the `--env-vars-file` parameter takes as input the name of a `yaml` file containing the list of environment variables to pass to the container.
+
+</details>
+
+**💻 Create a `.env.yaml` file containing the list of environment variables to pass to your container**
+
+You can use the provided `.env.sample.yaml` file as a source for the syntax (do not forget to update the value of the parameters).
+
+<details>
+  <summary markdown='span'>🙈 Solution</summary>
+
+Create a new `.env.yaml` file containing the values of your `.env` file in the `yaml` format:
+
+``` yaml
+DATASET_SIZE: 10k
+VALIDATION_DATASET_SIZE: 10k
+CHUNK_SIZE: "2000"
+```
+
+👉 All values should be strings
+
+</details>
+
 **❓ What is the purpose of Cloud Run?**
 
 <details>
@@ -547,7 +612,7 @@ Cloud Run will instantiate the image into a container and run the `CMD` instruct
 Let's run one last command 🤞
 
 ``` bash
-gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --platform managed --region $REGION
+gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --region $REGION --env-vars-file .env.yaml
 ```
 
 After confirmation, you should see a similar output indicating that the service is live 🎉

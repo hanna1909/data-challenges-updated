@@ -57,7 +57,7 @@ async def test_predict_has_key():
     from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
-    assert response.json().get('fare_amount', False)
+    assert response.json().get('fare_amount', False) or response.json().get('fare', False)
 
 
 @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
@@ -66,7 +66,7 @@ async def test_predict_val_is_float():
     from taxifare.api.fast import app
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.get("/predict", params=test_params)
-    assert isinstance(response.json()['fare_amount'], float)
+    assert isinstance(response.json().get('fare_amount'), float) or isinstance(response.json().get('fare'), float)
 
 
 # @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
