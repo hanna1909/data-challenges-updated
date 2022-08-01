@@ -142,7 +142,7 @@ As we are starting a new block of exploration, insert a **Markdown** cell and ap
 ## Yearly Gas production
 ```
 
-Now that we have prepared the dataframe, we can try to answer a first business-related question:
+Now that we have prepared the dataframe, we can try to answer the first business-related question:
 
 > How much gas has been produced yearly by each US state, and by the US as a whole?
 
