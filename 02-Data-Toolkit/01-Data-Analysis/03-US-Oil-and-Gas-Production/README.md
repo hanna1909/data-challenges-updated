@@ -307,7 +307,7 @@ Let's take similar steps with investigating this new data, insert a **Markdown**
 ## Yearly Oil production
 ```
 
-Now, aggregate the rows based on the year of the `Month` column. Insert a new code cell and code this aggregation using DataFrame.groupby() and DataFrame.sum(), assigning the result to a new variable called `yearly_oil_df`.  Let's plot the total U.S. Crude Oil production by year from our new dataframe.  Do you notice anything that might prevent us from doing this?  Take a look at the your column names through the `yearly_oil_df.columns` attribute.
+Now, aggregate the rows based on the year of the `Month` column. Insert a new code cell and code this aggregation using `DataFrame.groupby()` and `DataFrame.sum()`, assigning the result to a new variable called `yearly_oil_df`.  Let's plot the yearly total U.S. Crude Oil production from our new dataframe.  Do you notice anything that might prevent us from doing this? Take a look at the your column names through the `yearly_oil_df.columns` attribute.
 
 <details><summary markdown='span'>Hint
 </summary>
