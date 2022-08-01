@@ -23,6 +23,7 @@ def preprocess_features(X: pd.DataFrame) -> np.ndarray:
         """
 
         pass  # YOUR CODE HERE
+        return final_preprocessor
 
 
     print(Fore.BLUE + "\nPreprocess features..." + Style.RESET_ALL)
