@@ -190,7 +190,7 @@ If you got 100%, commit the changes and continue with the next section.
 
 ## Plotting results
 
-Once that we have successfully aggregated this dataframe, it is time to **plot** the total production in the `U.S.` thanks to the [`DataFrame.filter()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html) and the [`DataFrame.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html) functions.
+Once we have successfully aggregated this dataframe, it is time to **plot** the total production in the `U.S.` thanks to the [`DataFrame.filter()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html) and the [`DataFrame.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html) functions.
 
 <details><summary markdown='span'>View solution
 </summary>
