@@ -5,7 +5,7 @@ In this exercise, we will analyze the US Oil & Gas production from June 2008 to 
 2. Create a folder called `data` using the command `mkdir` in the Terminal in the folder of the challenge
 3. Store your csv in this `data` subfolder
 
-When analyzing data, we don't start with VS Code and write code, we stay in the notebook. VSCode will come later when we will do some **Data Engineering** and create a script to be run at once.  For this challenge, we provide a completely blank notebook and will walk you through the proper steps to keep an organized and presentable notebook while we explore the data set.  You will go back & forth between these instructions and the Notebook where you will write the code. Have fun!
+When analyzing data, we don't start with writing `.py` files in VS Code, we stay in the notebook. VSCode will come later when we do some **Data Engineering** and create a Python script to be run at once.  For this challenge, we provide a completely blank notebook and will walk you through the proper steps to keep an organized and presentable notebook while we explore the data set.  You will go back & forth between these instructions and the Notebook where you will write the code. Have fun!
 
 Let's start by launching Jupyter Notebook:
 
