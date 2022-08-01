@@ -50,7 +50,7 @@ Change the type of the next cell to Markdown and copy-paste the following in it:
 Let's load the Gas production:
 ```
 
-Remember, a Jupyter notebook is not just about writing Python code, otherwise we would have stayed in VSCode!
+Remember, a Jupyter notebook is not just about writing Python code, otherwise we would have stayed in VS Code!
 
 
 Insert a cell below (code, the default) and write the two lines to load the **gas** consumption. Then visualize the `DataFrame` with the `.head()` function.
