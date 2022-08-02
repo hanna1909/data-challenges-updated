@@ -7,7 +7,14 @@ import psycopg2.extras
 from colorama import Fore, Style
 
 
-def get_latest_trained_row(experiment):
+def get_next_first_row(experiment: str) -> int:
+    """
+    Get the rank of the next first row to be trained in the Mlflow experiment database
+    parameters:
+    - experiment: experiment name (str)
+    returns:
+    - next_row: rank of the next first row to be trained (int)
+    """
 
     print(Fore.BLUE + "\nRetrieve last trained row from mlflow db..." + Style.RESET_ALL)
 
@@ -51,6 +58,6 @@ def get_latest_trained_row(experiment):
 
     next_row = first_row + row_count
 
-    print(f"\n✅ last trained rows: row {next_row}")
+    print(f"\n✅ Rank of the next first row to train: row {next_row}")
 
     return next_row

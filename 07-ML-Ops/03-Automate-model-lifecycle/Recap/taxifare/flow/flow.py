@@ -27,7 +27,6 @@ def get_next_training_params(experiment):
 
     print(Fore.GREEN + "\n# 🐙 Prefect task - get next training params:" + Style.RESET_ALL)
 
-    next_row = get_latest_trained_row(experiment)
 
     print()
 

@@ -22,8 +22,7 @@ env_valid_options = dict(
     VALIDATION_DATASET_SIZE=["1k", "10k", "100k", "500k", "500k"],
     CHUNK_SIZE=["200", "2000", "20000", "100000", "1000000"],
     DATA_SOURCE=["local", "big query"],
-    MODEL_TARGET=["local", "gcs", "mlflow"],
-    PREFECT_BACKEND=["local", "server", "cloud"])
+    MODEL_TARGET=["local", "gcs", "mlflow"],)
 
 
 def validate_env_value(env, valid_options):

@@ -38,15 +38,15 @@ def save_model(model: Model = None,
 
         with mlflow.start_run():
 
-            # push parameters to mlflow
+            # STEP 1: push parameters to mlflow
             if params is not None:
                 mlflow.log_params(params)
 
-            # push metrics to mlflow
+            # STEP 2: push metrics to mlflow
             if metrics is not None:
                 mlflow.log_metrics(metrics)
 
-            # push model to mlflow
+            # STEP 3: push model to mlflow
             if model is not None:
 
                 mlflow.keras.log_model(keras_model=model,

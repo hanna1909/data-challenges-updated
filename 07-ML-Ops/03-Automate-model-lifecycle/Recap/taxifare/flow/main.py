@@ -3,21 +3,16 @@ from taxifare.flow import build_flow
 
 import os
 
-
 flow = build_flow()
 
-flow.visualize()
-
 mlflow_experiment = os.environ.get("MLFLOW_EXPERIMENT")
+prefect_backend = os.environ.get("PREFECT_BACKEND")
 
-if os.environ.get("PREFECT_BACKEND") == "local":
-
+if prefect_backend == "development":
+    flow.visualize()
     flow.run(parameters=dict(
         experiment=mlflow_experiment))
-
-else:
-
-    # requires cli run:
-    # `prefect create project "taxifare_project"`
-
+elif prefect_backend == "production":
     flow.register("taxifare_project")
+else:
+    raise ValueError(f"{prefect_backend} is not a valid value for PREFECT_BACKEND")
