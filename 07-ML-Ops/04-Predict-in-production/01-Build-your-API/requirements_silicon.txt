@@ -17,11 +17,9 @@ google-cloud-storage
 
 mlflow
 
-# $ONLY_FROM_prefect_BEGIN
-prefect
+prefect<2
 prefect[viz]
 psycopg2-binary
-# $ONLY_FROM_prefect_END
 
 # API
 fastapi
