@@ -1,0 +1,5 @@
+
+challenge_output: lewagon-data/train-in-the-cloud
+# $ONLY_FOR_cloud_prediction_BEGIN
+challenge_output: lewagon-data/predict-in-the-cloud
+# $ONLY_FOR_cloud_prediction_END

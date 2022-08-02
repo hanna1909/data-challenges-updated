@@ -421,10 +421,10 @@ A shell console should open, you are inside the image 👏.
 
 **💻 Check the image is correctly set up:**
 
-- [ ] The python version is the same as your virtual env
-- [ ] Presence of the `/taxifare` directory
-- [ ] Presence of the `requirements.txt`
-- [ ] The dependencies are all installed
+- ✅ The python version is the same as your virtual env
+- ✅ Presence of the `/taxifare` directory
+- ✅ Presence of the `requirements.txt`
+- ✅ The dependencies are all installed
 
 <details>
   <summary markdown='span'>🙈 Solution</summary>
@@ -455,7 +455,7 @@ test if the API responds as it should.
 You should probably remove the interactivity mode and forget the `sh` command...
 </details>
 
-**🐛 Unless you fing the correct command to run the image, it is probably crashing with errors involving environment variable.**
+**🐛 Unless you find the correct command to run the image, it is probably crashing with errors involving environment variable.**
 
 **❓ What is the difference between your local environment and image environment? 💬 Discuss with your buddy.**
 
@@ -617,7 +617,7 @@ gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --regio
 
 After confirmation, you should see a similar output indicating that the service is live 🎉
 
-``` txt
+```bash
 Service name (wagon-data-tpl-image):
 Allow unauthenticated invocations to [wagon-data-tpl-image] (y/N)?  y
 

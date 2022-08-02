@@ -3,7 +3,7 @@
 
 **🤩 Interfaces for humans 🤩**
 
-Throughout this module, you where able to train a powerful prediction model, and put in production an API to expose it to the world.
+Throughout this module, you were able to train a powerful prediction model, and put in production an API to expose your model to the world.
 
 It is time to create an interface to allow regular Internet users to play with your predictions 🌍
 
@@ -20,7 +20,7 @@ In this unit, you will learn how to create a website leveraging your **TaxiFare*
 
 **2️⃣ TaxiFare website**
 - We will use **streamlit** in order to create a user interface allowing to use our **TaxiFare** 🚕 model predictions
-- And deploy it to production using **Streamlit Cloud**
+- And deploy the user interface to production using **Streamlit Cloud**
 
 **▶️ It is pitch time**
 - Let's get ready for the pitches! 🎉
@@ -29,11 +29,10 @@ In this unit, you will learn how to create a website leveraging your **TaxiFare*
 
 [//]: # ( challenge instructions )
 
-
-In the previous challenges, we created a project containing the code allowing us to:
+In the previous challenges, we updated our code to:
 - **Train a model** at scale from the Kaggle New York City Taxi Fare Prediction dataset
 - Build a containerized **Prediction API** allowing to make predictions based on this model
-- Deploy this API on **Google Cloud Run** to make it available to the world 🌍
+- Deploy our API on **Google Cloud Run** to make it available to the world 🌍
 
 We have a live API allowing developers all over the world to predict the fare amount for a taxi ride in New York City 🎉
 
@@ -51,7 +50,7 @@ We are going to create a separate project for our website in order to keep thing
 
 🤔 Why would we want to split our code into 2 projects ?
 
-👉 Separating the code for the model training + prediction API from the code of the website will allow the package for the website to be very light.
+👉 Separating the code for the model training + prediction API from the code of the website will allow the package for the website to be very light
 👉 Using separate projects will also ease the deployment of the interface
 
 Actually, the package for our website will not require to contain any Data Science related code, since the website will be using our own API in order to make predictions.

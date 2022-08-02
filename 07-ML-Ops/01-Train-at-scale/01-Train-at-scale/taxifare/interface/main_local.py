@@ -50,7 +50,7 @@ def preprocess_and_train():
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
-    batch_size = 256
+    batch_size = 64
     # YOUR CODE HERE
 
     # Compute the validation metric (min val mae of the holdout set)

@@ -9,99 +9,10 @@ from taxifare.ml_logic.params import (CHUNK_SIZE,
 
 from taxifare.ml_logic.preprocessor import preprocess_features
 
-from taxifare.ml_logic.model import (initialize_model,
-                                           compile_model,
-                                           train_model,
-                                           evaluate_model)
-
-from taxifare.ml_logic.registry import (save_model,
-                                              load_model)
-
 import numpy as np
 import pandas as pd
 
 from colorama import Fore, Style
-
-
-def preprocess_and_train(
-    first_row=0):
-    """
-    Load data in memory, clean and preprocess it, train a Keras model on it,
-    save the model, and finally compute & save a performance metric
-    on a validation set holdout at the `model.fit()` level
-    """
-
-    print("\n⭐️ use case: preprocess and train")
-
-    # retrieve the dataset
-    data = get_chunk(source_name=f"train_{DATASET_SIZE}",
-                     index=first_row,
-                     chunk_size=None)  # retrieve all further data
-
-    if data is None:
-        print("\n✅ no data to preprocess and train")
-        return None
-
-    row_count = len(data)
-
-    # clean the dataset
-    data_cleaned = clean_data(data)
-
-    cleaned_row_count = len(data_cleaned)
-
-    if cleaned_row_count == 0:
-        print("\n✅ no data to preprocess and train after after data cleaning")
-        return None
-
-    # create X, y as pandas DataFrames
-    X = data_cleaned.drop("fare_amount", axis=1)
-    y = data_cleaned[["fare_amount"]]
-
-    # preprocess X and return a numpy array
-    X_processed = preprocess_features(X)
-
-    # model params
-    learning_rate = 0.001
-    batch_size = 256
-
-    load_existing_model = False
-    if first_row != 0:
-        load_existing_model = True
-
-    model = None
-    if load_existing_model:
-        model = load_model(        )
-
-    # initialize model
-    if model is None:
-        model = initialize_model(X_processed)
-        model = compile_model(model, learning_rate)
-
-    # train model
-    model, history = train_model(model, X_processed, y, batch_size, validation_split=0.3)
-
-    # compute val_metrics
-    val_mae = np.min(history.history['val_mae'])
-    metrics = dict(val_mae=val_mae)
-
-    # save model
-    params = dict(
-        # hyper parameters
-        learning_rate=learning_rate,
-        batch_size=batch_size,
-        # package behavior
-        context="preprocess and train",
-        # data source
-        first_row=first_row,
-        row_count=row_count,
-        cleaned_row_count=cleaned_row_count)
-
-    save_model(model=model, params=params, metrics=metrics)
-
-    print(f"\n✅ trained on {row_count} rows ({cleaned_row_count} cleaned) with mae {round(val_mae, 2)}")
-
-    return val_mae
-
 
 def preprocess(
     first_row=0
@@ -162,18 +73,6 @@ def preprocess(
         print("\n✅ no new data for the preprocessing 👌")
         return
 
-    # save params
-    params = dict(
-        # package behavior
-        context="preprocess",
-        chunk_size=CHUNK_SIZE,
-        # data source
-        first_row=first_row,
-        row_count=row_count,
-        cleaned_row_count=cleaned_row_count)
-
-    save_model(params=params)
-
     print(f"\n✅ data processed saved entirely: {row_count} rows ({cleaned_row_count} cleaned)")
 
 
@@ -185,8 +84,10 @@ def train(
     Save final model once it has seen all data, and compute validation metrics on a holdout validation set
     common to all chunks.
     """
-
     print("\n⭐️ use case: train")
+
+    from taxifare.ml_logic.model import (initialize_model, compile_model, train_model)
+    from taxifare.ml_logic.registry import save_model
 
     print(Fore.BLUE + "\nLoading preprocessed validation data..." + Style.RESET_ALL)
 
@@ -210,7 +111,7 @@ def train(
 
     # model params
     learning_rate = 0.001
-    batch_size = 256
+    batch_size = 64
 
     # iterate on the full dataset per chunks
     model = None
@@ -295,12 +196,15 @@ def train(
     return mean_val_mae
 
 
-def evaluate(first_row):
+def evaluate(first_row=0):
     """
     Evaluate the performance of the latest production model on new data
     """
 
     print("\n⭐️ use case: evaluate")
+
+    from taxifare.ml_logic.model import evaluate_model
+    from taxifare.ml_logic.registry import load_model, save_model
 
     # load new data
     new_data = get_chunk(source_name=f"train_{DATASET_SIZE}",
@@ -343,6 +247,8 @@ def pred(
 
     print("\n⭐️ use case: predict")
 
+    from taxifare.ml_logic.registry import load_model
+
     if X_pred is None:
 
         X_pred = pd.DataFrame(dict(
@@ -366,7 +272,6 @@ def pred(
 
 
 if __name__ == '__main__':
-    preprocess_and_train()
     preprocess()
     train()
     pred()

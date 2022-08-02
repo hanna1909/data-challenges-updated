@@ -20,7 +20,6 @@ DATASET = os.environ.get("DATASET")
 env_valid_options = dict(
     DATASET_SIZE=["1k", "10k", "100k", "500k", "50M"],
     VALIDATION_DATASET_SIZE=["1k", "10k", "100k", "500k", "500k"],
-    CHUNK_SIZE=["200", "2000", "20000", "100000", "1000000"],
     DATA_SOURCE=["local", "big query"],
     MODEL_TARGET=["local", "gcs", "mlflow"],)
 

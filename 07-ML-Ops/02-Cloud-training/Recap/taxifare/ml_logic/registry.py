@@ -9,8 +9,7 @@ import pickle
 
 from colorama import Fore, Style
 
-from tensorflow import keras
-from tensorflow.keras import Model
+from tensorflow.keras import Model, models
 
 
 def save_model(model: Model = None,
@@ -54,7 +53,7 @@ def save_model(model: Model = None,
 
     # save params
     if params is not None:
-        params_path = os.path.join(LOCAL_REGISTRY_PATH, "params", suffix + ".pickle")
+        params_path = os.path.join(LOCAL_REGISTRY_PATH, "params", timestamp + ".pickle")
 
         print(f"- params path: {params_path}")
 
@@ -63,7 +62,7 @@ def save_model(model: Model = None,
 
     # save metrics
     if metrics is not None:
-        metrics_path = os.path.join(LOCAL_REGISTRY_PATH, "metrics", suffix + ".pickle")
+        metrics_path = os.path.join(LOCAL_REGISTRY_PATH, "metrics", timestamp + ".pickle")
 
         print(f"- metrics path: {metrics_path}")
 
@@ -72,7 +71,7 @@ def save_model(model: Model = None,
 
     # save model
     if model is not None:
-        model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", suffix)
+        model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", timestamp)
 
         print(f"- model path: {model_path}")
 
@@ -102,7 +101,7 @@ def load_model() -> Model:
     model_path = sorted(glob.glob(f"{model_directory}/*"))[-1]
     print(f"- path: {model_path}")
 
-    model = keras.models.load_model(model_path)
+    model = models.load_model(model_path)
     print("\n✅ model loaded from disk")
 
     return model

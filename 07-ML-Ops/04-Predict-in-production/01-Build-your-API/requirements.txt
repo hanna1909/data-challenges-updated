@@ -19,7 +19,7 @@ pyarrow
 
 mlflow
 
-prefect
+prefect<2
 prefect[viz]
 psycopg2-binary
 

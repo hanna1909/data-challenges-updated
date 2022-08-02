@@ -5,8 +5,7 @@ import time
 print(Fore.BLUE + "\nLoading tensorflow..." + Style.RESET_ALL)
 start = time.perf_counter()
 
-from tensorflow import keras
-from tensorflow.keras import Model, Sequential, layers, regularizers
+from tensorflow.keras import Model, Sequential, layers, regularizers, optimizers
 from tensorflow.keras.callbacks import EarlyStopping
 
 end = time.perf_counter()
@@ -41,7 +40,7 @@ def compile_model(model: Model, learning_rate: float) -> Model:
 def train_model(model: Model,
                 X: np.ndarray,
                 y: np.ndarray,
-                batch_size=256,
+                batch_size=64,
                 validation_split=0.3,
                 validation_data=None) -> Tuple[Model, dict]:
     """

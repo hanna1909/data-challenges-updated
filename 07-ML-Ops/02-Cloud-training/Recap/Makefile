@@ -20,8 +20,19 @@ ccgreen=$(shell echo "\033[0;32m")
 ccblue=$(shell echo "\033[0;34m")
 ccreset=$(shell echo "\033[0;39m")
 
-run_model:
-	python -m taxifare.interface.main
+run_preprocess:
+	python -c 'from taxifare.interface.main import preprocess; preprocess()'
+
+run_train:
+	python -c 'from taxifare.interface.main import train; train()'
+
+run_pred:
+	python -c 'from taxifare.interface.main import pred; pred()'
+
+run_evaluate:
+	python -c 'from taxifare.interface.main import evaluate; evaluate()'
+
+run_all: run_preprocess run_train run_pred run_evaluate
 
 show_env:
 	@echo "\nEnvironment variables used by the \`taxifare\` package loaded by \`direnv\` from your \`.env\` located at:"
@@ -57,7 +68,7 @@ list:
 	@echo "            Show the environment variables used by the package by category."
 
 	@echo "\n    $(ccgreen)$(fbold)run rules:$(ccreset)"
-	@echo "\n        $(fbold)run_model$(ccreset)"
+	@echo "\n        $(fbold)run_all$(ccreset)"
 	@echo "            Run the package (\`taxifare.interface.main\` module)."
 
 	@echo "\n$(ccgreen)$(fbold)TESTS$(ccreset)"

@@ -44,8 +44,19 @@ ccgreen=$(shell echo "\033[0;32m")
 ccblue=$(shell echo "\033[0;34m")
 ccreset=$(shell echo "\033[0;39m")
 
-run_model:
-	python -m taxifare.interface.main
+run_preprocess:
+	python -c 'from taxifare.interface.main import preprocess; preprocess()'
+
+run_train:
+	python -c 'from taxifare.interface.main import train; train()'
+
+run_pred:
+	python -c 'from taxifare.interface.main import pred; pred()'
+
+run_evaluate:
+	python -c 'from taxifare.interface.main import evaluate; evaluate()'
+
+run_all: run_preprocess run_train run_pred run_evaluate
 
 reinstall_package:
 	@pip uninstall -y taxifare || :

@@ -96,10 +96,10 @@ pip install -e .
 mkdir -p training_outputs/params training_outputs/metrics training_outputs/models
 ```
 
-Run the training:
+Run the preprocess and training:
 
 ``` bash
-make run_model
+make run_preprocess run_train
 tree training_outputs
 ```
 

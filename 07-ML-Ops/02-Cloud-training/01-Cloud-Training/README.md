@@ -78,7 +78,7 @@ This file is a _template_ allowing you to create the `.env` file for each challe
 Bye bye `taxifare.interface.main_local` module, you served us well ❤️
 
 Long live `taxifare.interface.main`, our new package entry point ⭐️ to:
-- `preprocess_and_train`: preprocess and train the data in one go
+- ~~`preprocess_and_train`~~: This method have been deleted: it does not scale well enough
 - `preprocess`: preprocess the data by chunk
 - `train`: train the data by chunk
 - `evaluate`: evaluate the performance of the latest trained model on new data
@@ -211,8 +211,7 @@ make show_env
 ⚙️ Run the following command: `python -m taxifare.interface.main` to test each methods one by one, uncommenting each route below one after the other, and make sure to understand how your new package works.
 ```python
 if __name__ == '__main__':
-    preprocess_and_train()
-    #preprocess()
+    preprocess()
     #train()
     #pred()
     #evaluate(first_row=9000)
@@ -504,7 +503,7 @@ Head towards the GCP console [Compute Engine](https://console.cloud.google.com/c
   IMAGE_PROJECT=ubuntu-os-cloud
   IMAGE_FAMILY=ubuntu-2110
 
-  gcloud compute instances create ${INSTANCE} --image-project=${IMAGE_PROJECT} --image-family=${IMAGE_FAMILY}
+  gcloud compute instances create $INSTANCE --image-project=$IMAGE_PROJECT --image-family=$IMAGE_FAMILY
   ```
 </details>
 
@@ -532,7 +531,7 @@ All you need to do is to `gcloud compute ssh` on a running instance and to run `
 ``` bash
 INSTANCE=taxi-instance
 
-gcloud compute ssh ${INSTANCE}
+gcloud compute ssh $INSTANCE
 ```
 
 <details>
@@ -630,7 +629,7 @@ exit
 Then reconnect:
 
 ``` bash
-gcloud compute ssh ${INSTANCE}
+gcloud compute ssh $INSTANCE
 ```
 
 Install python `3.8.12` and create a `lewagon` virtual env. This can take a while and look like it is stuck, but it is not:
@@ -653,8 +652,17 @@ Copy your private key 🔑 to the _vm_ in order to allow it to access to your Gi
 
 ``` bash
 INSTANCE=taxi-instance
+
 # scp stands for secure copy (cp)
-gcloud compute scp ~/.ssh/id_ed25519 ${INSTANCE}:~/.ssh/
+gcloud compute scp ~/.ssh/id_ed25519 $INSTANCE:~/.ssh/
+```
+
+If the command fails and ask for a user name, use the following variation:
+
+``` bash
+USER=toto
+
+gcloud compute scp ~/.ssh/id_ed25519 $USER@$INSTANCE:~/.ssh/
 ```
 
 ⚠️ Then resume to running other commands in the VM ⚠️
@@ -682,8 +690,17 @@ In order to do so, we will copy your service account json key file 🔑 to the v
 ``` bash
 INSTANCE=taxi-instance
 
-gcloud compute scp $GOOGLE_APPLICATION_CREDENTIALS ${INSTANCE}:~/.ssh/
-gcloud compute ssh ${INSTANCE} --command "echo 'export GOOGLE_APPLICATION_CREDENTIALS=~/.ssh/$(basename $GOOGLE_APPLICATION_CREDENTIALS)' >> ~/.zshrc"
+gcloud compute scp $GOOGLE_APPLICATION_CREDENTIALS $INSTANCE:~/.ssh/
+gcloud compute ssh $INSTANCE --command "echo 'export GOOGLE_APPLICATION_CREDENTIALS=~/.ssh/$(basename $GOOGLE_APPLICATION_CREDENTIALS)' >> ~/.zshrc"
+```
+
+If the command fails and ask for a user name, use the following variation:
+
+``` bash
+USER=toto
+
+gcloud compute scp $GOOGLE_APPLICATION_CREDENTIALS $USER@$INSTANCE:~/.ssh/
+gcloud compute ssh $INSTANCE --command "echo 'export GOOGLE_APPLICATION_CREDENTIALS=~/.ssh/$(basename $GOOGLE_APPLICATION_CREDENTIALS)' >> ~/.zshrc"
 ```
 
 ⚠️ Then resume to running other commands in the VM ⚠️
@@ -818,7 +835,7 @@ exit
 ```
 
 ``` bash
-gcloud compute ssh ${INSTANCE}
+gcloud compute ssh $INSTANCE
 ```
 
 Allow your `.envrc`:
@@ -840,10 +857,10 @@ pip install pyarrow tensorflow  # this should be in your requirements.txt
 pip install -r requirements.txt
 ```
 
-And run the training!
+And run the preprocess and the training in the cloud!
 
 ``` bash
-make run_model  # python -m taxifare.interface.main
+make run_all  # Have a look at the Makefile to understand exactly what this does!
 ```
 
 </details>
@@ -870,9 +887,9 @@ Have a look at the `gcloud compute instances` commands in order to start, stop o
 ``` bash
 INSTANCE=taxi-instance
 
-gcloud compute instances stop ${INSTANCE}
+gcloud compute instances stop $INSTANCE
 gcloud compute instances list
-gcloud compute instances start ${INSTANCE}
+gcloud compute instances start $INSTANCE
 ```
 </details>
 

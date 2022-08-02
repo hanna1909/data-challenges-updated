@@ -5,8 +5,7 @@ import time
 print(Fore.BLUE + "\nLoading tensorflow..." + Style.RESET_ALL)
 start = time.perf_counter()
 
-from tensorflow import keras
-from tensorflow.keras import Model, Sequential, layers, regularizers
+from tensorflow.keras import Model, Sequential, layers, regularizers, optimizers
 from tensorflow.keras.callbacks import EarlyStopping
 
 end = time.perf_counter()
@@ -47,7 +46,7 @@ def compile_model(model: Model, learning_rate: float) -> Model:
     """
     Compile the Neural Network
     """
-    optimizer = keras.optimizers.Adam(learning_rate=learning_rate)
+    optimizer = optimizers.Adam(learning_rate=learning_rate)
     model.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["mae"])
 
     print("\n✅ model compiled")
@@ -57,7 +56,7 @@ def compile_model(model: Model, learning_rate: float) -> Model:
 def train_model(model: Model,
                 X: np.ndarray,
                 y: np.ndarray,
-                batch_size=256,
+                batch_size=64,
                 validation_split=0.3,
                 validation_data=None) -> Tuple[Model, dict]:
     """
@@ -88,7 +87,7 @@ def train_model(model: Model,
 def evaluate_model(model: Model,
                    X: np.ndarray,
                    y: np.ndarray,
-                   batch_size=256) -> Tuple[Model, dict]:
+                   batch_size=64) -> Tuple[Model, dict]:
     """
     Evaluate trained model performance on dataset
     """

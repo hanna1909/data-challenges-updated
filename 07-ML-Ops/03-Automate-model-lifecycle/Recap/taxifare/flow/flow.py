@@ -1,10 +1,7 @@
 
-from taxifare.ml_logic.registry_db import get_latest_trained_row
+from taxifare.ml_logic.registry_db import get_next_first_row
 
-from taxifare.interface.main import (preprocess_and_train,
-                                           preprocess,
-                                           train,
-                                           evaluate)
+from taxifare.interface.main import preprocess, train, evaluate
 
 from prefect import task, Flow, Parameter
 
@@ -71,21 +68,13 @@ def train_model(next_row):
     # - csv: approximate the new row count from the average line length
 
     # train new model (or existing production model if it exists) with new data
-    if next_row == 0:
 
-        # preprocess data chunk by chunk
-        preprocess(first_row=next_row)
+    # preprocess data chunk by chunk
+    preprocess(first_row=next_row)
 
-        # train model chunk by chunk
-        new_perf = train(first_row=next_row,
-                         stage="Production")
-
-    else:
-
-        # preprocess and train in one piece
-        new_perf = preprocess_and_train(first_row=next_row,
-                                        stage="Production")
-
+    # train model chunk by chunk
+    new_perf = train(first_row=next_row,
+                        stage="Production")
     print()
 
     return new_perf

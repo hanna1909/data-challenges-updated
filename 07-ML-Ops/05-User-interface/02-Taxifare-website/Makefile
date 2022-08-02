@@ -7,12 +7,7 @@ default: pytest
 # 	find . -iname "*.py" -not -path "./tests/test_*" | xargs -n1 -I {}  pylint --output-format=colorized {}; true
 
 pytest:
-	# $ONLY_TO_shifts_BEGIN
-	cd model && PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-	# $ONLY_TO_shifts_END
-	# $ONLY_FROM_api_pred_BEGIN
-	cd model && PYTHONDONTWRITEBYTECODE=1 pytest tests/api -v --color=yes
-	# $ONLY_FROM_api_pred_END
+	echo "no tests"
 
 # ----------------------------------
 #         LOCAL SET UP
