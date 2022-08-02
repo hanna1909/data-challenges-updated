@@ -57,7 +57,7 @@ def full_description_concatenation(first_name, last_name, age):
 def full_description_formatting(first_name, last_name, age):
     """
     returns a sentence with the first_name and the last_name capitalized and
-     the age using formatting
+     the age using string interpolation
     example: full_description_formatting("john", "doe", 33) => "John Doe is 33"
     """
     pass  # YOUR CODE HERE

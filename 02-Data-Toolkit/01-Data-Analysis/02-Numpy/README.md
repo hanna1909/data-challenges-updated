@@ -15,7 +15,7 @@ Have fun!
 Once you are done with this challenge do not forget to commit & push!
 
 ```bash
-git add Challenge.ipynb
+git add numpy_warm-up.ipynb
 git commit -m "Numpy 101 Challenge completed"
 git push origin master
 ```
