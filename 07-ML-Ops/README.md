@@ -27,20 +27,18 @@ They have been working in a isolated notebook context, hand-crafting & fine-tuni
 **Unit 1) - Train at Scale**
 - Understand data scientists' notebooks
 - **Package** your python code
-- Master your **IDE** (bye bye jupyter, hello VS code)
+- Master your **IDE** (bye bye jupyter, hello VS Code)
 - Train at scale (locally) via **incremental** processing techniques
 
 **Unit 2) - Train on Cloud**
-- Master your own **shell**
 - Store model weights on **Google Cloud Storage**
 - Store & query data on **Google Big Query**
 - Use cloud power with **Google Compute Engine** (Virtual Machines)
-- Use cloud managed solution with **Google Wertex AI Workbench** (Jupyter Lab on the cloud)
+- Use a cloud managed solution with **Google Vertex AI Workbench** (Jupyter Lab on the cloud)
 
 **Unit 3) - Model Lifecycle**
-- store model versions and monitor performance with **ML FLOW**
-- Retrain on fresh new data using **Prefect** to manage your DAG (Direct Acyclic Graphs)
-- Learn about **data versionning**
+- Store model versions and monitor performance with **MLflow**
+- Retrain on fresh new data using **Prefect** to manage your DAG (Direct Acyclic Graph)
 
 **Unit 4) - Predict in production**
 - Develop your **API** with **FastAPI** and **uvicorn**
