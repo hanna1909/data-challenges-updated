@@ -114,7 +114,7 @@ Learn how to setup the **application parameters** for your challenges
 
 [//]: # ( challenge instructions )
 
-## Install `taxifare` version `0.0.2`
+## Install `taxifare` version `0.0.4`
 
 **💻 Install the new package version**
 ```bash
@@ -124,7 +124,7 @@ make reinstall_package
 **🧪 Check the package version**
 ```bash
 pip list | grep taxifare
-# taxifare               0.0.2
+# taxifare               0.0.4
 ```
 
 ## Configuration setup
