@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 requirements = [x.strip() for x in content if "git+" not in x]
 
 setup(name='taxifare',
-      version="0.0.6",
+      version="0.0.7",
       description="TaxiFare Model (automate_model_lifecycle)",
       license="MIT",
       author="Le Wagon",
