@@ -289,7 +289,17 @@ books_df.groupby("Rating").count()["Title"].plot(kind="bar")
 
 ### Test your code!
 
-Add and run the following cell to test your code:
+Before we test our code, there is one special note about this particular exercise.
+
+If you check the test below, you will see that we're passing in the `books_dict` variable. Since `books_dict` is quite large, the test runs into an issue when pickling, which is that it reaches the "maximum recursion depth" when trying to pickle the dictionary (more information in [this Stack Overflow post](https://stackoverflow.com/questions/2134706/hitting-maximum-recursion-depth-using-pickle-cpickle)), so we need to increase the recursion limit before testing.
+
+Add and run the following cells to test your code:
+
+```python
+# Setting a new recursion limit and double-checking it
+sys.setrecursionlimit(4500)
+sys.getrecursionlimit()
+```
 
 ```python
 from nbresult import ChallengeResult
