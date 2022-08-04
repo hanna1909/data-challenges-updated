@@ -11,8 +11,8 @@ Download and save the database file in this challenge `data` directory.
 **Alternatively** you can make a copy of the `movies.sqlite` located in the previous challenge `data` directory, using the command below:
 
 ```bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/01-Python/03-SQL-Basics/03-Interacting-with-db/data/movies.sqlite \
-~/code/<user.github_nickname>/<program.challenges_repo_name>/01-Python/03-SQL-Basics/04-Interacting-With-Code/data/movies.sqlite
+cp ~/code/<user.github_nickname>/{{local_path_to("01-Python/03-SQL-Basics/03-Interacting-with-db")}}/data/movies.sqlite \
+~/code/<user.github_nickname>/{{local_path_to("01-Python/03-SQL-Basics/04-Interacting-With-Code")}}/data/movies.sqlite
 ```
 
 ## Tool

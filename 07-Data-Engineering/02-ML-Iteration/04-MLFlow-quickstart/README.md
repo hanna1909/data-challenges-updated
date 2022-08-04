@@ -26,7 +26,7 @@ Copy `ml_flow_test.py` from the challenge directory to the directory of your pac
 
 
 ```bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/04-MLFlow-quickstart/ml_flow_test.py ~/code/<user.github_nickname>/TaxiFareModel
+cp -r ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/02-ML-Iteration/04-MLFlow-quickstart")}}/ml_flow_test.py ~/code/<user.github_nickname>/TaxiFareModel
 ```
 
 </details>

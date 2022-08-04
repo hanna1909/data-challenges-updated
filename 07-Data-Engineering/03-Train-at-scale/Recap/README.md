@@ -46,7 +46,7 @@ code .
 👉 Open **another terminal window** for the notebooks. We will use the first terminal window in order to add and commit the code of our package as it evolves using `git` commands
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/03-Train-at-scale/Recap
+cd ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/03-Train-at-scale/Recap")}}
 jupyter notebook
 ```
 
@@ -271,5 +271,5 @@ Once the job is complete, you should find a trained model saved in your bucket. 
 Go to the challenge and follow the instructions in order to open in Google Colab a notebook containing a **Deep Learning** model training for the TaxiFare challenge.
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/03-Train-at-scale/06-Google-Colab
+cd ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/03-Train-at-scale/06-Google-Colab")}}
 ```

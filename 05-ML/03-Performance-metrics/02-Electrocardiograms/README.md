@@ -5,7 +5,7 @@
 The dataset is available [here](https://wagon-public-datasets.s3.amazonaws.com/Machine%20Learning%20Datasets/ML_Electrocardiograms_dataset.csv)). Let's download it and store it in the `data` folder in the `02-Electrocardiograms` directory with the following commands:
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/05-ML/03-Performance-metrics/02-Electrocardiograms
+cd ~/code/<user.github_nickname>/{{local_path_to("05-ML/03-Performance-metrics/02-Electrocardiograms")}}
 curl https://wagon-public-datasets.s3.amazonaws.com/Machine%20Learning%20Datasets/ML_Electrocardiograms_dataset.csv > data/electrocardiograms.csv
 ```
 

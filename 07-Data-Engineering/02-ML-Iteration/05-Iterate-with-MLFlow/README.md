@@ -81,7 +81,7 @@ You have just tried several estimators and saw that some perform better than oth
 Use the benefits of pipelines integrated into our custom class.
 
 We will start with one additional feature: `distance_to_center`:
-- Get back to the `<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/01-Kaggle-Taxi-Fare` notebook with complete feature engineering
+- Get back to the `{{local_path_to("07-Data-Engineering/02-ML-Iteration/01-Kaggle-Taxi-Fare")}}` notebook with complete feature engineering
 - Implement a custom transformer inside of `encoders.py` called `DistanceToCenter` which adds the `distance_to_center` feature
 - Adapt the `set_pipeline` method inside our main `Trainer` class so that it integrates this new block
 - Modify the parameters fed to our `Trainer` class in order to easily execute 2 runs to compare the influence of the added feature
