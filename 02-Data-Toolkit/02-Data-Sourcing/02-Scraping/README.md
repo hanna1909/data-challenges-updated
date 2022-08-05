@@ -12,7 +12,7 @@ The goal is to scrape the website **and** then use `pandas` to visualize the ext
 jupyter notebook
 ```
 
-Go ahead and create a new Python Notebook in the `04-Data-Sourcing/02-Scraping` folder of your `data-challenges` repository.
+Go ahead and open the Python Notebook in the `04-Data-Sourcing/02-Scraping` folder of your `data-challenges` repository.
 
 Start your notebook with the following imports in the first code cell:
 
@@ -313,6 +313,12 @@ result = ChallengeResult('books',
 )
 result.write()
 print(result.check())
+```
+
+:warning: **IMPORTANT NOTE:** increasing the recursion limit also means that the tests take longer to run. Since we have thousands of students all running the same test, this has a huge impact on our internal testing platform. Therefore, we would kindly ask you to test your `books_dict` **locally** to make sure you have the right code, but then pass the **empty `dict`** (as initialized above) to the test before pushing it to GitHub. Thanks! 🙏
+
+```python
+books_dict = { 'Title': [], 'Price': [], 'Rating': [] }
 ```
 
 Then you can `commit` and `push` your code :rocket:
