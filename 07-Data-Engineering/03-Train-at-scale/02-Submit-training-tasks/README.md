@@ -54,7 +54,7 @@ We will start with a clean slate for these challenges. The project on which we w
 First, we will copy the code for the challenges of **Train at scale** in your *projects directory*: `~/code/<user.github_nickname>`.
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/03-Train-at-scale/02-Submit-training-tasks/SimpleTaxiFare ~/code/<user.github_nickname>/TFM_TrainAtScale
+cp -r ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/03-Train-at-scale/02-Submit-training-tasks/SimpleTaxiFare")}} ~/code/<user.github_nickname>/TFM_TrainAtScale
 ```
 
 Then, we will create a local git repository for the project:

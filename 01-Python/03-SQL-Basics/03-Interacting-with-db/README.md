@@ -35,7 +35,7 @@ We will work with the `movies.sqlite` database, available at this URL:
 In your terminal, Copy/paste and execute the curl command below to download the database into the `data` directory of this challenge.
 ```bash
 curl https://wagon-public-datasets.s3.amazonaws.com/sql_databases/movies.sqlite \
-> ~/code/<user.github_nickname>/<program.challenges_repo_name>/01-Python/03-SQL-Basics/03-Interacting-with-db/data/movies.sqlite
+> ~/code/<user.github_nickname>/{{local_path_to("01-Python/03-SQL-Basics/03-Interacting-with-db")}}/data/movies.sqlite
 ```
 
 <details>

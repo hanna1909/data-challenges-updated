@@ -1,4 +1,4 @@
-## Objectives of the week
+## Objectives of the module
 
 We will analyze a dataset provided by an e-commerce marketplace called [Olist](https://www.olist.com) to answer the CEO's question:
 

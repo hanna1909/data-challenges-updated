@@ -37,7 +37,7 @@ Let's open the **boilerplate.ipynb** and **usage.ipynb** notebooks and see how i
 👉 Open **another terminal window** for the notebooks. We will use the first terminal window in order to add and commit the code of our package as it evolves using `git` commands
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/Recap
+cd ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/02-ML-Iteration/Recap")}}
 jupyter notebook
 ```
 

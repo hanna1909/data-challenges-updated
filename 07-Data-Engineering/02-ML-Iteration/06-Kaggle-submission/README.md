@@ -4,7 +4,7 @@
 Let's add a `Makefile` to our project:
 
 ``` bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/06-Kaggle-submission/Makefile ~/code/<user.github_nickname>/TaxiFareModel
+cp ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/02-ML-Iteration/06-Kaggle-submission")}}/Makefile ~/code/<user.github_nickname>/TaxiFareModel
 ```
 
 ## Trained pipeline
@@ -60,7 +60,7 @@ We will use the `predict.py` file provided with the challenge. Copy the file to 
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 ``` bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/06-Kaggle-submission/predict.py ~/code/<user.github_nickname>/TaxiFareModel/TaxiFareModel
+cp ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/02-ML-Iteration/06-Kaggle-submission")}}/predict.py ~/code/<user.github_nickname>/TaxiFareModel/TaxiFareModel
 ```
 
 </details>

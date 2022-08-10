@@ -7,14 +7,14 @@ For this recap, you can choose between two options:
 Option 1 : `Custom One-Hot-Encoder correction (~ 30min) + Q&A with teacher`
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/05-ML/08-Workflow/07-Custom-Encoder
+cd ~/code/<user.github_nickname>/{{local_path_to("05-ML/08-Workflow/07-Custom-Encoder")}}
 jupyter notebook custom_encoder.ipynb
 ```
 
 Option 2 : `Bonus - The cars' dataset preprocessor with column names (1h)`
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/05-ML/08-Workflow/06-Bonus
+cd ~/code/<user.github_nickname>/{{local_path_to("05-ML/08-Workflow/06-Bonus")}}
 jupyter notebook cars_dataset_full_pipeline.ipynb
 ```
 
