@@ -61,7 +61,7 @@ Then, let's copy the `Makefile` that is provided inside of the project... It wil
 - `deploy_heroku` : deploy our app when we are satisfied with its content
 
 ``` bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/Makefile ~/code/<user.github_nickname>/taxifare-website/
+cp ~/code/<user.github_nickname>/<local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')>//Makefile ~/code/<user.github_nickname>/taxifare-website/
 ```
 
 You project should look like this:
@@ -143,11 +143,7 @@ We have a website of our own running on our machine 🎉
 
 👉 Let's follow the instructions inside the web page and replace the content with some `requests` package magic and a call to our API!
 
-👉 Again, alternatively, you may use this Le Wagon **Prediction API** if you you do not have one in production:
-
-https://taxifare.lewagon.ai/
-
-https://taxifare.lewagon.ai/predict?pickup_datetime=2012-10-06%2012:10:20&pickup_longitude=40.7614327&pickup_latitude=-73.9798156&dropoff_longitude=40.6513111&dropoff_latitude=-73.8803331&passenger_count=2
+👉 Again, alternatively, you may use this Le Wagon **Prediction API URL** if you you do not have one in production: https://taxifare.lewagon.ai/
 
 Let's inspect `app.py` and check what is being done inside...
 
