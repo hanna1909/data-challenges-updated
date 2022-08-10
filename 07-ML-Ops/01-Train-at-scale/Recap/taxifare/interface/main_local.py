@@ -230,7 +230,7 @@ def train():
 
     print(f"\n✅ trained with MAE: {round(val_mae, 2)}")
 
-    save_model(model, params=params, metrics=dict(mae=val_mae))
+    save_model(model=model, params=params, metrics=dict(mae=val_mae))
 
     print("✅ model trained and saved")
 

@@ -108,15 +108,15 @@ def train():
     X_val_processed = data_val_processed[:, :-1]
     y_val = data_val_processed[:, -1]
 
+    model = None
+    model = load_model()  # production model
+
     # model params
     learning_rate = 0.001
     batch_size = 256
     patience = 2
 
     # iterate on the full dataset per chunks
-    model = None
-    model = load_model()  # production model
-
     chunk_id = 0
     row_count = 0
     metrics_val_list = []
@@ -158,7 +158,7 @@ def train():
 
         metrics_val_chunk = np.min(history.history['val_mae'])
         metrics_val_list.append(metrics_val_chunk)
-        print(metrics_val_chunk)
+        print(f"chunk MAE: {round(metrics_val_chunk,2)}")
 
         # check if chunk was full
         if chunk_row_count < CHUNK_SIZE:

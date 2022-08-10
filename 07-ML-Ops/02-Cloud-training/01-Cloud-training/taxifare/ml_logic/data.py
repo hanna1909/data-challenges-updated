@@ -2,13 +2,11 @@ from taxifare.ml_logic.params import (DATA_RAW_COLUMNS,
                                             DATA_RAW_DTYPES_OPTIMIZED,
                                             DATA_PROCESSED_DTYPES_OPTIMIZED)
 
-from taxifare.data_sources.local_disk import (get_pandas_chunk,
-                                                    save_local_chunk)
+from taxifare.data_sources.local_disk import (get_pandas_chunk, save_local_chunk)
 
-pass  # YOUR CODE HERE
+from taxifare.data_sources.big_query import (get_bq_chunk, save_bq_chunk)
 
 import os
-
 import pandas as pd
 
 
