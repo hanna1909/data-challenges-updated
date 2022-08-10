@@ -1,5 +1,3 @@
-from tests.test_base import write_result
-
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
@@ -50,21 +48,20 @@ def preprocess_and_train():
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
-    batch_size = 64
+    batch_size = 256
+    patience = 2
     # YOUR CODE HERE
 
     # Compute the validation metric (min val mae of the holdout set)
-    metrics = dict(val_mae=None)
+    metrics = dict(mae=None)
     # YOUR CODE HERE
 
     # Save trained model
     params = dict(
         learning_rate=learning_rate,
-        batch_size=batch_size)
+        batch_size=batch_size,
+        patience=patience)
     save_model(model, params=params, metrics=metrics)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ preprocess_and_train() done")
 
@@ -89,10 +86,6 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 
     # make a prediction
     # YOUR CODE HERE
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
-    print("✅ prediction done: ", y_pred, y_pred.shape)
 
     return y_pred
 

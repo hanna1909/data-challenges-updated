@@ -56,7 +56,7 @@ class TestCloudData(TestBase):
         parameters = {
             'columns':
                 {
-                    'key': 'string',
+                    'key': 'timestamp',
                     'fare_amount': 'float',
                     'pickup_datetime': 'timestamp',
                     'pickup_longitude': 'float',

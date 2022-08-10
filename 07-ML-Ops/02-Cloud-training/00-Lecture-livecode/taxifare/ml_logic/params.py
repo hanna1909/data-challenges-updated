@@ -13,6 +13,7 @@ CHUNK_SIZE = 5000
 LOCAL_DATA_PATH = "data"
 LOCAL_REGISTRY_PATH = "training_outputs"
 
+
 DATA_RAW_DTYPES_OPTIMIZED = {
     "key": "O",
     "fare_amount": "float32",

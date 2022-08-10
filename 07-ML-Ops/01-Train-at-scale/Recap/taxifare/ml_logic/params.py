@@ -7,6 +7,13 @@ import os
 
 import numpy as np
 
+DATASET_SIZE = "10k"             # ["1k","10k", "100k", "500k"]
+VALIDATION_DATASET_SIZE = "10k"  # ["1k", "10k", "100k", "500k"]
+CHUNK_SIZE = 2000
+LOCAL_DATA_PATH = os.path.join(os.getenv('HOME'), ".lewagon", "mlops", "data")
+LOCAL_REGISTRY_PATH =  os.path.join(os.getenv('HOME'), ".lewagon", "mlops", "training_outputs")
+
+
 DATA_RAW_DTYPES_OPTIMIZED = {
     "key": "O",
     "fare_amount": "float32",

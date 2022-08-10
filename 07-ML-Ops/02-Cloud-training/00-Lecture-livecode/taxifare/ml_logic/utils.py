@@ -1,5 +1,8 @@
+from taxifare.ml_logic.params import DATASET_SIZE
+
 import time
 import tracemalloc
+
 
 
 def simple_time_and_memory_tracker(method):

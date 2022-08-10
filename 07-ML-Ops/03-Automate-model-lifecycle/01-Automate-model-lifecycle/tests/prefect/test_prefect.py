@@ -13,7 +13,7 @@ class TestPrefect(TestBase):
         verify that the prefect parameters are correctly set
         """
         flow_name = os.environ.get('PREFECT_FLOW_NAME')
-        assert flow_name is not null, 'PREFECT_FLOW_NAME variable is not defined'
+        assert flow_name is not None, 'PREFECT_FLOW_NAME variable is not defined'
 
     @pytest.mark.skipif(TEST_ENV != "development", reason="only dev mode")
     def test_prefect_log_level_is_warning(self):
@@ -21,7 +21,7 @@ class TestPrefect(TestBase):
         verify that the prefect parameters are correctly set
         """
         log_level = os.environ.get('PREFECT_LOG_LEVEL')
-        assert flow_name == 'WARNING'
+        assert log_level == 'WARNING'
 
     def test_prefect_flow(self):
         """

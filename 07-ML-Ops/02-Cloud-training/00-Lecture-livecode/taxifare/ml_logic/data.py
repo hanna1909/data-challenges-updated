@@ -41,7 +41,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 
 def get_chunk(source_name: str,
               index: int = 0,
-              chunk_size: int = None) -> pd.DataFrame:
+              chunk_size: int = None,
+              verbose=False) -> pd.DataFrame:
     """
     return a chunk of the dataset between `index` and `index + chunk_size - 1`
     """
@@ -57,18 +58,19 @@ def get_chunk(source_name: str,
                                 index=index,
                                 chunk_size=chunk_size,
                                 dtypes=dtypes,
-                                columns=columns)
+                                columns=columns,
+                                verbose=verbose)
 
     return chunk_df
 
 
-def save_chunk(source_name: str,
+def save_chunk(destination_name: str,
                is_first: bool,
                data: pd.DataFrame) -> None:
     """
     save chunk
     """
 
-    save_local_chunk(path=source_name,
+    save_local_chunk(path=destination_name,
                      data=data,
                      is_first=is_first)

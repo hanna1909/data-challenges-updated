@@ -18,13 +18,12 @@ DATASET = os.environ.get("DATASET")
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
 
 env_valid_options = dict(
-    DATASET_SIZE=["1k", "10k", "100k", "500k", "50M"],
-    VALIDATION_DATASET_SIZE=["1k", "10k", "100k", "500k", "500k"],
+    DATASET_SIZE=["1k", "10k", "100k", "500k", "50M", "new"],
+    VALIDATION_DATASET_SIZE=["1k", "10k", "100k", "500k", "500k", "new"],
     DATA_SOURCE=["local", "big query"],
     MODEL_TARGET=["local", "gcs", "mlflow"],
-    PREFECT_BACKEND=["development", "production"]
+    PREFECT_BACKEND=["development", "production"],
 )
-
 
 def validate_env_value(env, valid_options):
     env_value = os.environ[env]
@@ -36,6 +35,7 @@ for env, valid_options in env_valid_options.items():
     validate_env_value(env, valid_options)
 
 # °º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸
+
 
 
 DATA_RAW_DTYPES_OPTIMIZED = {

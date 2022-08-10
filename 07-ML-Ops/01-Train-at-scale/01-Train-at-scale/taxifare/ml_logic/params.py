@@ -13,6 +13,7 @@ CHUNK_SIZE = 2000
 LOCAL_DATA_PATH = os.path.join(os.getenv('HOME'), ".lewagon", "mlops", "data")
 LOCAL_REGISTRY_PATH =  os.path.join(os.getenv('HOME'), ".lewagon", "mlops", "training_outputs")
 
+
 DATA_RAW_DTYPES_OPTIMIZED = {
     "key": "O",
     "fare_amount": "float32",
