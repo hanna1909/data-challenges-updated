@@ -61,7 +61,7 @@ Then, let's copy the `Makefile` that is provided inside of the project... It wil
 - `deploy_heroku` : deploy our app when we are satisfied with its content
 
 ``` bash
-cp ~/code/<user.github_nickname>/<local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')>/Makefile ~/code/<user.github_nickname>/taxifare-website/
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/Makefile ~/code/<user.github_nickname>/taxifare-website/
 ```
 
 You project should look like this:
