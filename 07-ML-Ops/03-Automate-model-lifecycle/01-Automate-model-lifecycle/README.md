@@ -303,7 +303,7 @@ Here are the next steps you decide to work on:
 
 ## Simulate the passing of time
 
-> The _WagonCab_ Data Engineering Team gave you a nice input: you can get 100k new records per month, already split chronologically between two 60k "train_new" and 40k "val_new" raw datasets. As the previous trainings showed you that this amount of data is enough to get a very good model performance, let's trigger the workflow **every month**. But wait, you ain't time to wait for it! You need to test your workflow right now! The good news is the Data Engineering Team has just finished to collect and prepare the data from January and February:
+> The _WagonCab_ Data Engineering Team gave you a nice input: you can get 100k new records per month, already split chronologically between two 80k "train_new" and 20k "val_new" raw datasets. As the previous trainings showed you that this amount of data is enough to get a very good model performance, let's trigger the workflow **every month**. But wait, you ain't time to wait for it! You need to test your workflow right now! The good news is the Data Engineering Team has just finished to collect and prepare the data from January and February:
 
 **👀 Inspect the `get_new_data.py` file that was given to you by the engineering team**
 - It is located at the root directory because it's not part of your taxifare package.
