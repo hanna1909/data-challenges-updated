@@ -95,6 +95,10 @@ def evaluate_model(model: Model,
 
     print(Fore.BLUE + f"\nEvaluate model on {len(X)} rows..." + Style.RESET_ALL)
 
+    if model is None:
+        print(f"\n❌ no model to evaluate")
+        return None
+
     metrics = model.evaluate(
         x=X,
         y=y,
