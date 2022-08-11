@@ -462,6 +462,8 @@ We want our worflow to:
 
 ```python
 # flow.py
+import requests
+
 @task
 def notify(eval_mae, train_mae):
     base_url = 'https://wagon-chat.herokuapp.com'

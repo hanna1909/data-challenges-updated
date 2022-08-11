@@ -1,8 +1,5 @@
 # YOUR CODE HERE
 
-from colorama import Fore, Style
-import requests
-
 @task
 def preprocess_new_data(experiment):
     """

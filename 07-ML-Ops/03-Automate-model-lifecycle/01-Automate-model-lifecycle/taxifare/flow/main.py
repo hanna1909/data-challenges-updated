@@ -1,6 +1,5 @@
-from taxifare.flow.flow import build_flow
 import os
-
+from taxifare.flow.flow import build_flow
 flow = build_flow()
 
 mlflow_experiment = os.environ.get("MLFLOW_EXPERIMENT")
