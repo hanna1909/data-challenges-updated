@@ -89,8 +89,6 @@ def train():
 
     from taxifare.ml_logic.model import (initialize_model, compile_model, train_model)
     from taxifare.ml_logic.registry import load_model, save_model
-    from taxifare.ml_logic.registry import get_model_version
-
     print(Fore.BLUE + "\nLoading preprocessed validation data..." + Style.RESET_ALL)
 
     # load a validation set common to all chunks, used to early stop model training
@@ -176,7 +174,8 @@ def train():
         # model parameters
         learning_rate=learning_rate,
         batch_size=batch_size,
-        patience=patience,        # package behavior
+        patience=patience,
+        # package behavior
         context="train",
         chunk_size=CHUNK_SIZE,
         # data source

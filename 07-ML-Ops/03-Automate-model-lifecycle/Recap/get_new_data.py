@@ -20,7 +20,7 @@ def get_new_data(month):
     if month not in available_months:
         raise ValueError(f'{month} is not a valid month, run `python get_new_data.py -h` for help')
 
-    base_source_url = 'https://storage.googleapis.com/datascience-mlops/taxi-fare-ny'
+    base_source_url = 'https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/'
     base_source_uri = "gs://datascience-mlops/taxi-fare-ny"
 
     client = bigquery.Client()
@@ -34,7 +34,7 @@ def get_new_data(month):
     )
 
     for split in ['train', 'val']:
-        source_url = f'{base_source_url}/{split}_{month}.csv'
+        source_url = f'{base_source_url}{split}_{month}.csv'
 
         # Local
         print(f"⬇️ Fetching new {split} data for {month} ...")

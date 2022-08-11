@@ -44,7 +44,7 @@ test_prefect_config:
 
 # Data sources: targets for monthly data imports
 ML_DIR=~/.lewagon/mlops
-HTTPS_DIR=https://storage.googleapis.com/datascience-mlops/taxi-fare-ny
+HTTPS_DIR=https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/
 GS_DIR=gs://datascience-mlops/taxi-fare-ny
 
 delete_new_source:
@@ -56,22 +56,22 @@ delete_new_source:
 reset_sources_all:
 	mkdir -p ${ML_DIR}/data/raw ${ML_DIR}/data/processed
 	mkdir -p ${ML_DIR}/training_outputs/params ${ML_DIR}/training_outputs/metrics ${ML_DIR}/training_outputs/model
-	-curl ${HTTPS_DIR}/train_1k.csv > ${ML_DIR}/data/raw/train_1k.csv
-	-curl ${HTTPS_DIR}/train_10k.csv > ${ML_DIR}/data/raw/train_10k.csv
-	-curl ${HTTPS_DIR}/train_100k.csv > ${ML_DIR}/data/raw/train_100k.csv
-	-curl ${HTTPS_DIR}/train_500k.csv > ${ML_DIR}/data/raw/train_500k.csv
-	-curl ${HTTPS_DIR}/val_1k.csv > ${ML_DIR}/data/raw/val_1k.csv
-	-curl ${HTTPS_DIR}/val_10k.csv > ${ML_DIR}/data/raw/val_10k.csv
-	-curl ${HTTPS_DIR}/val_100k.csv > ${ML_DIR}/data/raw/val_100k.csv
-	-curl ${HTTPS_DIR}/val_500k.csv > ${ML_DIR}/data/raw/val_500k.csv
-	-curl ${HTTPS_DIR}/processed/train_processed_1k.csv > ${ML_DIR}/data/processed/train_processed_1k.csv
-	-curl ${HTTPS_DIR}/processed/train_processed_10k.csv > ${ML_DIR}/data/processed/train_processed_10k.csv
-	-curl ${HTTPS_DIR}/processed/train_processed_100k.csv > ${ML_DIR}/data/processed/train_processed_100k.csv
-	-curl ${HTTPS_DIR}/processed/train_processed_500k.csv > ${ML_DIR}/data/processed/train_processed_500k.csv
-	-curl ${HTTPS_DIR}/processed/val_processed_1k.csv > ${ML_DIR}/data/processed/val_processed_1k.csv
-	-curl ${HTTPS_DIR}/processed/val_processed_10k.csv > ${ML_DIR}/data/processed/val_processed_10k.csv
-	-curl ${HTTPS_DIR}/processed/val_processed_100k.csv > ${ML_DIR}/data/processed/val_processed_100k.csv
-	-curl ${HTTPS_DIR}/processed/val_processed_500k.csv > ${ML_DIR}/data/processed/val_processed_500k.csv
+	-curl ${HTTPS_DIR}train_1k.csv > ${ML_DIR}/data/raw/train_1k.csv
+	-curl ${HTTPS_DIR}train_10k.csv > ${ML_DIR}/data/raw/train_10k.csv
+	-curl ${HTTPS_DIR}train_100k.csv > ${ML_DIR}/data/raw/train_100k.csv
+	-curl ${HTTPS_DIR}train_500k.csv > ${ML_DIR}/data/raw/train_500k.csv
+	-curl ${HTTPS_DIR}val_1k.csv > ${ML_DIR}/data/raw/val_1k.csv
+	-curl ${HTTPS_DIR}val_10k.csv > ${ML_DIR}/data/raw/val_10k.csv
+	-curl ${HTTPS_DIR}val_100k.csv > ${ML_DIR}/data/raw/val_100k.csv
+	-curl ${HTTPS_DIR}val_500k.csv > ${ML_DIR}/data/raw/val_500k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_1k.csv > ${ML_DIR}/data/processed/train_processed_1k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_10k.csv > ${ML_DIR}/data/processed/train_processed_10k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_100k.csv > ${ML_DIR}/data/processed/train_processed_100k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_500k.csv > ${ML_DIR}/data/processed/train_processed_500k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_1k.csv > ${ML_DIR}/data/processed/val_processed_1k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_10k.csv > ${ML_DIR}/data/processed/val_processed_10k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_100k.csv > ${ML_DIR}/data/processed/val_processed_100k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_500k.csv > ${ML_DIR}/data/processed/val_processed_500k.csv
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_1k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_10k
@@ -109,10 +109,10 @@ reset_sources_all:
 reset_sources_env:
 	mkdir -p ${ML_DIR}/data/raw ${ML_DIR}/data/processed
 	mkdir -p ${ML_DIR}/training_outputs/params ${ML_DIR}/training_outputs/metrics ${ML_DIR}/training_outputs/model
-	-curl ${HTTPS_DIR}/train_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/train_${DATASET_SIZE}.csv
-	-curl ${HTTPS_DIR}/val_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/val_${DATASET_SIZE}.csv
-	-curl ${HTTPS_DIR}/processed/train_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/train_processed_${DATASET_SIZE}.csv
-	-curl ${HTTPS_DIR}/processed/val_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/val_processed_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}train_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/train_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}val_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/val_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}processed/train_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/train_processed_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}processed/val_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/val_processed_${DATASET_SIZE}.csv
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_${DATASET_SIZE}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_${DATASET_SIZE}

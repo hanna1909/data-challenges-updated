@@ -181,7 +181,6 @@ def train():
         learning_rate=learning_rate,
         batch_size=batch_size,
         patience=patience,
-        model_version=get_model_version(),
         # package behavior
         context="train",
         chunk_size=CHUNK_SIZE,
@@ -189,6 +188,7 @@ def train():
         training_set_size=DATASET_SIZE,
         val_set_size=VALIDATION_DATASET_SIZE,
         row_count=row_count,
+        model_version=get_model_version(),
         dataset_timestamp=get_dataset_timestamp(),
     )
 
