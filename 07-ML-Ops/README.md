@@ -1,7 +1,7 @@
 
 [//]: # ( presentation of the module )
 
-## Context: Welcome to the TaxiFare project team @ WagonCab 🚕
+## Welcome to the `TaxiFare` project team at `WagonCab` 🚕
 
 In this module, you will impersonate a **ML Engineer** at `WagonCab`, a new taxi-app startup opening in New York!
 
@@ -9,18 +9,11 @@ In this module, you will impersonate a **ML Engineer** at `WagonCab`, a new taxi
 
 Your company has at its disposal the huge public [NYC Trip Record Dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) which weights around 170 Go, and looks as follow
 
-```markdown
-|    | key                           |   fare_amount | pickup_datetime         |   pickup_longitude |   pickup_latitude |   dropoff_longitude |   dropoff_latitude |   passenger_count |
-|---:|:------------------------------|--------------:|:------------------------|-------------------:|------------------:|--------------------:|-------------------:|------------------:|
-|  0 | 2009-06-15 17:26:21.0000001   |           4.5 | 2009-06-15 17:26:21 UTC |           -73.8443 |           40.7213 |            -73.8416 |            40.7123 |                 1 |
-|  1 | 2010-01-05 16:52:16.0000002   |          16.9 | 2010-01-05 16:52:16 UTC |           -74.016  |           40.7113 |            -73.9793 |            40.782  |                 1 |
-|  2 | 2011-08-18 00:35:00.00000049  |           5.7 | 2011-08-18 00:35:00 UTC |           -73.9827 |           40.7613 |            -73.9912 |            40.7506 |                 2 |
-|  3 | 2012-04-21 04:30:42.0000001   |           7.7 | 2012-04-21 04:30:42 UTC |           -73.9871 |           40.7331 |            -73.9916 |            40.7581 |                 1 |
-|  4 | 2010-03-09 07:51:00.000000135 |           5.3 | 2010-03-09 07:51:00 UTC |           -73.9681 |           40.768  |            -73.9567 |            40.7838 |                 1 |
-```
-
 A team of **Data Scientists** has been staffed to create and fine-tune a machine learning model to predict the price of a ride.
 They have been working in a isolated notebook context, hand-crafting & fine-tuning the best possible model, trained on a small, manageable subset of this dataset.
+
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/taxifare-head.png' width=400>
+
 
 ## Plan of the module (5 units)
 

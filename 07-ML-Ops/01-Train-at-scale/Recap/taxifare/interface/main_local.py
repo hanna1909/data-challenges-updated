@@ -1,5 +1,3 @@
-from tests.test_base import write_result
-
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
@@ -51,27 +49,26 @@ def preprocess_and_train():
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
-    batch_size = 64
+    batch_size = 256
+    patience = 2
     model = initialize_model(X_processed)
     model = compile_model(model, learning_rate)
-    model, history = train_model(model, X_processed, y, batch_size, validation_split=0.3)
+    model, history = train_model(model, X_processed, y, batch_size=batch_size, patience=patience, validation_split=0.3)
 
     # Compute the validation metric (min val mae of the holdout set)
-    metrics = dict(val_mae=None)
-    metrics = dict(val_mae=np.min(history.history['val_mae']))
+    metrics = dict(mae=None)
+    metrics = dict(mae=np.min(history.history['val_mae']))
 
     # Save trained model
     params = dict(
         learning_rate=learning_rate,
-        batch_size=batch_size)
+        batch_size=batch_size,
+        patience=patience)
     save_model(model, params=params, metrics=metrics)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ preprocess_and_train() done")
 
-def preprocess(training_set=True):
+def preprocess(source_type='train'):
     """
     Preprocess the dataset iteratively, loading data by chunks fitting in memory,
     processing each chunk, appending each of them to a final dataset preprocessed,
@@ -81,12 +78,8 @@ def preprocess(training_set=True):
     print("\n⭐️ use case: preprocess")
 
     # local saving paths given to you (do not overwrite these data_path variable)
-    if training_set:
-        source_name = f"train_{DATASET_SIZE}.csv"
-        destination_name = f"train_processed_{DATASET_SIZE}.csv"
-    else:
-        source_name = f"val_{VALIDATION_DATASET_SIZE}.csv"
-        destination_name = f"val_processed_{VALIDATION_DATASET_SIZE}.csv"
+    source_name = f"{source_type}_{DATASET_SIZE}.csv"
+    destination_name = f"{source_type}_processed_{DATASET_SIZE}.csv"
 
     data_raw_path = os.path.abspath(os.path.join(
         LOCAL_DATA_PATH, "raw", source_name))
@@ -147,12 +140,6 @@ def preprocess(training_set=True):
 
         chunk_id += 1
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    if training_set:
-        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
-        write_result(name="test_preprocess", subdir="train_at_scale",
-                    data_processed_head=data_processed[0:2])
-
     print("✅ data processed saved entirely")
 
 
@@ -212,15 +199,17 @@ def train():
 
         # Train a model incrementally and print validation metrics for this chunk
         learning_rate = 0.001
-        batch_size = 64
+        batch_size = 256
+        patience=2
         if model is None:
             model = initialize_model(X_train_chunk)
-            model = compile_model(model, learning_rate)
 
+        model = compile_model(model, learning_rate)
         model, history = train_model(model,
                                      X_train_chunk,
                                      y_train_chunk,
-                                     batch_size,
+                                     batch_size=batch_size,
+                                     patience=patience,
                                      validation_data=(X_val, y_val))
         metrics_val_chunk = np.min(history.history['val_mae'])
         metrics_val_list.append(metrics_val_chunk)
@@ -228,21 +217,20 @@ def train():
 
         chunk_id += 1
 
+    # return the last value of the validation MAE
+    val_mae = metrics_val_list[-1]
+
     # Save model and training params
     params = dict(
         learning_rate=learning_rate,
         batch_size=batch_size,
+        patience=patience,
         incremental=True,
         chunk_size=CHUNK_SIZE)
 
-    metrics_val_mean_all_chunks = np.mean(np.array(metrics_val_list))
-    metrics = dict(mean_val=metrics_val_mean_all_chunks)
+    print(f"\n✅ trained with MAE: {round(val_mae, 2)}")
 
-    save_model(model, params=params, metrics=metrics)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_train", subdir="train_at_scale",
-                 metrics=metrics)
+    save_model(model=model, params=params, metrics=dict(mae=val_mae))
 
     print("✅ model trained and saved")
 
@@ -267,10 +255,6 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 
     # make a prediction
     y_pred = model.predict(X_processed)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
-    print("✅ prediction done: ", y_pred, y_pred.shape)
 
     return y_pred
 

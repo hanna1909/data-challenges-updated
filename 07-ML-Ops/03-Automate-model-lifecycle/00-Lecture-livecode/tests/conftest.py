@@ -20,16 +20,16 @@ DATA_RAW_DTYPES_OPTIMIZED = {
 @pytest.fixture(scope="session")  # cached fixture
 def train_1k()->pd.DataFrame:
 
-    aws_path = "https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv"
-    df_raw = pd.read_csv(aws_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    gcs_path = "https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_1k.csv"
+    df_raw = pd.read_csv(gcs_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
 
     return df_raw
 
 
 @pytest.fixture(scope='session')
 def train_1k_cleaned()->pd.DataFrame:
-    aws_path = "https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/solutions/train_1k_cleaned.csv"
-    df_cleaned = pd.read_csv(aws_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    gcs_path = "https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/solutions/train_1k_cleaned.csv"
+    df_cleaned = pd.read_csv(gcs_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
 
     return df_cleaned
 

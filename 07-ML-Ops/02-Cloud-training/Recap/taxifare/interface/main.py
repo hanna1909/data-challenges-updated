@@ -1,11 +1,10 @@
-
 from taxifare.ml_logic.data import (clean_data,
-                                          get_chunk,
-                                          save_chunk)
+                                    get_chunk,
+                                    save_chunk)
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
-                                            DATASET_SIZE,
-                                            VALIDATION_DATASET_SIZE)
+                                      DATASET_SIZE,
+                                      VALIDATION_DATASET_SIZE)
 
 from taxifare.ml_logic.preprocessor import preprocess_features
 
@@ -14,11 +13,11 @@ import pandas as pd
 
 from colorama import Fore, Style
 
-def preprocess(
-    first_row=0
-):
+def preprocess(source_type='train'):
     """
     Preprocess the dataset by chunks fitting in memory.
+    parameters:
+    - source_type: 'train' or 'val'
     """
 
     print("\n⭐️ use case: preprocess")
@@ -27,13 +26,15 @@ def preprocess(
     chunk_id = 0
     row_count = 0
     cleaned_row_count = 0
+    source_name = f"{source_type}_{DATASET_SIZE}"
+    destination_name = f"{source_type}_processed_{DATASET_SIZE}"
 
     while (True):
 
         print(Fore.BLUE + f"\nProcessing chunk n°{chunk_id}..." + Style.RESET_ALL)
 
-        data_chunk = get_chunk(source_name=f"train_{DATASET_SIZE}",
-                               index=(chunk_id * CHUNK_SIZE) + first_row,
+        data_chunk = get_chunk(source_name=source_name,
+                               index=chunk_id * CHUNK_SIZE,
                                chunk_size=CHUNK_SIZE)
 
         # Break out of while loop if data is none
@@ -61,9 +62,9 @@ def preprocess(
             np.concatenate((X_processed_chunk, y_chunk), axis=1))
 
         # save and append the chunk
-        is_first = chunk_id == 0 and first_row == 0
+        is_first = chunk_id == 0
 
-        save_chunk(source_name=f"train_processed_{DATASET_SIZE}",
+        save_chunk(destination_name=destination_name,
                    is_first=is_first,
                    data=data_processed_chunk)
 
@@ -71,13 +72,13 @@ def preprocess(
 
     if row_count == 0:
         print("\n✅ no new data for the preprocessing 👌")
-        return
+        return None
 
     print(f"\n✅ data processed saved entirely: {row_count} rows ({cleaned_row_count} cleaned)")
 
+    return None
 
-def train(
-    first_row=0):
+def train():
     """
     Train a new model on the full (already preprocessed) dataset ITERATIVELY, by loading it
     chunk-by-chunk, and updating the weight of the model after each chunks.
@@ -87,34 +88,29 @@ def train(
     print("\n⭐️ use case: train")
 
     from taxifare.ml_logic.model import (initialize_model, compile_model, train_model)
-    from taxifare.ml_logic.registry import save_model
-
+    from taxifare.ml_logic.registry import load_model, save_model
     print(Fore.BLUE + "\nLoading preprocessed validation data..." + Style.RESET_ALL)
 
     # load a validation set common to all chunks, used to early stop model training
-    data_val = get_chunk(source_name=f"val_{VALIDATION_DATASET_SIZE}",
-                         index=0,  # retrieve from first row
-                         chunk_size=None)  # retrieve all further data
+    data_val_processed = get_chunk(
+        source_name=f"val_processed_{VALIDATION_DATASET_SIZE}",
+        index=0,  # retrieve from first row
+        chunk_size=None).to_numpy()  # retrieve all further data
 
-    if data_val is None:
+    if data_val_processed is None:
         print("\n✅ no data to train")
         return None
 
-    X_val = data_val.drop("fare_amount", axis=1)
-    y_val = data_val[["fare_amount"]]
+    X_val_processed = data_val_processed[:, :-1]
+    y_val = data_val_processed[:, -1]
 
-    X_val_processed = preprocess_features(X_val)
-
-    load_existing_model = False
-    if first_row != 0:
-        load_existing_model = True
-
+    model = None
     # model params
     learning_rate = 0.001
-    batch_size = 64
+    batch_size = 256
+    patience = 2
 
     # iterate on the full dataset per chunks
-    model = None
     chunk_id = 0
     row_count = 0
     metrics_val_list = []
@@ -124,7 +120,7 @@ def train(
         print(Fore.BLUE + f"\nLoading and training on preprocessed chunk n°{chunk_id}..." + Style.RESET_ALL)
 
         data_processed_chunk = get_chunk(source_name=f"train_processed_{DATASET_SIZE}",
-                                         index=(chunk_id * CHUNK_SIZE) + first_row,
+                                         index=chunk_id * CHUNK_SIZE,
                                          chunk_size=CHUNK_SIZE)
 
         # check whether data source contain more data
@@ -141,25 +137,22 @@ def train(
         chunk_row_count = data_processed_chunk.shape[0]
         row_count += chunk_row_count
 
-        if model is None:
-            if load_existing_model:
-                model = load_model(                )
-
         # initialize model
         if model is None:
             model = initialize_model(X_train_chunk)
-            model = compile_model(model, learning_rate)
 
-        # train the model incrementally
+        # (re)compile and train the model incrementally
+        model = compile_model(model, learning_rate)
         model, history = train_model(model,
                                      X_train_chunk,
                                      y_train_chunk,
-                                     batch_size,
+                                     batch_size=batch_size,
+                                     patience=patience,
                                      validation_data=(X_val_processed, y_val))
 
         metrics_val_chunk = np.min(history.history['val_mae'])
         metrics_val_list.append(metrics_val_chunk)
-        print(metrics_val_chunk)
+        print(f"chunk MAE: {round(metrics_val_chunk,2)}")
 
         # check if chunk was full
         if chunk_row_count < CHUNK_SIZE:
@@ -172,31 +165,31 @@ def train(
         print("\n✅ no new data for the training 👌")
         return
 
-    mean_val_mae = np.mean(np.array(metrics_val_list))
+    # return the last value of the validation MAE
+    val_mae = metrics_val_list[-1]
 
-    print(f"\n✅ trained on {row_count} rows: [{first_row}-{first_row + row_count - 1}] with mae {round(mean_val_mae, 2)}")
+    print(f"\n✅ trained on {row_count} rows with MAE: {round(val_mae, 2)}")
 
     params = dict(
-        # hyper parameters
+        # model parameters
         learning_rate=learning_rate,
         batch_size=batch_size,
+        patience=patience,
         # package behavior
         context="train",
         chunk_size=CHUNK_SIZE,
         # data source
-        cleaned_first_row=first_row,
-        cleaned_row_count=row_count)
-
-    # process metrics
-    metrics = dict(mean_val=mean_val_mae)
+        training_set_size=DATASET_SIZE,
+        val_set_size=VALIDATION_DATASET_SIZE,
+        row_count=row_count,    )
 
     # save model
-    save_model(model=model, params=params, metrics=metrics)
+    save_model(model=model, params=params, metrics=dict(mae=val_mae))
 
-    return mean_val_mae
+    return val_mae
 
 
-def evaluate(first_row=0):
+def evaluate():
     """
     Evaluate the performance of the latest production model on new data
     """
@@ -205,42 +198,39 @@ def evaluate(first_row=0):
 
     from taxifare.ml_logic.model import evaluate_model
     from taxifare.ml_logic.registry import load_model, save_model
-
     # load new data
-    new_data = get_chunk(source_name=f"train_{DATASET_SIZE}",
-                         index=first_row,
+    new_data = get_chunk(source_name=f"val_processed_{DATASET_SIZE}",
+                         index=0,
                          chunk_size=None)  # retrieve all further data
 
     if new_data is None:
         print("\n✅ no data to evaluate")
         return None
 
-    X_new = new_data.drop("fare_amount", axis=1)
-    y_new = new_data[["fare_amount"]]
+    new_data = new_data.to_numpy()
 
-    X_new_processed = preprocess_features(X_new)
+    X_new = new_data[:, :-1]
+    y_new = new_data[:, -1]
 
-    model = load_model(    )
+    model = load_model()
 
-    metrics_dict = evaluate_model(model=model, X=X_new_processed, y=y_new)
+    metrics_dict = evaluate_model(model=model, X=X_new, y=y_new)
+    mae = metrics_dict["mae"]
 
     # save evaluation
-    params = dict(
-        # package behavior
+    params = dict(        # package behavior
         context="evaluate",
         # data source
-        first_row=first_row,
-        row_count=len(X_new_processed))
+        training_set_size=DATASET_SIZE,
+        val_set_size=VALIDATION_DATASET_SIZE,
+        row_count=len(X_new))
 
-    save_model(params=params, metrics=metrics_dict)
-
-    mae = metrics_dict["mae"]
+    save_model(params=params, metrics=dict(mae=mae))
 
     return mae
 
 
-def pred(
-    X_pred: pd.DataFrame = None) -> np.ndarray:
+def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     """
     Make a prediction using the latest trained model
     """
@@ -260,7 +250,7 @@ def pred(
             dropoff_latitude=[40.769802],
             passenger_count=[1]))
 
-    model = load_model(    )
+    model = load_model()
 
     X_processed = preprocess_features(X_pred)
 
@@ -273,6 +263,7 @@ def pred(
 
 if __name__ == '__main__':
     preprocess()
+    preprocess(source_type='val')
     train()
     pred()
-    evaluate(first_row=9000)
+    evaluate()

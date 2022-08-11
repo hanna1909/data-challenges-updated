@@ -120,22 +120,22 @@ tree -a ~/.lewagon/mlops/
 
 ```bash
 # 3 train sets
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv > ~/.lewagon/mlops/data/raw/train_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/raw/train_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_100k.csv > ~/.lewagon/mlops/data/raw/train_100k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_500k.csv > ~/.lewagon/mlops/data/raw/train_500k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_1k.csv > ~/.lewagon/mlops/data/raw/train_1k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/raw/train_10k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_100k.csv > ~/.lewagon/mlops/data/raw/train_100k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_500k.csv > ~/.lewagon/mlops/data/raw/train_500k.csv
 
 # 3 val sets
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_1k.csv > ~/.lewagon/mlops/data/raw/val_1k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/raw/val_10k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_100k.csv > ~/.lewagon/mlops/data/raw/val_100k.csv
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_500k.csv > ~/.lewagon/mlops/data/raw/val_500k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_1k.csv > ~/.lewagon/mlops/data/raw/val_1k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/raw/val_10k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_100k.csv > ~/.lewagon/mlops/data/raw/val_100k.csv
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_500k.csv > ~/.lewagon/mlops/data/raw/val_500k.csv
 ```
 
 ❗️ And only if you have excellent internet connexion and 6Go free space on your computer (not mandatory)
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_50M.csv.zip > ~/.lewagon/mlops/data/raw/train_50M.csv.zip
+curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_50M.csv.zip > ~/.lewagon/mlops/data/raw/train_50M.csv.zip
 ```
 
 </details>
@@ -299,7 +299,7 @@ CHUNK_SIZE = 200
   <summary markdown='span'>👇 Code to copy 👇</summary>
 
 ```python
-def preprocess(training_set=True):
+def preprocess(source_type='train'):
     """
     Preprocess the dataset iteratively, loading data by chunks fitting in memory,
     processing each chunk, appending each of them to a final dataset preprocessed,
@@ -309,17 +309,11 @@ def preprocess(training_set=True):
     print("\n⭐️ use case: preprocess")
 
     # local saving paths given to you (do not overwrite these data_path variable)
-    if training_set:
-        source_name = f"train_{DATASET_SIZE}.csv"
-        destination_name = f"train_processed_{DATASET_SIZE}.csv"
-    else:
-        source_name = f"val_{VALIDATION_DATASET_SIZE}.csv"
-        destination_name = f"val_processed_{VALIDATION_DATASET_SIZE}.csv"
+    source_name = f"{source_type}_{DATASET_SIZE}.csv"
+    destination_name = f"{source_type}_processed_{DATASET_SIZE}.csv"
 
-    data_raw_path = os.path.abspath(os.path.join(
-        LOCAL_DATA_PATH, "raw", source_name))
-    data_processed_path = os.path.abspath(os.path.join(
-        LOCAL_DATA_PATH, "processed", destination_name))
+    data_raw_path = os.path.abspath(os.path.join(LOCAL_DATA_PATH, "raw", source_name))
+    data_processed_path = os.path.abspath(os.path.join(LOCAL_DATA_PATH, "processed", destination_name))
 
     # iterate on the dataset, by chunks
     chunk_id = 0
@@ -327,38 +321,27 @@ def preprocess(training_set=True):
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the `data_chunk_raw` numbered `chunk_id` of size CHUNK_SIZE
+        # load in memory the chunk numbered `chunk_id` of size CHUNK_SIZE
         # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=...)
         # YOUR CODE HERE
-        data_raw_chunk = None
 
         # clean chunk
         # YOUR CODE HERE
-        data_clean_chunk = None
 
-        # create (X_chunk, y_chunk)
+        # create X_chunk,y_chunk
         # YOUR CODE HERE
-        X_chunk = None
-        y_chunk = None
 
         # create X_processed_chunk and concatenate (X_processed_chunk, y_chunk) into data_processed_chunk
         # YOUR CODE HERE
-        X_processed_chunk = None
-        data_processed_chunk = None
 
-        # Save data_processed_chunk to local disk by appending rows to previous chunk
+        # Save the chunk of the dataset to local disk (append to existing csv to build it chunk by chunk)
         # 🎯 Hints1: check out pd.to_csv(mode=...)
         # YOUR CODE HERE
 
         chunk_id += 1
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    if training_set:
-        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
-        write_result(name="test_preprocess", subdir="train_at_scale",
-                    data_processed_head=data_processed[0:2])
-
     print("✅ data processed saved entirely")
+
 ```
 
 </details>
@@ -465,11 +448,11 @@ def train():
     """
     print("\n ⭐️ use case: train")
 
-    # First, load a validation set common to all chunks and create (X_val, y_val)
+    # Validation Set: Load a validation set common to all chunks and create X_val, y_val
     data_val_processed_path = os.path.abspath(os.path.join(
         LOCAL_DATA_PATH, "processed", f"val_processed_{VALIDATION_DATASET_SIZE}.csv"))
-    # YOUR CODE BELOW
 
+    # YOUR CODE HERE
 
     # Iterate on the full training dataset chunk per chunks.
     # Break out of the loop if you receive no more data to train upon!
@@ -482,33 +465,33 @@ def train():
 
         # Load chunk of preprocess data and create (X_train_chunk, y_train_chunk)
         # YOUR CODE HERE
-        data_processed_chunk = None
-        X_train_chunk = None
-        y_train_chunk = None
 
         # Train a model incrementally and print validation metrics for this chunk
         learning_rate = 0.001
         batch_size = 256
+        patience = 2
+
         # YOUR CODE HERE
 
         chunk_id += 1
+
+    # return the last value of the validation MAE
+    val_mae = metrics_val_list[-1]
 
     # Save model and training params
     params = dict(
         learning_rate=learning_rate,
         batch_size=batch_size,
+        patience = patience,
         incremental=True,
         chunk_size=CHUNK_SIZE)
 
-    metrics_val_mean_all_chunks = np.mean(np.array(metrics_val_list))
-    metrics = dict(mean_val=metrics_val_mean_all_chunks)
+    print(f"\n✅ trained with MAE: {round(val_mae, 2)}")
 
-    save_model(model, params=params, metrics=metrics)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_train", subdir="train_at_scale", metrics=metrics)
+    save_model(model, params=params, metrics=dict(mae=val_mae))
 
     print("✅ model trained and saved")
+
 ```
 
 </details>

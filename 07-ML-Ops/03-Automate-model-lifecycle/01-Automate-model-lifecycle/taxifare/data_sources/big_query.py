@@ -11,23 +11,23 @@ from taxifare.ml_logic.params import PROJECT, DATASET
 def get_bq_chunk(table: str,
                  index: int,
                  chunk_size: int,
-                 dtypes: dict = None) -> pd.DataFrame:
+                 dtypes: dict = None,
+                 verbose=True) -> pd.DataFrame:
     """
     return a chunk of a big query dataset table
     format the output dataframe according to the provided data types
     """
-
-    print(Fore.MAGENTA + f"Source data from big query {table}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL)
+    print(Fore.MAGENTA + f"Source data from big query {table}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL) if verbose else None
 
     table = f"{PROJECT}.{DATASET}.{table}"
 
     client = bigquery.Client()
 
     if chunk_size is None:
-        print(f"\nQuery {table} whole content...")
+        print(f"\nQuery {table} whole content...") if verbose else None
     else:
         print(f"\nQuery {table} chunk {index // chunk_size} "
-              + f"([{index}-{index + chunk_size - 1}])...")
+              + f"([{index}-{index + chunk_size - 1}])...") if verbose else None
 
     rows = client.list_rows(table,
                             start_index=index,

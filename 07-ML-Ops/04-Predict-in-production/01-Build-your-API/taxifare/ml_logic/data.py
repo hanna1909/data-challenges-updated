@@ -2,15 +2,11 @@ from taxifare.ml_logic.params import (DATA_RAW_COLUMNS,
                                             DATA_RAW_DTYPES_OPTIMIZED,
                                             DATA_PROCESSED_DTYPES_OPTIMIZED)
 
-from taxifare.data_sources.local_disk import (get_pandas_chunk,
-                                                    save_local_chunk)
+from taxifare.data_sources.local_disk import (get_pandas_chunk, save_local_chunk)
 
-from taxifare.data_sources.big_query import (get_bq_chunk,
-                                                   save_bq_chunk)
-
+from taxifare.data_sources.big_query import (get_bq_chunk, save_bq_chunk)
 
 import os
-
 import pandas as pd
 
 
@@ -45,7 +41,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 
 def get_chunk(source_name: str,
               index: int = 0,
-              chunk_size: int = None) -> pd.DataFrame:
+              chunk_size: int = None,
+              verbose=False) -> pd.DataFrame:
     """
     return a chunk of the dataset between `index` and `index + chunk_size - 1`
     """
@@ -62,7 +59,8 @@ def get_chunk(source_name: str,
         chunk_df = get_bq_chunk(table=source_name,
                                 index=index,
                                 chunk_size=chunk_size,
-                                dtypes=dtypes)
+                                dtypes=dtypes,
+                                verbose=verbose)
 
         return chunk_df
 
@@ -70,12 +68,13 @@ def get_chunk(source_name: str,
                                 index=index,
                                 chunk_size=chunk_size,
                                 dtypes=dtypes,
-                                columns=columns)
+                                columns=columns,
+                                verbose=verbose)
 
     return chunk_df
 
 
-def save_chunk(source_name: str,
+def save_chunk(destination_name: str,
                is_first: bool,
                data: pd.DataFrame) -> None:
     """
@@ -84,12 +83,12 @@ def save_chunk(source_name: str,
 
     if os.environ.get("DATA_SOURCE") == "big query":
 
-        save_bq_chunk(table=source_name,
+        save_bq_chunk(table=destination_name,
                       data=data,
                       is_first=is_first)
 
         return
 
-    save_local_chunk(path=source_name,
+    save_local_chunk(path=destination_name,
                      data=data,
                      is_first=is_first)

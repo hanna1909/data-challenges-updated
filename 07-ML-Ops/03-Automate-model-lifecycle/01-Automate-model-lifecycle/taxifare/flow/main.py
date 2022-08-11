@@ -1,9 +1,12 @@
-# YOUR CODE HERE
-
+import os
+from taxifare.flow.flow import build_flow
 flow = build_flow()
 
 mlflow_experiment = os.environ.get("MLFLOW_EXPERIMENT")
 prefect_backend = os.environ.get("PREFECT_BACKEND")
+
+# OPTIONAL: Configure parallel task executor
+# YOUR CODE HERE
 
 if prefect_backend == "development":
     flow.visualize()

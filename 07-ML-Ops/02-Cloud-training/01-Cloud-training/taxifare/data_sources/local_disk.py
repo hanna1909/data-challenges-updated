@@ -10,7 +10,8 @@ def get_pandas_chunk(path: str,
                      index: int,
                      chunk_size: int,
                      dtypes,
-                     columns: list = None) -> pd.DataFrame:
+                     columns: list = None,
+                     verbose=True) -> pd.DataFrame:
     """
     return a chunk of the raw dataset from local disk or cloud storage
     """
@@ -20,7 +21,7 @@ def get_pandas_chunk(path: str,
         "processed" if "processed" in path else "raw",
         f"{path}.csv")
 
-    print(Fore.MAGENTA + f"Source data from {path}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL)
+    print(Fore.MAGENTA + f"Source data from {path}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL) if verbose else None
 
     try:
 

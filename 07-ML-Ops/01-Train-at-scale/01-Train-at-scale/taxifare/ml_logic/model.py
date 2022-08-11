@@ -41,6 +41,7 @@ def train_model(model: Model,
                 X: np.ndarray,
                 y: np.ndarray,
                 batch_size=64,
+                patience=2,
                 validation_split=0.3,
                 validation_data=None) -> Tuple[Model, dict]:
     """
