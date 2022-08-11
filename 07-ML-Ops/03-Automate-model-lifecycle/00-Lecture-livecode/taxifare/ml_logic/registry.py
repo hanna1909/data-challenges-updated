@@ -85,7 +85,10 @@ def get_model_version(stage="Production"):
 
         client = MlflowClient()
 
-        version = client.get_latest_versions(name=mlflow_model_name, stages=[stage])
+        try:
+            version = client.get_latest_versions(name=mlflow_model_name, stages=[stage])
+        except:
+            return None
 
         # check whether a version of the model exists in the given stage
         if not version:
