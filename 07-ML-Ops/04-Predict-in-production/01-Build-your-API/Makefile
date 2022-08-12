@@ -18,22 +18,23 @@ run_evaluate:
 
 run_all: run_preprocess run_train run_pred run_evaluate
 
-# Prefect: run your workflow locally
 run_workflow:
 	PREFECT__LOGGING__LEVEL=${PREFECT_LOG_LEVEL} python -m taxifare.flow.main
+
+run_api:
+	uvicorn taxifare.api.fast:app --reload
 
 ##################### TESTS #####################
 default:
 	@echo 'tests are only executed locally for this challenge'
 
-run_api:
-	uvicorn taxifare.api.fast:app --reload
+test_api: test_api_root test_api_predict
 
 test_api_root:
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_root' -v --color=yes --asyncio-mode=strict -W "ignore"
+	TEST_ENV=development pytest tests/api -k 'test_root' --asyncio-mode=strict -W "ignore"
 
 test_api_predict:
-	TEST_ENV=development PYTHONDONTWRITEBYTECODE=1 pytest tests/api -k 'test_predict' -v --color=yes --asyncio-mode=strict -W "ignore"
+	TEST_ENV=development pytest tests/api -k 'test_predict' --asyncio-mode=strict -W "ignore"
 
 ################### DATA SOURCES ACTIONS ################
 
