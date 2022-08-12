@@ -21,39 +21,40 @@ In order to do so, we will:
 
 ## Project setup
 
+### Environment
+
+Copy your `.env` file from the previous package version:
+
+```bash
+cp ~/<user.github_nickname>/{{local_path_to('07-MLOps/03-Automated-model-lifecycle/01-Automated-model-lifecycle')}}/.env .env
+```
+
+OR
+
+Use the `env.sample` provided, replacing the environment variable values by yours.
+
 ### API directory
 
-A new `taxifare/api` directory has been added to the project to contain the code of the API.dand new files within the `model` project directory.
-
-First, let's have a look at this new directory:
+A new `taxifare/api` directory has been added to the project to contain the code of the API along with 2 new configuration files within the challenge project directory:
 
 ```bash
 .
-├── Dockerfile          # 🆕 Building instructions
-├── MANIFEST.in         # 🆕 Config file for production purpose
+├── Dockerfile          # 🎁  NEW Building instructions
+├── MANIFEST.in         # 🎁  NEW Config file for production purpose
 ├── Makefile            # Good old task manager
-├── README.md           # Package documentation
+├── README.md
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare
-│   ├── api             # 🆕 API directory
+│   ├── api             # 🎁  NEW API directory
 │   │   ├── __init__.py
-│   │   └── fast.py     # 🆕 Where the API lays
+│   │   └── fast.py     # 🎁  NEW Where the API lays
 │   ├── data_sources    # Data stuff
 │   ├── flow            # DAG stuff
 │   ├── interface       # Package entry point
-│   └── ml_logic        # ML logic
-└── tests               # Your favorite 🍔
+│   └── ml_logic        # ML stuff
+└── tests
 ```
-
-**❓ What's inside that new directory?**
-
-<details>
-  <summary markdown='span'>Answer</summary>
-
-🎁 As you can see, it contains a new **module** named **`taxifare.api.fast`** that you are going to implement!
-
-</details>
 
 Now, have a look at the `requirements.txt`. You can see new comers:
 
@@ -145,26 +146,26 @@ Once and _only once_ your API responds as required:
 
 - GET `/predict`
 - Query parameters
-
-| Name | Type | Sample |
-|---|---|---|
-| pickup_datetime | DateTime |  `2013-07-06 17:18:00` |
-| pickup_longitude | float |  `-73.950655` |
-| pickup_latitude | float |  `40.783282` |
-| dropoff_longitude | float |  `-73.950655` |
-| dropoff_latitude | float |  `40.783282` |
-| passenger_count | int |  `2` |
-
+    | Name | Type | Sample |
+    |---|---|---|
+    | pickup_datetime | DateTime |  `2013-07-06 17:18:00` |
+    | pickup_longitude | float |  `-73.950655` |
+    | pickup_latitude | float |  `40.783282` |
+    | dropoff_longitude | float |  `-73.950655` |
+    | dropoff_latitude | float |  `40.783282` |
+    | passenger_count | int |  `2` |
 - Response
-Status 200
+    `Status 200`
 - Code sample
-GET `http://localhost:8000/predict?pickup_datetime=2013-07-06 17:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2`
-Example response:
-```json
-{
-    'fare_amount': 5.93
-}
-```
+    ```bash
+    GET http://localhost:8000/predict?pickup_datetime=2013-07-06 17:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2
+    ```
+    Example response:
+    ```json
+    {
+        'fare_amount': 5.93
+    }
+    ```
 
 **❓ How would you proceed to implement the `/predict` endpoint? 💬 Discuss with your buddy.**
 
@@ -172,16 +173,16 @@ Example response:
   <summary markdown='span'>⚡️ Kickstart pack</summary>
 Here is a piece of code you can use to kickstart the implementation:
 
-```Python
-@app.get("/predict")
-def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
-            pickup_longitude: float,    # -73.950655
-            pickup_latitude: float,     # 40.783282
-            dropoff_longitude: float,   # -73.984365
-            dropoff_latitude: float,    # 40.769802
-            passenger_count: int):
-    pass # YOUR CODE HERE
-```
+    ```python
+    @app.get("/predict")
+    def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
+                pickup_longitude: float,    # -73.950655
+                pickup_latitude: float,     # 40.783282
+                dropoff_longitude: float,   # -73.984365
+                dropoff_latitude: float,    # 40.769802
+                passenger_count: int):
+        pass # YOUR CODE HERE
+    ```
 
 </details>
 
@@ -200,12 +201,12 @@ Ask yourselves the following questions:
 
 Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration:
 
-``` bash
-MODEL_TARGET=mlflow
-MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
-MLFLOW_EXPERIMENT=taxifare_experiment_recap
-MLFLOW_MODEL_NAME=my_taxifare
-```
+    ``` bash
+    MODEL_TARGET=mlflow
+    MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
+    MLFLOW_EXPERIMENT=taxifare_experiment_krokrob
+    MLFLOW_MODEL_NAME=taxifare_krokrob
+    ```
 
 </details>
 
@@ -215,11 +216,11 @@ MLFLOW_MODEL_NAME=my_taxifare
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
 1. Of course you must re-use the `taxifare.interface.main.pred()` or the `taxifare.ml_logic.registry.load_model()` functions!
 1. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
-1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
+1. FastAPI can only render data type from the [Python Standard Library](https://docs.python.org/3.8/library/stdtypes.html), you may need to convert `y_pred` to match this requirement
 
 </details>
 
-**👀 Inspect your browser response 👉 ['http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
+**👀 Inspect your browser response 👉 [http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
 
 **🐛 Inspect the server logs and add some `breakpoint()` to debug**
 
@@ -323,36 +324,40 @@ Choosing an image with Python already installed could be a nice start...
 
 **💻 Write the instructions needed to build the API image in the `Dockerfile` with the following specifications:**
 
-- [ ] it should contain the same Python version of your virtual env
-- [ ] it should contain the necessary directories from the `/taxifare` directory to allow the API to run
-- [ ] it should contain the dependencies list
-- [ ] the API depencies should be installed
-- [ ] the web server should be launched when the container is started from the image
-- [ ] the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
-- [ ] the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
+- ✅ it should contain the same Python version of your virtual env
+- ✅ it should contain the necessary directories from the `/taxifare` directory to allow the API to run
+- ✅ it should contain the dependencies list
+- ✅ the API depencies should be installed
+- ✅ the web server should be launched when the container is started from the image
+- ✅ the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
+- ✅ the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
 
 <details>
   <summary markdown='span'>⚡️ Kickstart pack</summary>
 
 Here is the skeleton of the `Dockerfile`:
 
-```Dockerfile
-FROM image
-COPY taxifare
-COPY dependencies
-RUN install dependencies
-CMD launch API web server
-```
+  ```Dockerfile
+  FROM image
+  COPY taxifare
+  COPY dependencies
+  RUN install dependencies
+  CMD launch API web server
+  ```
 
 </details>
 
-**🚨 Apple Silicon users**
+<details>
+  <summary markdown='span'><strong>🚨 Apple Silicon users</strong>, expand me and read carefully</summary>
 
-🚨 You will not be able to test your container locally with the tensorflow package since the current version does not install properly on _Apple Silicon_ machines.
+You will not be able to test your container locally with the tensorflow package since the current version does not install properly on _Apple Silicon_ machines.
 
 The solution is to use one image to test your code locally and another one to push your code to production.
 
 👉 Refer to the commands in the `Dockerfile_silicon` file in order to build and test your **local image** and build and deploy to production your **production image**
+</details>
+
+
 
 **❓ How would you check if the `Dockerfile` instructions will execute what you wanted?**
 
@@ -502,6 +507,34 @@ Now we have built a **predictive API** Docker image that we are able to run on o
 - Push the **Docker image** to **Google Container Registry**
 - Deploy the image on **Google Cloud Run** so that it gets instantiated into a **Docker container**
 
+### Lightweigth image
+
+As a responsible ML Engineer, you know the size of an image is important when it comes to production. Depending the choice of the base image you used in your `Dockerfile`, the API image could be huge:
+- `python:3.8.12-buster` 👉 `3.9GB`
+- `python:3.8.12-slim`   👉 `3.1GB`
+- `python:3.8.12-alpine` 👉 `3.1GB`
+
+**❓ What is the heaviest requirement used by your API?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+No doubt it is `tensorflow` with 1.1GB! You need to find a base image that is optimized for it.
+</details>
+
+**📝 Change your base image**
+
+**💻 Build and run a lightweight local image of your API**
+
+**✅ Make sure the API is still up and running**
+
+**👀 Inspect the space saved with `docker images` and feel happy**
+
+<details>
+  <summary markdown='span'>Hints</summary>
+
+You may want to use a [tensorflow docker image](https://hub.docker.com/r/tensorflow/tensorflow).
+</details>
 
 ### Push our prediction API image to Google Container Registry
 
@@ -530,23 +563,23 @@ gcloud auth configure-docker
 
 Now we are going to build our image again. This should be pretty fast since Docker is pretty smart and is going to reuse all the building blocks used previously in order to build the prediction API image.
 
-Add a `MULTI_REGION` variable to your project configuration and set it to `eu.gcr.io`.
+Add a `GCR_MULTI_REGION` variable to your project configuration and set it to `eu.gcr.io`.
 
 ``` bash
-docker build -t $MULTI_REGION/$PROJECT/$IMAGE .
+docker build -t $GCR_MULTI_REGION/$PROJECT/$IMAGE .
 ```
 
 Again, let's make sure that our image runs correctly, so that we avoid spending the time on pushing an image that is not working to the cloud.
 
 ``` bash
-docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $MULTI_REGION/$PROJECT/$IMAGE
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $GCR_MULTI_REGION/$PROJECT/$IMAGE
 ```
 Visit [http://localhost:8000/](http://localhost:8000/) and check the API is running as expected.
 
 We can now push our image to Google Container Registry.
 
 ``` bash
-docker push $MULTI_REGION/$PROJECT/$IMAGE
+docker push $GCR_MULTI_REGION/$PROJECT/$IMAGE
 ```
 
 The image should be visible in the GCP console [here](https://console.cloud.google.com/gcr/).
@@ -612,7 +645,7 @@ Cloud Run will instantiate the image into a container and run the `CMD` instruct
 Let's run one last command 🤞
 
 ``` bash
-gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --region $REGION --env-vars-file .env.yaml
+gcloud run deploy --image $GCR_MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --region $REGION --env-vars-file .env.yaml
 ```
 
 After confirmation, you should see a similar output indicating that the service is live 🎉
