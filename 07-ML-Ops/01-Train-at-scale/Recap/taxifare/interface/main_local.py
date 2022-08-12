@@ -1,3 +1,4 @@
+from tests.test_base import write_result
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
@@ -66,6 +67,9 @@ def preprocess_and_train():
         patience=patience)
     save_model(model, params=params, metrics=metrics)
 
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
+
     print("✅ preprocess_and_train() done")
 
 def preprocess(source_type='train'):
@@ -73,6 +77,8 @@ def preprocess(source_type='train'):
     Preprocess the dataset iteratively, loading data by chunks fitting in memory,
     processing each chunk, appending each of them to a final dataset preprocessed,
     and saving final prepocessed dataset as CSV
+    Parameter:
+    - source_type could be 'train' or 'val'
     """
 
     print("\n⭐️ use case: preprocess")
@@ -139,6 +145,11 @@ def preprocess(source_type='train'):
                 index=False)
 
         chunk_id += 1
+
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    if source_type == 'train':
+        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
+        write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:2])
 
     print("✅ data processed saved entirely")
 
@@ -255,6 +266,9 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 
     # make a prediction
     y_pred = model.predict(X_processed)
+
+
+    print("✅ prediction done: ", y_pred, y_pred.shape)
 
     return y_pred
 

@@ -1,3 +1,4 @@
+from tests.test_base import write_result
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
@@ -63,6 +64,9 @@ def preprocess_and_train():
         patience=patience)
     save_model(model, params=params, metrics=metrics)
 
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
+
     print("✅ preprocess_and_train() done")
 
 
@@ -86,6 +90,9 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
 
     # make a prediction
     # YOUR CODE HERE
+
+
+    print("✅ prediction done: ", y_pred, y_pred.shape)
 
     return y_pred
 
