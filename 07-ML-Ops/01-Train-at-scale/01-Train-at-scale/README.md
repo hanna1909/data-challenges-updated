@@ -119,13 +119,13 @@ tree -a ~/.lewagon/mlops/
 ❓ Now, download the raw datasets
 
 ```bash
-# 3 train sets
+# 4 train sets
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_1k.csv > ~/.lewagon/mlops/data/raw/train_1k.csv
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/raw/train_10k.csv
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_100k.csv > ~/.lewagon/mlops/data/raw/train_100k.csv
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_500k.csv > ~/.lewagon/mlops/data/raw/train_500k.csv
 
-# 3 val sets
+# 4 val sets
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_1k.csv > ~/.lewagon/mlops/data/raw/val_1k.csv
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/raw/val_10k.csv
 curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_100k.csv > ~/.lewagon/mlops/data/raw/val_100k.csv
@@ -340,6 +340,11 @@ def preprocess(source_type='train'):
 
         chunk_id += 1
 
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    if source_type == 'train':
+        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
+        write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:2])
+
     print("✅ data processed saved entirely")
 
 ```
@@ -497,6 +502,8 @@ def train():
 </details>
 
 **🧪 Test your code with `make test_train_at_scale_6`**
+
+You should get an MAE below 3 on the validation set!
 
 🏁 🏁 🏁 🏁 Congratulations! 🏁 🏁 🏁 🏁
 
