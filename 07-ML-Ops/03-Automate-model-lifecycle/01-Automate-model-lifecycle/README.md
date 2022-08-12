@@ -489,23 +489,39 @@ def notify(eval_mae, train_mae):
 
 ## Leverage the Prefect suite
 
-Now you have a functional workflow, sure you want to get the Prefect server + interface to play with.
+Great, you now you have a functional prefect workflow that you can run locally when `PREFECT_BACKEND_SERVER` is set to `development`.
+
+However, Prefect also comes with an online server + UI to play with!
 
 1. Create an account on [Prefect Cloud](https://cloud.prefect.io/) and get an API key
-1. Store your API key in a secret place 🙊
-1. Launch a Prefect server (cf lecture)
-1. Switch the `PREFECT_BACKEND_SERVER` to `production`
+2. Store your API key in a secret place 🙊
+3. Auth to Prefect using your API key (cf lecture)
+4. Launch a Prefect Agent (cf lecture)
+5. Switch the `PREFECT_BACKEND_SERVER` to `production`
 
-**💻 Try to `make run_workflow`**
+☝️ In production mode, `make run_workflow` do not execute any computation at all! It just sends a "snapshot" of your taxifare package to Prefect Cloud web server (but does not execute it). Therefore, you will need to re-run this anytime you change your code or your `.env` locally.
 
-**✅ Check your workflow has been pushed to your Prefect dashboard**
+**💻 Try to `make run_workflow` and check that your workflow has been pushed to your Prefect dashboard**
 
-Now's the time to play with the UI to get familiar with:
-- 🔎 Finding your workflow
-- 🏃‍♀️ Running your workflow
-- 📆 Scheduling your workflow
+Now, because you have also launched a Prefect Agent that connects your local machine and the Prefect Cloud web server, you will be able to click on "Quick Run" on the Prefect Cloud UI to trigger the workflow locally on your machine without resorting to your terminal anymore. (Think, for instance, that your local machine is instead a powerfull remote server full of GPUs... You do not need to SSH-connect to it every time you want to launch a training !)
 
-**🏁 AMAZING! You plugged the `taxifare` to a fully automated workflow lifecycle 👏👏👏👏**
+<img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/07-ML-OPS/prefect_quick_run.png" width=500>
+
+👉 **Actually execute your workflow from the Prefect UI**
+- 🔎 Find and run your workflow in the Prefect UI
+- Check the performance of your model on MLFLOW
+
+👏👏👏👏 Congrats for plugging the `taxifare` to a fully automated workflow lifecycle
+
+**🏁 Have fun to finish with!**
+1. Start back with data from January 2015
+2. Execute your workflow with Prefect
+3. Simulate the passing of time with the `get_new_data()` function
+4. Follow the chat to check for notifications
+5. Use the **Compare** feature of the MLflow UI to draw performance metric data visualization
+6. Set the last best model to `Production` anytime with MLflow
+7. Move forwards one month and repeat ! You can even try to schedule your workflow to be ran every 5 minutes instead of manually using "Quick Run" 📆
+
 </details>
 
 <br>
@@ -515,16 +531,7 @@ Now's the time to play with the UI to get familiar with:
 <details>
   <summary markdown='span'><strong>❓ Instructions (expand me)</strong></summary>
 
-## OPTIONAL 1: Automate the performance monitoring
-
-1. Find how long is your workflow on Prefect
-1. Schedule your workflow with a relevant time laps on Prefect
-1. Simulate the passing of time with the `get_new_data()` function with a relevant frequency
-1. Follow the chat to check for notifications
-1. Use the `Compare` feature of mlflow UI to draw performance metric data visulization
-1. Set the last best model to `Production` anytime with mlflow
-
-## OPTIONAL 2: Parallelization
+## OPTIONAL 1: Parallelization
 
 1. Use the [`prefect.executors.LocalDaskExecutor`](https://docs-v1.prefect.io/core/tutorial/06-parallel-execution.html#scaling-out) in `flow.main.py` to parallelize the tasks
 1. Launch the new workflow in `development` mode to test it then go to `production` and visualize the effect on the execution time
@@ -532,7 +539,7 @@ Now's the time to play with the UI to get familiar with:
 1. Create a `flow.parallelized_flow.py` based on the previous workflow and adapt it so the formerly identified task is split
 1. Publish and run the new workflow and check the new execution time
 
-## OPTIONAL 3: Model Finetuning
+## OPTIONAL 2: Model Finetuning
 
 1. Before deciding which model version to put in production, try a couple of hyperparameters during the training phase, by testing (grid-searching?) wisely various `batch_size`,  `learning_rate` and `patience`.
 1. In addition, after finetuning and deciding on a model, try to retrain using the whole new dataset of each month, and not just the "train_new".
