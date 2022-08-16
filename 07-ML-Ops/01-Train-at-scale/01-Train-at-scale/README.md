@@ -356,7 +356,7 @@ def preprocess(source_type='train'):
 **❓ Try create and store the following preprocessed datasets**
 
 - `data/processed/train_processed_1k.csv` by running `preprocess()`
-- `data/processed/val_processed_1k.csv` by running `preprocess(training_set=False)`
+- `data/processed/val_processed_1k.csv` by running `preprocess(source_type='val')`
 
 **🧪 Test your code**
 
@@ -373,7 +373,7 @@ CHUNK_SIZE = 100000
 ```
 To create:
 - `data/processed/train_processed_500k.csv` by running `preprocess()`
-- `data/processed/val_processed_500k.csv` by running `preprocess(training_set=False)`
+- `data/processed/val_processed_500k.csv` by running `preprocess(source_type='val')`
 
 🎉 Given few hours of computation, we could easily process the 55 Millions rows too, but let's not do it today!
 
