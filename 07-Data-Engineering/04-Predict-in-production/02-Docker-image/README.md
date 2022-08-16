@@ -119,7 +119,7 @@ In order to run the Docker commands, you need to make sure that your **Docker da
 
 Make sure that the `Docker.app` is running (you should see a whale in your menu bar).
 
-<img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running">
+<img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running">
 
 ### Linux
 

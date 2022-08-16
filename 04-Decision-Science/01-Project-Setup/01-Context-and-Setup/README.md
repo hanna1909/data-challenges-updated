@@ -6,7 +6,7 @@ We will analyze a dataset provided by an e-commerce marketplace called [Olist](h
 
 ## About Olist 🇧🇷
 
-<img src="https://raw.githubusercontent.com/lewagon/data-images/master/best-practices/olist.png" width="500"/>
+<img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/best-practices/olist.png" width="500"/>
 
 Olist is a leading e-commerce service that connects merchants to main marketplaces in Brazil. They provide a wide range of offers including inventory management, dealing with reviews and customer contacts to logistic services.
 
@@ -60,7 +60,7 @@ This will be your project structure for the week.
 ```bash
 .
 # Your whole code logic and data, this is your "package"
-├── context-and-setup-olist         
+├── context-and-setup-olist
     ├── data                # Your data source (git ignored)
     |   ├── csv
     |   |   ├── olist_customers_dataset.csv

@@ -259,7 +259,7 @@ You need Docker daemon to run on your machine so you  will be able to build and 
 
 Launch the Docker Desktop app, you should see a whale in your menu bar.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/macos-docker-desktop-running.png" target="_blank"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running"></a>
 
 </details>
 
@@ -268,7 +268,7 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
 
 Launch the Docker app.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/windows-docker-app.png" target="_blank"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running"></a>
 
 </details>
 

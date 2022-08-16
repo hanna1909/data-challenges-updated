@@ -37,7 +37,7 @@ Sometimes, a set of data values can have more than one mode.
 
 E.g. A distribution of grades
 
-![grades_distribution](https://raw.githubusercontent.com/lewagon/data-images/master/math/grades.png)
+![grades_distribution](https://wagon-public-datasets.s3.amazonaws.com/data-science-images/math/grades.png)
 
 Implement the function `my_multimodes(samples)` in the `basic_functions.py`
 

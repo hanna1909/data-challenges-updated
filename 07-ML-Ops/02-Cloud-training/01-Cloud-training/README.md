@@ -538,13 +538,13 @@ You have access at arms length to virtually unlimited computing power. Ready to 
 
 The GCP console allows you to connect to the VM instance through a web interface:
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-ssh.png" width="150" alt="gce vm ssh"></a><a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-console-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-console-ssh.png" width="120" alt="gce console ssh"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-ssh.png" width="150" alt="gce vm ssh"></a><a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-console-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-console-ssh.png" width="120" alt="gce console ssh"></a>
 
 You can disconnect by typing `exit` or closing the window.
 
 A nice alternative is to connect to the virtual machine right from your command line 🤩
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
 
 All you need to do is to `gcloud compute ssh` on a running instance and to run `exit` when you want to disconnect 🎉
 
@@ -635,7 +635,7 @@ python-dev python3-dev
 
 ℹ️ If a window pops up to ask you which services to restart, just press *Enter*:
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png" width="150" alt="gce apt services restart"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-apt-services-restart.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-apt-services-restart.png" width="150" alt="gce apt services restart"></a>
 
 Now we need to start a new user session so that the updates in the `~/.zshrc` and `~/.zprofile` are taken into account.
 
@@ -885,7 +885,7 @@ pip install -r requirements.txt
 make run_all  # Have a look at the Makefile to understand exactly what this does!
 ```
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-ssh.png" width="150" alt="gce train ssh"></a><a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-web-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-web-ssh.png" width="120" alt="gce train web ssh"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-ssh.png" width="150" alt="gce train ssh"></a><a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-web-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-web-ssh.png" width="120" alt="gce train web ssh"></a>
 
 **🏋🏽‍♂️ Go Big: re-run everything switching to 500k data sizes and 100k chunks 🏋🏽‍♂️**!
 
@@ -894,7 +894,7 @@ make run_all  # Have a look at the Makefile to understand exactly what this does
 
 You can easily start and stop a vm instance from the GCP console, which allows to see which instances are running.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png" width="150" alt="gce vm start"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-start.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-start.png" width="150" alt="gce vm start"></a>
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>

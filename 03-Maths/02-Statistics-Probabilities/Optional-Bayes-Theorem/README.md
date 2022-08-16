@@ -15,7 +15,7 @@ More precisely, we want to compute the probability **$P(play \mid weather)$** in
 
 By doing so, we will also demonstrate the **Bayes Theorem** by calculating each of these 4 probabilities ourselves:
 
-<img src='https://github.com/lewagon/data-images/blob/master/math/bayes-theorem.png?raw=true'>
+<img src='https://wagon-public-datasets.s3.amazonaws.com/data-science-images/math/bayes-theorem.png'>
 
 
 Where :
