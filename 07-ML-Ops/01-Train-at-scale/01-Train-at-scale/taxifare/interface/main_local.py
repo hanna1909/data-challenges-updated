@@ -54,8 +54,7 @@ def preprocess_and_train():
     # YOUR CODE HERE
 
     # Compute the validation metric (min val mae of the holdout set)
-    metrics = dict(mae=None)
-    # YOUR CODE HERE
+    metrics = dict(mae=np.min(history.history['val_mae']))
 
     # Save trained model
     params = dict(
@@ -91,7 +90,8 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     # make a prediction
     # YOUR CODE HERE
 
-
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
     print("✅ prediction done: ", y_pred, y_pred.shape)
 
     return y_pred
