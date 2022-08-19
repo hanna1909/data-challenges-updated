@@ -349,8 +349,8 @@ def preprocess(source_type='train'):
         chunk_id += 1
 
     # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
-    data_processed = pd.read_csv(data_processed_path, header=None, skiprows= 1, dtype=DTYPES_PROCESSED_OPTIMIZED).to_numpy()
-    write_result(name="test_preprocess", subdir="train_at_scale", data_processed=data_processed)
+    data_processed = pd.read_csv(data_processed_path, header=None, skiprows=1, dtype=DTYPES_PROCESSED_OPTIMIZED).to_numpy()
+    write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:10])
 
 
     print("✅ data processed saved entirely")
