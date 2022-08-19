@@ -1,6 +1,8 @@
-from taxifare.ml_logic.params import (DATA_RAW_COLUMNS,
-                                            DATA_RAW_DTYPES_OPTIMIZED,
-                                            DATA_PROCESSED_DTYPES_OPTIMIZED)
+from taxifare.ml_logic.params import (COLUMN_NAMES_RAW,
+                                            DTYPES_RAW_OPTIMIZED,
+                                            DTYPES_RAW_OPTIMIZED_HEADLESS,
+                                            DTYPES_PROCESSED_OPTIMIZED
+                                            )
 
 import os
 import pandas as pd

@@ -4,8 +4,6 @@ from taxifare.interface.main import preprocess, train, evaluate
 from prefect import task, Flow, Parameter
 
 import os
-
-from colorama import Fore, Style
 import requests
 
 @task

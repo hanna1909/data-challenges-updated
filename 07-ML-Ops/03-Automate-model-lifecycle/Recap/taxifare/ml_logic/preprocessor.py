@@ -16,10 +16,9 @@ def preprocess_features(X: pd.DataFrame) -> np.ndarray:
 
     def create_sklearn_preprocessor() -> ColumnTransformer:
         """
-        Create a stateless scikit-learn "Column Transformer" object
+        Create a scikit-learn preprocessor
         that transforms a cleaned dataset of shape (_, 7)
         into a preprocessed one of different fixed shape (_, 65)
-        ready for machine-learning models
         """
 
 

@@ -41,55 +41,60 @@ delete_new_source:
 reset_sources_all:
 	mkdir -p ${ML_DIR}/data/raw ${ML_DIR}/data/processed
 	mkdir -p ${ML_DIR}/training_outputs/params ${ML_DIR}/training_outputs/metrics ${ML_DIR}/training_outputs/model
-	-curl ${HTTPS_DIR}train_1k.csv > ${ML_DIR}/data/raw/train_1k.csv
-	-curl ${HTTPS_DIR}train_10k.csv > ${ML_DIR}/data/raw/train_10k.csv
-	-curl ${HTTPS_DIR}train_100k.csv > ${ML_DIR}/data/raw/train_100k.csv
-	-curl ${HTTPS_DIR}train_500k.csv > ${ML_DIR}/data/raw/train_500k.csv
-	-curl ${HTTPS_DIR}val_1k.csv > ${ML_DIR}/data/raw/val_1k.csv
-	-curl ${HTTPS_DIR}val_10k.csv > ${ML_DIR}/data/raw/val_10k.csv
-	-curl ${HTTPS_DIR}val_100k.csv > ${ML_DIR}/data/raw/val_100k.csv
-	-curl ${HTTPS_DIR}val_500k.csv > ${ML_DIR}/data/raw/val_500k.csv
-	-curl ${HTTPS_DIR}processed/train_processed_1k.csv > ${ML_DIR}/data/processed/train_processed_1k.csv
-	-curl ${HTTPS_DIR}processed/train_processed_10k.csv > ${ML_DIR}/data/processed/train_processed_10k.csv
-	-curl ${HTTPS_DIR}processed/train_processed_100k.csv > ${ML_DIR}/data/processed/train_processed_100k.csv
-	-curl ${HTTPS_DIR}processed/train_processed_500k.csv > ${ML_DIR}/data/processed/train_processed_500k.csv
-	-curl ${HTTPS_DIR}processed/val_processed_1k.csv > ${ML_DIR}/data/processed/val_processed_1k.csv
-	-curl ${HTTPS_DIR}processed/val_processed_10k.csv > ${ML_DIR}/data/processed/val_processed_10k.csv
-	-curl ${HTTPS_DIR}processed/val_processed_100k.csv > ${ML_DIR}/data/processed/val_processed_100k.csv
-	-curl ${HTTPS_DIR}processed/val_processed_500k.csv > ${ML_DIR}/data/processed/val_processed_500k.csv
+	# Big Query
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}
+	# 1k
+	-curl ${HTTPS_DIR}train_1k.csv > ${ML_DIR}/data/raw/train_1k.csv
+	-curl ${HTTPS_DIR}val_1k.csv > ${ML_DIR}/data/raw/val_1k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_1k.csv > ${ML_DIR}/data/processed/train_processed_1k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_1k.csv > ${ML_DIR}/data/processed/val_processed_1k.csv
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_1k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_10k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_100k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_500k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_1k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_10k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_100k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_500k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_1k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_10k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_100k
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_500k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_1k
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_1k ${GS_DIR}/train_1k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_1k ${GS_DIR}/val_1k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_1k ${GS_DIR}/processed/train_processed_1k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_1k ${GS_DIR}/processed/val_processed_1k.csv
+	# 10k
+	-curl ${HTTPS_DIR}train_10k.csv > ${ML_DIR}/data/raw/train_10k.csv
+	-curl ${HTTPS_DIR}val_10k.csv > ${ML_DIR}/data/raw/val_10k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_10k.csv > ${ML_DIR}/data/processed/train_processed_10k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_10k.csv > ${ML_DIR}/data/processed/val_processed_10k.csv
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_10k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_10k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_10k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_10k
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_10k ${GS_DIR}/train_10k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_10k ${GS_DIR}/val_10k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_10k ${GS_DIR}/processed/train_processed_10k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_10k ${GS_DIR}/processed/val_processed_10k.csv
+	# 100k
+	-curl ${HTTPS_DIR}train_100k.csv > ${ML_DIR}/data/raw/train_100k.csv
+	-curl ${HTTPS_DIR}val_100k.csv > ${ML_DIR}/data/raw/val_100k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_100k.csv > ${ML_DIR}/data/processed/train_processed_100k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_100k.csv > ${ML_DIR}/data/processed/val_processed_100k.csv
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_100k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_100k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_100k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_100k
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_100k ${GS_DIR}/train_100k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_100k ${GS_DIR}/val_100k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_100k ${GS_DIR}/processed/train_processed_100k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_100k ${GS_DIR}/processed/val_processed_100k.csv
+	# 500k
+	-curl ${HTTPS_DIR}train_500k.csv > ${ML_DIR}/data/raw/train_500k.csv
+	-curl ${HTTPS_DIR}val_500k.csv > ${ML_DIR}/data/raw/val_500k.csv
+	-curl ${HTTPS_DIR}processed/train_processed_500k.csv > ${ML_DIR}/data/processed/train_processed_500k.csv
+	-curl ${HTTPS_DIR}processed/val_processed_500k.csv > ${ML_DIR}/data/processed/val_processed_500k.csv
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_500k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_500k
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_500k
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_500k
-	-bq load --sync --autodetect --replace ${DATASET}.train_1k ${GS_DIR}/train_1k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_10k ${GS_DIR}/train_10k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_100k ${GS_DIR}/train_100k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_500k ${GS_DIR}/train_500k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_1k ${GS_DIR}/val_1k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_10k ${GS_DIR}/val_10k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_100k ${GS_DIR}/val_100k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_500k ${GS_DIR}/val_500k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_processed_1k ${GS_DIR}/processed/train_processed_1k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_processed_10k ${GS_DIR}/processed/train_processed_10k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_processed_100k ${GS_DIR}/processed/train_processed_100k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_processed_500k ${GS_DIR}/processed/train_processed_500k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_processed_1k ${GS_DIR}/processed/val_processed_1k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_processed_10k ${GS_DIR}/processed/val_processed_10k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_processed_100k ${GS_DIR}/processed/val_processed_100k.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_processed_500k ${GS_DIR}/processed/val_processed_500k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_500k ${GS_DIR}/train_500k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_500k ${GS_DIR}/val_500k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_500k ${GS_DIR}/processed/train_processed_500k.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_500k ${GS_DIR}/processed/val_processed_500k.csv
 
 reset_sources_env:
 	mkdir -p ${ML_DIR}/data/raw ${ML_DIR}/data/processed
@@ -103,10 +108,10 @@ reset_sources_env:
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_${DATASET_SIZE}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_${DATASET_SIZE}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_${DATASET_SIZE}
-	-bq load --sync --autodetect --replace ${DATASET}.train_${DATASET_SIZE} ${GS_DIR}/train_${DATASET_SIZE}.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_${DATASET_SIZE} ${GS_DIR}/val_${DATASET_SIZE}.csv
-	-bq load --sync --autodetect --replace ${DATASET}.train_processed_${DATASET_SIZE} ${GS_DIR}/processed/train_processed_${DATASET_SIZE}.csv
-	-bq load --sync --autodetect --replace ${DATASET}.val_processed_${DATASET_SIZE} ${GS_DIR}/processed/val_processed_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_${DATASET_SIZE} ${GS_DIR}/train_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_${DATASET_SIZE} ${GS_DIR}/val_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_${DATASET_SIZE} ${GS_DIR}/processed/train_processed_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_${DATASET_SIZE} ${GS_DIR}/processed/val_processed_${DATASET_SIZE}.csv
 
 show_sources_all:
 	-ls -laR ~/.lewagon/mlops/data
