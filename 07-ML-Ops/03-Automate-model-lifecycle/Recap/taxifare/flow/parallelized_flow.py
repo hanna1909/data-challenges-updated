@@ -1,47 +1,8 @@
-from taxifare.interface.main import preprocess, train, evaluate
-from taxifare.flow.flow import notify
-
-from prefect import task, Flow, Parameter
-
 import os
+from prefect import task, Flow, Parameter
+# YOUR CODE HERE
 
-from colorama import Fore, Style
-
-@task
-def preprocess_new_train(experiment):
-    """
-    Run the preprocessing of the train_new data
-    """
-    preprocess()
-
-@task
-def preprocess_new_val(experiment):
-    """
-    Run the preprocessing of the val_new data
-    """
-    preprocess(source_type='val')
-
-@task
-def evaluate_production_model(preproc_train_status, preproc_val_status):
-    """
-    Run the `Production` stage evaluation on new data
-    Returns `eval_mae`
-    """
-    eval_mae = evaluate()
-    return eval_mae
-
-
-@task
-def re_train(preproc_train_status, preproc_val_status):
-    """
-    Run the training
-    Returns train_mae
-    """
-    train_mae = train()
-    return train_mae
-
-
-def build_flow():
+def build_parallel_flow():
     """
     build the prefect workflow for the `taxifare` package
     """
@@ -56,10 +17,6 @@ def build_flow():
         experiment = Parameter(name="experiment", default=mlflow_experiment)
 
         # register tasks in the workflow
-        preproc_train_status = preprocess_new_train(experiment)
-        preproc_cal_status = preprocess_new_cal(experiment)
-        eval_mae = evaluate_production_model(preproc_train_status, preproc_val_status)
-        train_mae = re_train(preproc_train_status, preproc_val_status)
-        notify(eval_mae, train_mae)
+        # YOUR CODE HERE
 
     return flow

@@ -321,29 +321,37 @@ def preprocess(source_type='train'):
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the chunk numbered `chunk_id` of size CHUNK_SIZE
-        # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=...)
-        # YOUR CODE HERE
+        # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
+
+        # 🎯 Hint1: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
+        # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
+
+        # 🎯 Hint2: Don't forget also to `break` out of the while loop when you reached the end of the CSV
+        # We advise you to use a `try: ... except: ...` statement here
+
+        # 👉 YOUR CODE HERE
 
         # clean chunk
-        # YOUR CODE HERE
+        # 👉 YOUR CODE HERE
 
         # create X_chunk,y_chunk
-        # YOUR CODE HERE
+        # 👉 YOUR CODE HERE
 
         # create X_processed_chunk and concatenate (X_processed_chunk, y_chunk) into data_processed_chunk
-        # YOUR CODE HERE
+        # 👉 YOUR CODE HERE
 
-        # Save the chunk of the dataset to local disk (append to existing csv to build it chunk by chunk)
-        # 🎯 Hints1: check out pd.to_csv(mode=...)
-        # YOUR CODE HERE
+        # Save and append the chunk of the preprocessed dataset to a local CSV
+        # Keep headers on the first chunk: For convention, we'll always save CSVs with headers in this challenge
+        # 🎯 Hints: check out pd.to_csv(mode=...)
+
+        # 👉 YOUR CODE HERE
 
         chunk_id += 1
 
     # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
-    if source_type == 'train':
-        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
-        write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:2])
+    data_processed = pd.read_csv(data_processed_path, header=None, skiprows=1, dtype=DTYPES_PROCESSED_OPTIMIZED).to_numpy()
+    write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:10])
+
 
     print("✅ data processed saved entirely")
 
@@ -457,7 +465,15 @@ def train():
     data_val_processed_path = os.path.abspath(os.path.join(
         LOCAL_DATA_PATH, "processed", f"val_processed_{VALIDATION_DATASET_SIZE}.csv"))
 
-    # YOUR CODE HERE
+    data_val_processed = pd.read_csv(
+        data_val_processed_path,
+        skiprows= 1, # skip header
+        header=None,
+        dtype=DTYPES_PROCESSED_OPTIMIZED
+        ).to_numpy()
+
+    X_val = data_val_processed[:, :-1]
+    y_val = data_val_processed[:, -1]
 
     # Iterate on the full training dataset chunk per chunks.
     # Break out of the loop if you receive no more data to train upon!
@@ -469,14 +485,34 @@ def train():
         print(f"loading and training on preprocessed chunk n°{chunk_id}...")
 
         # Load chunk of preprocess data and create (X_train_chunk, y_train_chunk)
-        # YOUR CODE HERE
+        path = os.path.abspath(os.path.join(
+            LOCAL_DATA_PATH, "processed", f"train_processed_{DATASET_SIZE}.csv"))
 
-        # Train a model incrementally and print validation metrics for this chunk
+        try:
+            data_processed_chunk = pd.read_csv(
+                    path,
+                    skiprows=(chunk_id * CHUNK_SIZE) + 1, # skip header
+                    header=None,
+                    nrows=CHUNK_SIZE,
+                    dtype=DTYPES_PROCESSED_OPTIMIZED,
+                    ).to_numpy()
+
+        except pd.errors.EmptyDataError:
+            data_processed_chunk = None  # end of data
+
+        # Break out of while loop if we have no data to train upon
+        if data_processed_chunk is None:
+            break
+
+        X_train_chunk = data_processed_chunk[:, :-1]
+        y_train_chunk = data_processed_chunk[:, -1]
+
         learning_rate = 0.001
         batch_size = 256
         patience = 2
 
-        # YOUR CODE HERE
+        # Train a model *incrementally*, and store the val MAE of each chunk in `metrics_val_list`
+        # 👉 YOUR CODE HERE
 
         chunk_id += 1
 

@@ -87,16 +87,16 @@ class TestCloudData(TestBase):
         verify the value of the `fare_amount` column for the first 10 observations of the training dataset table
         """
         from taxifare.data_sources.big_query import get_bq_chunk
-        from taxifare.ml_logic.params import DATA_RAW_DTYPES_OPTIMIZED
+        from taxifare.ml_logic.params import DTYPES_RAW_OPTIMIZED
 
-        training_rows = get_bq_chunk("train_10k", 0, 10, DATA_RAW_DTYPES_OPTIMIZED)
+        training_rows = get_bq_chunk("train_10k", 0, 10, DTYPES_RAW_OPTIMIZED)
         fare_amount = list(training_rows.fare_amount)
         fare_amount = [round(f, 1) for f in fare_amount]
 
         # validate data types
         dtypes = training_rows.dtypes
 
-        for column, data_type in DATA_RAW_DTYPES_OPTIMIZED.items():
+        for column, data_type in DTYPES_RAW_OPTIMIZED.items():
 
             returned_data_type = dtypes[column]
 

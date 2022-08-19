@@ -1,6 +1,8 @@
-from taxifare.ml_logic.params import (DATA_RAW_COLUMNS,
-                                            DATA_RAW_DTYPES_OPTIMIZED,
-                                            DATA_PROCESSED_DTYPES_OPTIMIZED)
+from taxifare.ml_logic.params import (COLUMN_NAMES_RAW,
+                                            DTYPES_RAW_OPTIMIZED,
+                                            DTYPES_RAW_OPTIMIZED_HEADLESS,
+                                            DTYPES_PROCESSED_OPTIMIZED
+                                            )
 
 from taxifare.data_sources.local_disk import (get_pandas_chunk, save_local_chunk)
 
@@ -44,15 +46,20 @@ def get_chunk(source_name: str,
               chunk_size: int = None,
               verbose=False) -> pd.DataFrame:
     """
-    return a chunk of the dataset between `index` and `index + chunk_size - 1`
+    Return a `chunk_size` rows from the source dataset, starting at row `index` (included)
+    Always assumes `source_name` (CSV or Big Query table) have headers,
+    and do not consider them as part of the data `index` count.
     """
 
     if "processed" in source_name:
         columns = None
-        dtypes = DATA_PROCESSED_DTYPES_OPTIMIZED
+        dtypes = DTYPES_PROCESSED_OPTIMIZED
     else:
-        columns = DATA_RAW_COLUMNS
-        dtypes = DATA_RAW_DTYPES_OPTIMIZED
+        columns = COLUMN_NAMES_RAW
+        if os.environ.get("DATA_SOURCE") == "big query":
+            dtypes = DTYPES_RAW_OPTIMIZED
+        else:
+            dtypes = DTYPES_RAW_OPTIMIZED_HEADLESS
 
     if os.environ.get("DATA_SOURCE") == "big query":
 

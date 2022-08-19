@@ -21,3 +21,4 @@ training_outputs/
 
 *.sublime-project
 *.sublime-workspace
+**/*.code-workspace

@@ -2,9 +2,10 @@ from tests.test_base import write_result
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
-                                            DATA_RAW_DTYPES_OPTIMIZED,
-                                            DATA_PROCESSED_DTYPES_OPTIMIZED,
-                                            DATA_RAW_COLUMNS,
+                                            DTYPES_RAW_OPTIMIZED_HEADLESS,
+                                            DTYPES_RAW_OPTIMIZED,
+                                            DTYPES_PROCESSED_OPTIMIZED,
+                                            COLUMN_NAMES_RAW,
                                             DATASET_SIZE,
                                             VALIDATION_DATASET_SIZE,
                                             LOCAL_DATA_PATH)
@@ -35,7 +36,7 @@ def preprocess_and_train():
 
     # Retrieve raw data
     data_raw_path = os.path.join(LOCAL_DATA_PATH, "raw", f"train_{DATASET_SIZE}.csv")
-    data = pd.read_csv(data_raw_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    data = pd.read_csv(data_raw_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     # Clean data using ml_logic.data.clean_data
     # YOUR CODE HERE

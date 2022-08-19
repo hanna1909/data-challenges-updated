@@ -14,7 +14,8 @@ LOCAL_REGISTRY_PATH = os.path.expanduser(os.environ.get("LOCAL_REGISTRY_PATH"))
 PROJECT = os.environ.get("PROJECT")
 DATASET = os.environ.get("DATASET")
 
-DATA_RAW_DTYPES_OPTIMIZED = {
+# Use this to optimize loading of raw_data with headers: pd.read_csv(..., dtypes=..., headers=True)
+DTYPES_RAW_OPTIMIZED = {
     "key": "O",
     "fare_amount": "float32",
     "pickup_datetime": "O",
@@ -24,9 +25,24 @@ DATA_RAW_DTYPES_OPTIMIZED = {
     "dropoff_latitude": "float32",
     "passenger_count": "int8"
 }
-DATA_RAW_COLUMNS = DATA_RAW_DTYPES_OPTIMIZED.keys()
 
-DATA_PROCESSED_DTYPES_OPTIMIZED = np.float32
+COLUMN_NAMES_RAW = DTYPES_RAW_OPTIMIZED.keys()
+
+# Use this to optimize loading of raw_data without headers: pd.read_csv(..., dtypes=..., headers=False)
+DTYPES_RAW_OPTIMIZED_HEADLESS = {
+    0: "O",
+    1: "float32",
+    2: "O",
+    3: "float32",
+    4: "float32",
+    5: "float32",
+    6: "float32",
+    7: "int8"
+}
+
+DTYPES_PROCESSED_OPTIMIZED = np.float32
+
+
 
 ################## VALIDATIONS #################
 

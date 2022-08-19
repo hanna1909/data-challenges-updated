@@ -17,17 +17,19 @@ def get_bq_chunk(table: str,
     return a chunk of a big query dataset table
     format the output dataframe according to the provided data types
     """
-    print(Fore.MAGENTA + f"Source data from big query {table}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL) if verbose else None
+    if verbose:
+        print(Fore.MAGENTA + f"Source data from big query {table}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL)
 
     table = f"{PROJECT}.{DATASET}.{table}"
 
     client = bigquery.Client()
 
-    if chunk_size is None:
-        print(f"\nQuery {table} whole content...") if verbose else None
-    else:
-        print(f"\nQuery {table} chunk {index // chunk_size} "
-              + f"([{index}-{index + chunk_size - 1}])...") if verbose else None
+    if verbose:
+        if chunk_size is None:
+            print(f"\nQuery {table} whole content...")
+        else:
+            print(f"\nQuery {table} chunk {index // chunk_size} "
+                + f"([{index}-{index + chunk_size - 1}])...")
 
     rows = client.list_rows(table,
                             start_index=index,
