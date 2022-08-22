@@ -82,7 +82,7 @@ def save_model(model: Model = None,
     return None
 
 
-def load_model() -> Model:
+def load_model(save_copy_locally=False) -> Model:
     """
     load the latest saved model, return None if no model found
     """
@@ -105,6 +105,15 @@ def load_model() -> Model:
         except:
             print(f"\n❌ no model in stage {stage} on mlflow")
             return None
+
+        if save_copy_locally:
+            from pathlib import Path
+
+            # Create path to LOCAL_REGISTRY_PATH if it does exist
+            Path(LOCAL_REGISTRY_PATH).mkdir(parents=True, exist_ok=True)
+            timestamp = time.strftime("%Y%m%d-%H%M%S")
+            model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", timestamp)
+            model.save(model_path)
 
         return model
 
