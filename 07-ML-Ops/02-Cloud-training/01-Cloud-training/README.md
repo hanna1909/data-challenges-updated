@@ -293,7 +293,7 @@ Find the `gcloud` command allowing you to list your **GCP project id**.
 
 **📝 Fill the `PROJECT` variable in the `.env` project configuration with the name of your GCP project**
 
-**🧪 Run the tests with `make test_gcp_project_setup`**
+**🧪 Run the tests with `make test_gcp_project`**
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>

@@ -18,6 +18,9 @@ run_evaluate:
 
 run_all: run_preprocess run_train run_pred run_evaluate
 
+# legacy directive
+run_model: run_all
+
 ##################### TESTS #####################
 default:
 	@echo 'tests are only executed locally for this challenge'

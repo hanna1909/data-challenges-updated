@@ -95,11 +95,13 @@ def train():
     data_val_processed = get_chunk(
         source_name=f"val_processed_{VALIDATION_DATASET_SIZE}",
         index=0,  # retrieve from first row
-        chunk_size=None).to_numpy()  # retrieve all further data
+        chunk_size=None)  # retrieve all further data
 
     if data_val_processed is None:
         print("\n✅ no data to train")
         return None
+
+    data_val_processed = data_val_processed.to_numpy()
 
     X_val_processed = data_val_processed[:, :-1]
     y_val = data_val_processed[:, -1]
