@@ -5,7 +5,7 @@ flow = build_flow()
 mlflow_experiment = os.environ.get("MLFLOW_EXPERIMENT")
 prefect_backend = os.environ.get("PREFECT_BACKEND")
 
-pass  # YOUR CODE HERE
+# YOUR CODE HERE
 
 # In dev mode, `make run_workflow` will run all tasks directly on your terminal
 if prefect_backend == "development":

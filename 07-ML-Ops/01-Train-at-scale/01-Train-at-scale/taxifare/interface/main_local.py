@@ -39,20 +39,20 @@ def preprocess_and_train():
     data = pd.read_csv(data_raw_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     # Clean data using ml_logic.data.clean_data
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # Create X, y
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # Preprocess X using `preprocessor.py`
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
     batch_size = 256
     patience = 2
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # Compute the validation metric (min val mae of the holdout set)
     metrics = dict(mae=np.min(history.history['val_mae']))
@@ -86,10 +86,10 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     model = load_model()
 
     # preprocess the new data
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # make a prediction
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)

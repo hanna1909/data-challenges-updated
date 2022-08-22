@@ -15,13 +15,13 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """
 
     # remove useless/redundant columns
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # remove buggy transactions
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     # remove irrelevant/non-representative transactions (rows) for a training set
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     print("\n✅ data cleaned")
 

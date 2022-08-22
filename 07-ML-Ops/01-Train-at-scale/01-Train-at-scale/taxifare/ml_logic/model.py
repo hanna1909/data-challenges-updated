@@ -20,7 +20,7 @@ def initialize_model(X: np.ndarray) -> Model:
     """
     Initialize the Neural Network with random weights
     """
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     print("\n✅ model initialized")
 
@@ -31,7 +31,7 @@ def compile_model(model: Model, learning_rate: float) -> Model:
     """
     Compile the Neural Network
     """
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     print("\n✅ model compiled")
     return model
@@ -48,7 +48,7 @@ def train_model(model: Model,
     Fit model and return a the tuple (fitted_model, history)
     """
 
-    pass  # YOUR CODE HERE
+    # YOUR CODE HERE
 
     print(f"\n✅ model trained ({len(X)} rows)")
 
