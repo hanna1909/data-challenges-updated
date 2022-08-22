@@ -125,7 +125,7 @@
   <details>
     <summary markdown='span'><strong>📝 Register the workflow in Prefect Cloud</strong></summary>
 
-    Set `PREFECT_BACKEND=development` in the `.env` and `direnv reload`.
+    Set `PREFECT_BACKEND=production` in the `.env` and `direnv reload`.
 
     In the `taxifare.flow.main` module, comment out the `LocalDaskExecutor` line.
 
