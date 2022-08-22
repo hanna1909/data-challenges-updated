@@ -109,7 +109,7 @@ def load_model(save_copy_locally=False) -> Model:
         if save_copy_locally:
             from pathlib import Path
 
-            # Create path to LOCAL_REGISTRY_PATH if it does exist
+            # Create the LOCAL_REGISTRY_PATH directory if it does exist
             Path(LOCAL_REGISTRY_PATH).mkdir(parents=True, exist_ok=True)
             timestamp = time.strftime("%Y%m%d-%H%M%S")
             model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", timestamp)

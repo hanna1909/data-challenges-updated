@@ -193,7 +193,7 @@ Ask yourselves the following questions:
 <details>
   <summary markdown='span'>⚙️ Configuration</summary>
 
-Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration, which have a model saved already! (thank you M. krokrob!):
+Have you put a trained model in _Production_ in MLflow? If not, you can use the following configuration, which already has a saved model:
 
     ``` bash
     MODEL_TARGET=mlflow
@@ -208,7 +208,7 @@ Have you put a trained model in _Production_ in mlflow? If not, you can use the 
   <summary markdown='span'>🍔 Food for thought</summary>
 
 1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires.
-2. It's smarter to re-use selected methods in `taxifare/ml_logic` package rather than main routes in `taxifare/interface`. Always load the minimal amount of code!
+2. It's more convenient to re-use the methods available in the `taxifare/ml_logic` package rather than the main routes in `taxifare/interface`. Always load the minimal amount of code!
 3. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
 4. FastAPI can only render data type from the [Python Standard Library](https://docs.python.org/3.8/library/stdtypes.html), you may need to convert `y_pred` to match this requirement
 
@@ -230,7 +230,7 @@ Did you notice your prediction were a bit slow? Why?
 
 The answer is in visible in your logs!
 
-We want to avoid loading the heavy deep-learning model from ML-Flow at each GET request! The trick is to load the model in RAM memory at app startup and store it in a global variable in `app.state`, which is kept in memory and accessible across each routes instantly!
+We want to avoid loading the heavy deep-learning model from MLflow at each GET request! The trick is to load the model in memory at app startup and store it in a global variable in `app.state`, which is kept in memory and accessible across all routes instantly!
 
 This will prove very usefull for demo days!
 
@@ -349,7 +349,7 @@ You can start from a raw linux (Ubuntu) image, but then you'll have to install p
 
 OR
 
-You can choose an image with Python (and pip) already installed ! (recommanded) ✅
+You can choose an image with Python (and pip) already installed ! (recommended) ✅
 
 </details>
 
@@ -488,10 +488,10 @@ test if the API responds as it should.
 <details>
   <summary markdown='span'>💡 Hints</summary>
 
-You should probably remove the interactivity mode and forget the `sh` command...but if you're stuck, read below!
+You should probably remove the interactivity mode and forget the `sh` command... Read below if you're stuck!
 </details>
 
-**😱 It is probably crashing with errors involving environment variable**
+**😱 It is probably crashing with errors involving environment variables**
 
 **❓ What is the difference between your local environment and image environment? 💬 Discuss with your buddy.**
 
@@ -520,7 +520,7 @@ docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $IMAGE
 
 The API should respond in your browser, go visit it!
 
-Also you can check the image runs with `docker ps` in a new terminal
+Also you can check if the image runs with `docker ps` in a new terminal
 
 </details>
 
@@ -546,7 +546,7 @@ Now we have built a **predictive API** Docker image that we are able to run on o
 - Push the **Docker image** to **Google Container Registry**
 - Deploy the image on **Google Cloud Run** so that it gets instantiated into a **Docker container**
 
-## Lightweigth image
+## Lightweight image
 
 As a responsible ML Engineer, you know the size of an image is important when it comes to production. Depending the choice of the base image you used in your `Dockerfile`, the API image could be huge:
 - `python:3.8.12-buster` 👉 `3.9GB`
@@ -565,9 +565,9 @@ No doubt it is `tensorflow` with 1.1GB! You need to find a base image that is op
 
 You may want to use a [tensorflow docker image](https://hub.docker.com/r/tensorflow/tensorflow) and don't forget to remove `tensorflow` from the `requirements.txt` on your container
 
-- 💻 Build and run a lightweight local image of your API**
-- ✅ Make sure the API is still up and running**
-- 👀 Inspect the space saved with `docker images` and feel happy**
+- 💻 Build and run a lightweight local image of your API
+- ✅ Make sure the API is still up and running
+- 👀 Inspect the space saved with `docker images` and feel happy
 
 ## Push our prediction API image to Google Container Registry
 
@@ -749,11 +749,11 @@ The url query string (everything after `?` in the url above) is not adapted to s
 ### Welcome to `/POST` HTTP requests
 
 - Your goal is to be able to send a batch of 1000 new predictions at once!
-- Try to read more about post in [fast api docs](https://fastapi.tiangolo.com/tutorial/body/#request-body-path-query-parameters) and implement it on your pacakge
+- Try to read more about post in [fast api docs](https://fastapi.tiangolo.com/tutorial/body/#request-body-path-query-parameters) and implement it on your package
 
 ## 2) Read about sending images 📸 via /POST requests to CNN models...
 
-In anticipation to your demo-day, you might be wondering how to send unstructured data like images (or videos, or sounds etc...) to your deep-learning model in prod?
+In anticipation to your demo-day, you might be wondering how to send unstructured data like images (or videos, or sounds etc...) to your deep-learning model in prod.
 
 
 👉 Bookmark [Le Wagon - data-template](https://github.com/lewagon/data-templates) and try to understand & reproduce the project boilerplate called "[sending-images-streamlit-fastapi](https://github.com/lewagon/data-templates/tree/main/project-boilerplates/sending-images-streamlit-fastapi)"
