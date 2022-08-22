@@ -26,7 +26,7 @@ In order to do so, we will:
 Copy your `.env` file from the previous package version:
 
 ```bash
-cp ~/<user.github_nickname>/{{local_path_to('07-MLOps/03-Automated-model-lifecycle/01-Automated-model-lifecycle')}}/.env .env
+cp ~/<user.github_nickname>/{{local_path_to('07-ML-Ops/03-Automate-model-lifecycle/01-Automate-model-lifecycle')}}/.env .env
 ```
 
 OR
