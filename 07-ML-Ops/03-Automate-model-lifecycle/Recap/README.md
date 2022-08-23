@@ -176,8 +176,8 @@ cp .env.sample .env
 And setup the local data path in the `.env`:
 
 ``` bash
-LOCAL_DATA_PATH=~/.lewagon/mlops/data
-LOCAL_REGISTRY_PATH=~/.lewagon/mlops/training_outputs
+LOCAL_DATA_PATH=$HOME/.lewagon/mlops/data
+LOCAL_REGISTRY_PATH=$HOME/.lewagon/mlops/training_outputs
 ```
 
 Then `direnv allow .` and `direnv reload` and retrieve the latest version of the data using either:

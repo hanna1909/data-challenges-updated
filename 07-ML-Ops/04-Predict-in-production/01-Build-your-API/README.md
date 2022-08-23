@@ -93,6 +93,11 @@ You probably need a `uvicorn` web server..., with a 🔥 reloading...
 
 In case you can't find the proper syntax, keep calm and look at your `Makefile`, we provided you with a new task `run_api`.
 
+If you run into an error `Address already in use`, the port `8000` on your local machine might already be used by another application.
+
+You can check this by running `lsof -i :8000`. If the command returns something, then the port `8000` is already in use.
+
+In this case specify another port in the [0, 65535] range in the `run_api` command using the `--port` parameter.
 </details>
 
 **❓ How do you consult your running API?**
@@ -700,6 +705,23 @@ Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
 Any developer in the world 🌍 is now able to browse to the deployed url and make a prediction using the API 🤖!
 
 ⚠️ Keep in mind that you pay for the service as long as it is up 💸
+
+<details>
+  <summary markdown='span'>Hint</summary>
+
+You can look for the running instances using:
+
+``` bash
+gcloud compute instances list
+```
+
+You can shutdown your instance with:
+
+``` bash
+gcloud compute instances stop $INSTANCE
+```
+
+</details>
 
 **👏 Congrats, you deployed your first ML predictive API!**
 

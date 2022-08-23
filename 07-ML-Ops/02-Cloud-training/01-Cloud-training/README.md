@@ -521,7 +521,7 @@ Head towards the GCP console [Compute Engine](https://console.cloud.google.com/c
   ``` bash
   INSTANCE=taxi-instance
   IMAGE_PROJECT=ubuntu-os-cloud
-  IMAGE_FAMILY=ubuntu-2110
+  IMAGE_FAMILY=ubuntu-2204-lts
 
   gcloud compute instances create $INSTANCE --image-project=$IMAGE_PROJECT --image-family=$IMAGE_FAMILY
   ```
@@ -630,7 +630,7 @@ Add dependencies required to build python:
 sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-python-dev python3-dev
+python3-dev
 ```
 
 ℹ️ If a window pops up to ask you which services to restart, just press *Enter*:
