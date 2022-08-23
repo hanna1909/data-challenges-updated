@@ -93,18 +93,16 @@ def preprocess(source_type='train'):
     # iterate on the dataset, by chunks
     chunk_id = 0
 
+    # Let's loop until we reach the end of the dataset, then `break` out
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
-
-        # 🎯 Hint1: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
-        # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
-
-        # 🎯 Hint2: Don't forget also to `break` out of the while loop when you reached the end of the CSV
-        # We advise you to use a `try: ... except: ...` statement here
 
         try:
+            # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
+            # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
+            # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
+
             data_raw_chunk = pd.read_csv(
                     data_raw_path,
                     header=None,
@@ -116,7 +114,9 @@ def preprocess(source_type='train'):
             assert dict(data_raw_chunk.dtypes) == DTYPES_RAW_OPTIMIZED_HEADLESS # read_csv(dtypes=...) will silently fail to convert data types, if column names do no match dictionnary key provided.
 
             data_raw_chunk.columns = COLUMN_NAMES_RAW
+
         except pd.errors.EmptyDataError:
+            # 🎯 Hint: What would you do when you reached the end of the CSV ?
             data_raw_chunk = None  # end of data
 
         # Break out of while loop if data is none

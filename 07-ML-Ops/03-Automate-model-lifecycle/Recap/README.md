@@ -8,80 +8,80 @@
 <details>
   <summary markdown='span'><strong>💻 Train a model from scratch on the 500k dataset</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>🎬 Setup the parameters</strong></summary>
+<details>
+  <summary markdown='span'><strong>🎬 Setup the parameters</strong></summary>
 
-    ``` bash
-    cp .env.sample .env
-    direnv allow
-    direnv reload
-    ```
+  ``` bash
+  cp .env.sample .env
+  direnv allow
+  direnv reload
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>🏋️‍♂️ Train the model</strong></summary>
+<details>
+  <summary markdown='span'><strong>🏋️‍♂️ Train the model</strong></summary>
 
-    ``` bash
-    make run_preprocess
-    make run_train
-    make run_evaluate
-    ```
-  </details>
+  ``` bash
+  make run_preprocess
+  make run_train
+  make run_evaluate
+  ```
+</details>
 
-  <details>
-    <summary markdown='span'><strong>🏁 Put the model in production</strong></summary>
+<details>
+  <summary markdown='span'><strong>🏁 Put the model in production</strong></summary>
 
-    In **MLflow** set the model _stage_ as _Production_
-  </details>
+  In **MLflow** set the model _stage_ as _Production_
+</details>
 
 </details>
 
 <details>
   <summary markdown='span'><strong>💻 Handle the January dataset</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>🎬 Inject the dataset</strong></summary>
+<details>
+  <summary markdown='span'><strong>🎬 Inject the dataset</strong></summary>
 
-    ``` bash
-    python get_new_data.py jan
-    ```
+  ``` bash
+  python get_new_data.py jan
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>👀 Observe the evolution of the performance</strong></summary>
+<details>
+  <summary markdown='span'><strong>👀 Observe the evolution of the performance</strong></summary>
 
-    The performance of the model in production on the new data seems to be stable.
+  The performance of the model in production on the new data seems to be stable.
 
-    👉 No need to train a new model
+  👉 No need to train a new model
 
-  </details>
+</details>
 
 </details>
 
 <details>
   <summary markdown='span'><strong>💻 Handle other monthly datasets</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>🎬 Inject the monthly dataset</strong></summary>
+<details>
+  <summary markdown='span'><strong>🎬 Inject the monthly dataset</strong></summary>
 
-    ``` bash
-    python get_new_data.py jan
-    ```
+  ``` bash
+  python get_new_data.py jan
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>👀 Observe the evolution of the performance</strong></summary>
+<details>
+  <summary markdown='span'><strong>👀 Observe the evolution of the performance</strong></summary>
 
-    👉 Define with the business a performance threshold on which to act, for example a variation of the performance of $0.3
+  👉 Define with the business a performance threshold on which to act, for example a variation of the performance of $0.3
 
-    🤔 If the performance degrades significantly, train a new model
+  🤔 If the performance degrades significantly, train a new model
 
-    🤔 If the performance of the new model is good enough, put it in production
+  🤔 If the performance of the new model is good enough, put it in production
 
-  </details>
+</details>
 
 </details>
 
@@ -90,110 +90,110 @@
 <details>
   <summary markdown='span'><strong>💻 Workflow setup and local visualize</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>🔑 Authenticate to Prefect</strong></summary>
+<details>
+  <summary markdown='span'><strong>🔑 Authenticate to Prefect</strong></summary>
 
-    ``` bash
-    prefect auth login -k YOUR_KEY
-    ```
+  ``` bash
+  prefect auth login -k YOUR_KEY
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>🎬 Start a Prefect agent</strong></summary>
+<details>
+  <summary markdown='span'><strong>🎬 Start a Prefect agent</strong></summary>
 
-    ``` bash
-    prefect agent local start
-    ```
+  ``` bash
+  prefect agent local start
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>👀 Visualize the workflow locally</strong></summary>
+<details>
+  <summary markdown='span'><strong>👀 Visualize the workflow locally</strong></summary>
 
-    ``` bash
-    make run_workflow
-    ```
+  ``` bash
+  make run_workflow
+  ```
 
-  </details>
+</details>
 
 </details>
 
 <details>
   <summary markdown='span'><strong>💻 Workflow quick run</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>📝 Register the workflow in Prefect Cloud</strong></summary>
+<details>
+  <summary markdown='span'><strong>📝 Register the workflow in Prefect Cloud</strong></summary>
 
-    Set `PREFECT_BACKEND=production` in the `.env` and `direnv reload`.
+  Set `PREFECT_BACKEND=production` in the `.env` and `direnv reload`.
 
-    In the `taxifare.flow.main` module, comment out the `LocalDaskExecutor` line.
+  In the `taxifare.flow.main` module, comment out the `LocalDaskExecutor` line.
 
-    ``` bash
-    make run_workflow
-    ```
+  ``` bash
+  make run_workflow
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>🚕 Quick run the workflow</strong></summary>
+<details>
+  <summary markdown='span'><strong>🚕 Quick run the workflow</strong></summary>
 
-    Run the workflow in the Prefect UI using _Quick Run_.
+  Run the workflow in the Prefect UI using _Quick Run_.
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>👀 Observe the performance in the notification app</strong></summary>
+<details>
+  <summary markdown='span'><strong>👀 Observe the performance in the notification app</strong></summary>
 
-    Check the performance in [https://wagon-chat.herokuapp.com/<user.github_nickname>].
+  Check the performance in [https://wagon-chat.herokuapp.com/<user.github_nickname>].
 
-  </details>
+</details>
 
 </details>
 
 <details>
   <summary markdown='span'><strong>💻 Run the automated workflow</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>📆 Schedule the workflow</strong></summary>
+<details>
+  <summary markdown='span'><strong>📆 Schedule the workflow</strong></summary>
 
-    Create a schedule in the Prefect UI.
+  Create a schedule in the Prefect UI.
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>♻️ For each month</strong></summary>
+<details>
+  <summary markdown='span'><strong>♻️ For each month</strong></summary>
 
-    💉 Inject new data
+  💉 Inject new data
 
-    👀 Observe the performance in the notification app
+  👀 Observe the performance in the notification app
 
-    🤔 Put the newly trained model in production if appropriate
+  🤔 Put the newly trained model in production if appropriate
 
-  </details>
+</details>
 
 </details>
 
 <details>
   <summary markdown='span'><strong>💻 Optimize the workflow</strong></summary>
 
-  <details>
-    <summary markdown='span'><strong>📝 Register a parallel version of the workflow</strong></summary>
+<details>
+  <summary markdown='span'><strong>📝 Register a parallel version of the workflow</strong></summary>
 
-    In the `taxifare.flow.main` module, uncomment the `LocalDaskExecutor` line.
+  In the `taxifare.flow.main` module, uncomment the `LocalDaskExecutor` line.
 
-    ``` bash
-    make run_workflow
-    ```
+  ``` bash
+  make run_workflow
+  ```
 
-  </details>
+</details>
 
-  <details>
-    <summary markdown='span'><strong>👀 Observe the workflow evolution</strong></summary>
+<details>
+  <summary markdown='span'><strong>👀 Observe the workflow evolution</strong></summary>
 
-    In the Prefect UI, the workflow tasks execute in parallel whenever possible.
+  In the Prefect UI, the workflow tasks execute in parallel whenever possible.
 
-  </details>
+</details>
 
 </details>
 
