@@ -318,20 +318,22 @@ def preprocess(source_type='train'):
     # iterate on the dataset, by chunks
     chunk_id = 0
 
+    # Let's loop until we reach the end of the dataset, then `break` out
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
+        try:
+            # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
+            # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
+            # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
+            # 👉 YOUR CODE HERE
 
-        # 🎯 Hint1: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
-        # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
+        except pd.errors.EmptyDataError:
+            # 🎯 Hint: What would you do when you reached the end of the CSV ?
+            # 👉 YOUR CODE HERE
 
-        # 🎯 Hint2: Don't forget also to `break` out of the while loop when you reached the end of the CSV
-        # We advise you to use a `try: ... except: ...` statement here
 
-        # 👉 YOUR CODE HERE
-
-        # clean chunk
+        # clean chunk. Pay attention, sometimes it can result in 0 rows remaining!
         # 👉 YOUR CODE HERE
 
         # create X_chunk,y_chunk
