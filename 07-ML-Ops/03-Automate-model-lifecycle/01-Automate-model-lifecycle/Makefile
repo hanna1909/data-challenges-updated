@@ -117,18 +117,18 @@ reset_sources_env:
 	mkdir -p ${ML_DIR}/data/raw ${ML_DIR}/data/processed
 	mkdir -p ${ML_DIR}/training_outputs/params ${ML_DIR}/training_outputs/metrics ${ML_DIR}/training_outputs/model
 	-curl ${HTTPS_DIR}train_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/train_${DATASET_SIZE}.csv
-	-curl ${HTTPS_DIR}val_${DATASET_SIZE}.csv > ${ML_DIR}/data/raw/val_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}val_${VALIDATION_DATASET_SIZE}.csv > ${ML_DIR}/data/raw/val_${VALIDATION_DATASET_SIZE}.csv
 	-curl ${HTTPS_DIR}processed/train_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/train_processed_${DATASET_SIZE}.csv
-	-curl ${HTTPS_DIR}processed/val_processed_${DATASET_SIZE}.csv > ${ML_DIR}/data/processed/val_processed_${DATASET_SIZE}.csv
+	-curl ${HTTPS_DIR}processed/val_processed_${VALIDATION_DATASET_SIZE}.csv > ${ML_DIR}/data/processed/val_processed_${VALIDATION_DATASET_SIZE}.csv
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_${DATASET_SIZE}
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_${DATASET_SIZE}
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_${VALIDATION_DATASET_SIZE}
 	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.train_processed_${DATASET_SIZE}
-	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_${DATASET_SIZE}
+	-bq mk --sync --location=${MULTI_REGION} ${DATASET}.val_processed_${VALIDATION_DATASET_SIZE}
 	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_${DATASET_SIZE} ${GS_DIR}/train_${DATASET_SIZE}.csv
-	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_${DATASET_SIZE} ${GS_DIR}/val_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_${VALIDATION_DATASET_SIZE} ${GS_DIR}/val_${VALIDATION_DATASET_SIZE}.csv
 	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.train_processed_${DATASET_SIZE} ${GS_DIR}/processed/train_processed_${DATASET_SIZE}.csv
-	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_${DATASET_SIZE} ${GS_DIR}/processed/val_processed_${DATASET_SIZE}.csv
+	-bq load --sync --autodetect --skip_leading_rows 1 --replace ${DATASET}.val_processed_${VALIDATION_DATASET_SIZE} ${GS_DIR}/processed/val_processed_${VALIDATION_DATASET_SIZE}.csv
 
 show_sources_all:
 	-ls -laR ~/.lewagon/mlops/data
@@ -154,9 +154,9 @@ show_sources_env:
 	-ls -laR ~/.lewagon/mlops/data | grep ${DATASET_SIZE}
 	-bq ls ${DATASET}
 	-bq show ${DATASET}.train_${DATASET_SIZE}
-	-bq show ${DATASET}.val_${DATASET_SIZE}
+	-bq show ${DATASET}.val_${VALIDATION_DATASET_SIZE}
 	-bq show ${DATASET}.train_processed_${DATASET_SIZE}
-	-bq show ${DATASET}.val_processed_${DATASET_SIZE}
+	-bq show ${DATASET}.val_processed_${VALIDATION_DATASET_SIZE}
 
 ##################### DEBUGGING HELPERS ####################
 fbold=$(shell echo "\033[1m")
