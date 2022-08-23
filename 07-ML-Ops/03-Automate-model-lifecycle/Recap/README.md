@@ -5,8 +5,7 @@
 
 ## ❓ TL;DR MLflow instructions
 
-<details>
-  <summary markdown='span'><strong>💻 Train a model from scratch on the 500k dataset</strong></summary>
+### Train a model from scratch on the 500k dataset
 
 <details>
   <summary markdown='span'><strong>🎬 Setup the parameters</strong></summary>
@@ -16,7 +15,6 @@
   direnv allow
   direnv reload
   ```
-
 </details>
 
 <details>
@@ -35,10 +33,7 @@
   In **MLflow** set the model _stage_ as _Production_
 </details>
 
-</details>
-
-<details>
-  <summary markdown='span'><strong>💻 Handle the January dataset</strong></summary>
+### Handle the January dataset
 
 <details>
   <summary markdown='span'><strong>🎬 Inject the dataset</strong></summary>
@@ -46,7 +41,6 @@
   ``` bash
   python get_new_data.py jan
   ```
-
 </details>
 
 <details>
@@ -55,13 +49,9 @@
   The performance of the model in production on the new data seems to be stable.
 
   👉 No need to train a new model
-
 </details>
 
-</details>
-
-<details>
-  <summary markdown='span'><strong>💻 Handle other monthly datasets</strong></summary>
+### Handle other monthly datasets
 
 <details>
   <summary markdown='span'><strong>🎬 Inject the monthly dataset</strong></summary>
@@ -69,7 +59,6 @@
   ``` bash
   python get_new_data.py jan
   ```
-
 </details>
 
 <details>
@@ -80,15 +69,11 @@
   🤔 If the performance degrades significantly, train a new model
 
   🤔 If the performance of the new model is good enough, put it in production
-
-</details>
-
 </details>
 
 ## ❓ TL;DR Prefect instructions
 
-<details>
-  <summary markdown='span'><strong>💻 Workflow setup and local visualize</strong></summary>
+### Workflow setup and local visualize
 
 <details>
   <summary markdown='span'><strong>🔑 Authenticate to Prefect</strong></summary>
@@ -96,7 +81,6 @@
   ``` bash
   prefect auth login -k YOUR_KEY
   ```
-
 </details>
 
 <details>
@@ -105,7 +89,6 @@
   ``` bash
   prefect agent local start
   ```
-
 </details>
 
 <details>
@@ -114,13 +97,9 @@
   ``` bash
   make run_workflow
   ```
-
 </details>
 
-</details>
-
-<details>
-  <summary markdown='span'><strong>💻 Workflow quick run</strong></summary>
+### Workflow quick run
 
 <details>
   <summary markdown='span'><strong>📝 Register the workflow in Prefect Cloud</strong></summary>
@@ -132,33 +111,26 @@
   ``` bash
   make run_workflow
   ```
-
 </details>
 
 <details>
   <summary markdown='span'><strong>🚕 Quick run the workflow</strong></summary>
 
   Run the workflow in the Prefect UI using _Quick Run_.
-
 </details>
 
 <details>
   <summary markdown='span'><strong>👀 Observe the performance in the notification app</strong></summary>
 
   Check the performance in [https://wagon-chat.herokuapp.com/<user.github_nickname>].
-
 </details>
 
-</details>
-
-<details>
-  <summary markdown='span'><strong>💻 Run the automated workflow</strong></summary>
+### Run the automated workflow
 
 <details>
   <summary markdown='span'><strong>📆 Schedule the workflow</strong></summary>
 
   Create a schedule in the Prefect UI.
-
 </details>
 
 <details>
@@ -169,13 +141,9 @@
   👀 Observe the performance in the notification app
 
   🤔 Put the newly trained model in production if appropriate
-
 </details>
 
-</details>
-
-<details>
-  <summary markdown='span'><strong>💻 Optimize the workflow</strong></summary>
+### Optimize the workflow
 
 <details>
   <summary markdown='span'><strong>📝 Register a parallel version of the workflow</strong></summary>
@@ -185,16 +153,12 @@
   ``` bash
   make run_workflow
   ```
-
 </details>
 
 <details>
   <summary markdown='span'><strong>👀 Observe the workflow evolution</strong></summary>
 
   In the Prefect UI, the workflow tasks execute in parallel whenever possible.
-
-</details>
-
 </details>
 
 ## MLflow
@@ -212,8 +176,8 @@ cp .env.sample .env
 And setup the local data path in the `.env`:
 
 ``` bash
-LOCAL_DATA_PATH=~/.lewagon/mlops/data
-LOCAL_REGISTRY_PATH=~/.lewagon/mlops/training_outputs
+LOCAL_DATA_PATH=$HOME/.lewagon/mlops/data
+LOCAL_REGISTRY_PATH=$HOME/.lewagon/mlops/training_outputs
 ```
 
 Then `direnv allow .` and `direnv reload` and retrieve the latest version of the data using either:

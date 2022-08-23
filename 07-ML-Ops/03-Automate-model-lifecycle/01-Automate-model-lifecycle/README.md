@@ -37,7 +37,7 @@ Get your project ready for this new mission 🚀
 
 ## Install requirements
 
-**💻 Install the version `0.0.automate_model_lifecycle` of the `taxifare` package with `make reinstall_package`**
+**💻 Install the version `0.0.7` of the `taxifare` package with `make reinstall_package`**
 
 Notice we've added 3 new packages: `mlflow`, `prefect` and  `psycopg2`
 
@@ -65,7 +65,7 @@ sudo apt install graphviz xdg-utils
 
 ```bash
 pip list | grep taxifare
-# taxifare                  0.0.automate_model_lifecycle
+# taxifare                  0.0.7
 ```
 
 **💻 Do not forget to handle your `.env` file**
