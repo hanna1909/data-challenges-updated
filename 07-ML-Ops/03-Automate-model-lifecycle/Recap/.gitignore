@@ -1,4 +1,5 @@
 .env
+.env.yaml
 
 # System files
 .DS_Store
@@ -20,3 +21,4 @@ training_outputs/
 
 *.sublime-project
 *.sublime-workspace
+**/*.code-workspace

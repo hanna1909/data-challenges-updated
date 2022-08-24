@@ -179,7 +179,7 @@ Boom, just like that your container is in production and you did not even had to
 
 If you see a sad unicorn, do not worry, it is just there while **Cloud Build** is building your Docker image before pushing it to **Cloud Run**.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/cloud-build-sad-unicorn.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/cloud-build-sad-unicorn.png" width="150" alt="sad unicorn"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/cloud-build-sad-unicorn.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/cloud-build-sad-unicorn.png" width="150" alt="sad unicorn"></a>
 
 Once your application is in production, as usual you will see the built image stored in [Container Registry](https://console.cloud.google.com/gcr).
 
@@ -277,8 +277,6 @@ Step #0 - "Build":  ---> 07314cd21657
 Step #0 - "Build": Step 3/5 : RUN pip install -U pip
 Step #0 - "Build":  ---> Running in 25e3ea8cde29
 ```
-
-[//]: # ( markdown comment test )
 
 ### Option 2: check the logs of your service
 

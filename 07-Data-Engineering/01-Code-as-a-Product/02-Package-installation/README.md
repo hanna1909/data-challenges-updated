@@ -148,13 +148,13 @@ pip install termcolor
 In order to understand how to pass arguments to a script, you can inspect the code of the `computedist.py` file located in:
 
 ```bash
-~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/01-Code-as-a-Product/02-Package-installation
+~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/01-Code-as-a-Product/02-Package-installation")}}
 ```
 
 Run :
 
 ```bash
-python ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/01-Code-as-a-Product/02-Package-installation/computedist.py --coords 48.865 2.380 48.235 2.393
+python ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/01-Code-as-a-Product/02-Package-installation")}}/computedist.py --coords 48.865 2.380 48.235 2.393
 ```
 
 Basically you will want to run the exact same command but without `python` and anywhere on your laptop.

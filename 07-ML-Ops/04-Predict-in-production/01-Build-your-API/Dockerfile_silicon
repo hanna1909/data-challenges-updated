@@ -5,7 +5,7 @@
 #   docker build -f Dockerfile_silicon --tag=$IMAGE .
 #   docker run -it -e PORT=8000 -p 8000:8000 --env-file .env $IMAGE
 
-# use case 2: apple silicon: build for intel prod
+# use case 2: apple silicon: build for intel prod server
 #
 #   PROD_IMAGE=prod-$IMAGE
 #   docker build -t $MULTI_REGION/$PROJECT/$PROD_IMAGE --platform linux/amd64 .

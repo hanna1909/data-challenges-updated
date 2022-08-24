@@ -24,7 +24,7 @@ We will create a simple project in order to store the code executed by **Cloud F
 First, let's copy the code of the **Cloud Functions** challenge in your *projects directory*: `~/code/<user.github_nickname>`.
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/02-ML-Iteration/08-Cloud-Functions/CloudFunctionCode ~/code/<user.github_nickname>/CloudFunctionCode
+cp -r ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/02-ML-Iteration/08-Cloud-Functions/CloudFunctionCode")}} ~/code/<user.github_nickname>/CloudFunctionCode
 ```
 
 Then, we will create a local git repository for the project:

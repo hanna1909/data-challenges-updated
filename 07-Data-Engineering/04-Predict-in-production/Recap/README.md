@@ -34,7 +34,7 @@ code .
 👉 Open **another terminal window** for the notebooks. We will use the first terminal window in order to add and commit the code of our package as it evolves using `git` commands
 
 ``` bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/04-Predict-in-production/Recap
+cd ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/04-Predict-in-production/Recap")}}
 jupyter notebook
 ```
 

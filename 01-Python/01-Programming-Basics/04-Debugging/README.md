@@ -31,7 +31,7 @@ python hello.py john lennon
 The program will **pause** at the line where you inserted the `pdb.set_trace()`:
 
 ```bash
-> [...]<program.challenges_repo_name>/01-Python/01-Programming-Basics/04-Debugging/hello.py(9)full_name()
+> [...]{{local_path_to("01-Python/01-Programming-Basics/04-Debugging")}}/hello.py(9)full_name()
       8
 ----> 9     name = f"{first_name.capitalize()}{last_name.capitalize()}"
      10     return name

@@ -12,7 +12,7 @@ The goal is to scrape the website **and** then use `pandas` to visualize the ext
 jupyter notebook
 ```
 
-Go ahead and create a new Python Notebook in the `04-Data-Sourcing/02-Scraping` folder of your `data-challenges` repository.
+Go ahead and open the new Python Notebook in the ~/code/<user.github_nickname>/{{local_path_to("02-Data-Toolkit/02-Data-Sourcing/02-Scraping")}} folder.
 
 Start your notebook with the following imports in the first code cell:
 

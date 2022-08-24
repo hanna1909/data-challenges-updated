@@ -1,11 +1,11 @@
 from tests.test_base import write_result
-
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
-                                            DATA_RAW_DTYPES_OPTIMIZED,
-                                            DATA_PROCESSED_DTYPES_OPTIMIZED,
-                                            DATA_RAW_COLUMNS,
+                                            DTYPES_RAW_OPTIMIZED_HEADLESS,
+                                            DTYPES_RAW_OPTIMIZED,
+                                            DTYPES_PROCESSED_OPTIMIZED,
+                                            COLUMN_NAMES_RAW,
                                             DATASET_SIZE,
                                             VALIDATION_DATASET_SIZE,
                                             LOCAL_DATA_PATH)
@@ -36,7 +36,7 @@ def preprocess_and_train():
 
     # Retrieve raw data
     data_raw_path = os.path.join(LOCAL_DATA_PATH, "raw", f"train_{DATASET_SIZE}.csv")
-    data = pd.read_csv(data_raw_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    data = pd.read_csv(data_raw_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     # Clean data using ml_logic.data.clean_data
     # YOUR CODE HERE
@@ -50,20 +50,21 @@ def preprocess_and_train():
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
-    batch_size = 64
+    batch_size = 256
+    patience = 2
     # YOUR CODE HERE
 
     # Compute the validation metric (min val mae of the holdout set)
-    metrics = dict(val_mae=None)
-    # YOUR CODE HERE
+    metrics = dict(mae=np.min(history.history['val_mae']))
 
     # Save trained model
     params = dict(
         learning_rate=learning_rate,
-        batch_size=batch_size)
+        batch_size=batch_size,
+        patience=patience)
     save_model(model, params=params, metrics=metrics)
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ preprocess_and_train() done")
@@ -90,7 +91,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     # make a prediction
     # YOUR CODE HERE
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
     print("✅ prediction done: ", y_pred, y_pred.shape)
 

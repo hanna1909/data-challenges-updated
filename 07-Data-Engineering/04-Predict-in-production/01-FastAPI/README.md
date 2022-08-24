@@ -23,7 +23,7 @@ We will start with a clean slate for these challenges. The project on which we w
 First, we will copy the code for the challenges of **Predict in production** in your *projects directory*: `~/code/<user.github_nickname>`.
 
 ``` bash
-cp -r ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-Data-Engineering/04-Predict-in-production/01-FastAPI/TaxiFareModel ~/code/<user.github_nickname>/TFM_PredictInProd
+cp -r ~/code/<user.github_nickname>/{{local_path_to("07-Data-Engineering/04-Predict-in-production/01-FastAPI")}}/TaxiFareModel ~/code/<user.github_nickname>/TFM_PredictInProd
 ```
 
 Then, we will create a local git repository for the project:

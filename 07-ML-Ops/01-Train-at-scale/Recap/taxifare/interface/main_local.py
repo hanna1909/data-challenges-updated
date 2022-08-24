@@ -1,11 +1,11 @@
 from tests.test_base import write_result
-
 from taxifare.ml_logic.data import clean_data
 
 from taxifare.ml_logic.params import (CHUNK_SIZE,
-                                            DATA_RAW_DTYPES_OPTIMIZED,
-                                            DATA_PROCESSED_DTYPES_OPTIMIZED,
-                                            DATA_RAW_COLUMNS,
+                                            DTYPES_RAW_OPTIMIZED_HEADLESS,
+                                            DTYPES_RAW_OPTIMIZED,
+                                            DTYPES_PROCESSED_OPTIMIZED,
+                                            COLUMN_NAMES_RAW,
                                             DATASET_SIZE,
                                             VALIDATION_DATASET_SIZE,
                                             LOCAL_DATA_PATH)
@@ -36,7 +36,7 @@ def preprocess_and_train():
 
     # Retrieve raw data
     data_raw_path = os.path.join(LOCAL_DATA_PATH, "raw", f"train_{DATASET_SIZE}.csv")
-    data = pd.read_csv(data_raw_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    data = pd.read_csv(data_raw_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     # Clean data using ml_logic.data.clean_data
     data_cleaned = clean_data(data)
@@ -51,72 +51,72 @@ def preprocess_and_train():
     # Train model on X_processed and y, using `model.py`
     model = None
     learning_rate = 0.001
-    batch_size = 64
+    batch_size = 256
+    patience = 2
     model = initialize_model(X_processed)
     model = compile_model(model, learning_rate)
-    model, history = train_model(model, X_processed, y, batch_size, validation_split=0.3)
+    model, history = train_model(model, X_processed, y, batch_size=batch_size, patience=patience, validation_split=0.3)
 
     # Compute the validation metric (min val mae of the holdout set)
-    metrics = dict(val_mae=None)
-    metrics = dict(val_mae=np.min(history.history['val_mae']))
+    metrics = dict(mae=np.min(history.history['val_mae']))
 
     # Save trained model
     params = dict(
         learning_rate=learning_rate,
-        batch_size=batch_size)
+        batch_size=batch_size,
+        patience=patience)
     save_model(model, params=params, metrics=metrics)
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     write_result(name="test_preprocess_and_train", subdir="train_at_scale", metrics=metrics)
 
     print("✅ preprocess_and_train() done")
 
-def preprocess(training_set=True):
+def preprocess(source_type='train'):
     """
     Preprocess the dataset iteratively, loading data by chunks fitting in memory,
     processing each chunk, appending each of them to a final dataset preprocessed,
     and saving final prepocessed dataset as CSV
+    Parameter:
+    - source_type could be 'train' or 'val'
     """
 
     print("\n⭐️ use case: preprocess")
 
     # local saving paths given to you (do not overwrite these data_path variable)
-    if training_set:
-        source_name = f"train_{DATASET_SIZE}.csv"
-        destination_name = f"train_processed_{DATASET_SIZE}.csv"
-    else:
-        source_name = f"val_{VALIDATION_DATASET_SIZE}.csv"
-        destination_name = f"val_processed_{VALIDATION_DATASET_SIZE}.csv"
+    source_name = f"{source_type}_{DATASET_SIZE}.csv"
+    destination_name = f"{source_type}_processed_{DATASET_SIZE}.csv"
 
-    data_raw_path = os.path.abspath(os.path.join(
-        LOCAL_DATA_PATH, "raw", source_name))
-    data_processed_path = os.path.abspath(os.path.join(
-        LOCAL_DATA_PATH, "processed", destination_name))
+    data_raw_path = os.path.abspath(os.path.join(LOCAL_DATA_PATH, "raw", source_name))
+    data_processed_path = os.path.abspath(os.path.join(LOCAL_DATA_PATH, "processed", destination_name))
 
     # iterate on the dataset, by chunks
     chunk_id = 0
 
+    # Let's loop until we reach the end of the dataset, then `break` out
     while (True):
         print(f"processing chunk n°{chunk_id}...")
 
-        # load in memory the chunk numbered `chunk_id` of size CHUNK_SIZE
-        # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=...)
-
-
-        one_if_first_chunk = 1 if chunk_id == 0 else 0
 
         try:
+            # load in memory the chunk numbered `chunk_id` of size `CHUNK_SIZE`
+            # 🎯 Hint: check out pd.read_csv(skiprows=..., nrows=..., headers=...)
+            # We advise you to always load data with `header=None`, and add back column names using COLUMN_NAMES_RAW
+
             data_raw_chunk = pd.read_csv(
                     data_raw_path,
-                    header=None, # ignore headers
-                    skiprows=(chunk_id * CHUNK_SIZE) + one_if_first_chunk, # first chunk has headers
+                    header=None,
+                    skiprows=(chunk_id * CHUNK_SIZE) + 1, # first chunk has headers, we don't want them
                     nrows=CHUNK_SIZE,
-                    dtype=DATA_RAW_DTYPES_OPTIMIZED,
+                    dtype=DTYPES_RAW_OPTIMIZED_HEADLESS,
                     )
 
-            data_raw_chunk.columns = DATA_RAW_COLUMNS
+            assert dict(data_raw_chunk.dtypes) == DTYPES_RAW_OPTIMIZED_HEADLESS # read_csv(dtypes=...) will silently fail to convert data types, if column names do no match dictionnary key provided.
+
+            data_raw_chunk.columns = COLUMN_NAMES_RAW
 
         except pd.errors.EmptyDataError:
+            # 🎯 Hint: What would you do when you reached the end of the CSV ?
             data_raw_chunk = None  # end of data
 
         # Break out of while loop if data is none
@@ -126,7 +126,7 @@ def preprocess(training_set=True):
         # clean chunk
         data_clean_chunk = clean_data(data_raw_chunk)
         # Break out of while loop if cleaning removed all rows
-        if len(data_clean_chunk) ==0:
+        if len(data_clean_chunk) == 0:
             break
 
         # create X_chunk,y_chunk
@@ -138,20 +138,20 @@ def preprocess(training_set=True):
         data_processed_chunk = pd.DataFrame(
             np.concatenate((X_processed_chunk, y_chunk), axis=1))
 
-        # Save the chunk of the dataset to local disk (append to existing csv to build it chunk by chunk)
-        # 🎯 Hints1: check out pd.to_csv(mode=...)
+        # Save and append the chunk of the preprocessed dataset to a local CSV
+        # Keep headers on the first chunk
+        # For convention, we'll always save CSVs with headers in this challenge
+        # 🎯 Hints: check out pd.to_csv(mode=...)
         data_processed_chunk.to_csv(data_processed_path,
                 mode="w" if chunk_id==0 else "a",
-                header=chunk_id==0,
+                header=chunk_id == 0, # Header only for first chunk
                 index=False)
 
         chunk_id += 1
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    if training_set:
-        data_processed = pd.read_csv(data_processed_path, header=None, dtype=DATA_PROCESSED_DTYPES_OPTIMIZED).to_numpy()
-        write_result(name="test_preprocess", subdir="train_at_scale",
-                    data_processed_head=data_processed[0:2])
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
+    data_processed = pd.read_csv(data_processed_path, header=None, skiprows=1, dtype=DTYPES_PROCESSED_OPTIMIZED).to_numpy()
+    write_result(name="test_preprocess", subdir="train_at_scale", data_processed_head=data_processed[0:10])
 
     print("✅ data processed saved entirely")
 
@@ -171,8 +171,9 @@ def train():
 
     data_val_processed = pd.read_csv(
         data_val_processed_path,
+        skiprows= 1, # skip header
         header=None,
-        dtype=DATA_PROCESSED_DTYPES_OPTIMIZED
+        dtype=DTYPES_PROCESSED_OPTIMIZED
         ).to_numpy()
 
     X_val = data_val_processed[:, :-1]
@@ -194,10 +195,10 @@ def train():
         try:
             data_processed_chunk = pd.read_csv(
                     path,
+                    skiprows=(chunk_id * CHUNK_SIZE) + 1, # skip header
                     header=None,
-                    skiprows=(chunk_id * CHUNK_SIZE),
                     nrows=CHUNK_SIZE,
-                    dtype=DATA_PROCESSED_DTYPES_OPTIMIZED,
+                    dtype=DTYPES_PROCESSED_OPTIMIZED,
                     ).to_numpy()
 
         except pd.errors.EmptyDataError:
@@ -210,17 +211,20 @@ def train():
         X_train_chunk = data_processed_chunk[:, :-1]
         y_train_chunk = data_processed_chunk[:, -1]
 
-        # Train a model incrementally and print validation metrics for this chunk
         learning_rate = 0.001
-        batch_size = 64
+        batch_size = 256
+        patience=2
+
+        # Train a model *incrementally*, and store the val MAE of each chunk in `metrics_val_list`
         if model is None:
             model = initialize_model(X_train_chunk)
-            model = compile_model(model, learning_rate)
 
+        model = compile_model(model, learning_rate)
         model, history = train_model(model,
                                      X_train_chunk,
                                      y_train_chunk,
-                                     batch_size,
+                                     batch_size=batch_size,
+                                     patience=patience,
                                      validation_data=(X_val, y_val))
         metrics_val_chunk = np.min(history.history['val_mae'])
         metrics_val_list.append(metrics_val_chunk)
@@ -228,21 +232,20 @@ def train():
 
         chunk_id += 1
 
+    # return the last value of the validation MAE
+    val_mae = metrics_val_list[-1]
+
     # Save model and training params
     params = dict(
         learning_rate=learning_rate,
         batch_size=batch_size,
+        patience=patience,
         incremental=True,
         chunk_size=CHUNK_SIZE)
 
-    metrics_val_mean_all_chunks = np.mean(np.array(metrics_val_list))
-    metrics = dict(mean_val=metrics_val_mean_all_chunks)
+    print(f"\n✅ trained with MAE: {round(val_mae, 2)}")
 
-    save_model(model, params=params, metrics=metrics)
-
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
-    write_result(name="test_train", subdir="train_at_scale",
-                 metrics=metrics)
+    save_model(model=model, params=params, metrics=dict(mae=val_mae))
 
     print("✅ model trained and saved")
 
@@ -268,7 +271,7 @@ def pred(X_pred: pd.DataFrame = None) -> np.ndarray:
     # make a prediction
     y_pred = model.predict(X_processed)
 
-    # 🧪 Write test output (used by Kitt to track progress - do not remove)
+    # 🧪 Write outputs so that they can be tested by make test_train_at_scale (do not remove)
     write_result(name="test_pred", subdir="train_at_scale", y_pred=y_pred)
     print("✅ prediction done: ", y_pred, y_pred.shape)
 

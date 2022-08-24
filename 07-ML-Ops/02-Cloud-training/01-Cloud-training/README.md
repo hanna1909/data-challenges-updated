@@ -78,9 +78,9 @@ This file is a _template_ allowing you to create the `.env` file for each challe
 Bye bye `taxifare.interface.main_local` module, you served us well ❤️
 
 Long live `taxifare.interface.main`, our new package entry point ⭐️ to:
-- ~~`preprocess_and_train`~~: This method have been deleted: it does not scale well enough
-- `preprocess`: preprocess the data by chunk
-- `train`: train the data by chunk
+- ~~`preprocess_and_train`~~: This method have been deleted: it does not scale well enough as we saw previously.
+- `preprocess`: preprocess the data by chunk and store data_processed
+- `train`: train the data by chunk and store model weights
 - `evaluate`: evaluate the performance of the latest trained model on new data
 - `pred`: make a prediction on a `DataFrame` with a specific version of the trained model
 
@@ -98,6 +98,14 @@ The main changes concern :
 - `ml_logic.data` is now responsible for data cleaning
 - `data_sources.local_disk` is responsible for loading from and saving data to your local disk
 - `data_sources.big_query` is responsible for loading from and saving data to BigQuery
+
+**💡`data.py` now acts as a switch** The beauty of having all the global logic implemented in `main.py` is that in `data.py` we need not worry about the context in which the functions are called. We only need to concentrate on what each function does and how it does it.
+
+- Pay attention to the `ml_logic.data.get_chunk` _function_ in order to undertand how it can switch from local to cloud data loading (the `save_chunk` _function_ works similarly for storage).
+
+- We provide you with the code of the `data_sources.local_disk` _module_ so you can see how the `get_pandas_chunk` and `save_local_chunk` are working. Later on, we will code the equivalent for big query instead of local data storage.
+
+✋ Ask for a TA if you need explanations to understand any of the above steps.
 
 </details>
 <br>
@@ -188,6 +196,13 @@ echo $LOCAL_DATA_PATH
 
 From now on, whenever you need to update the behavior of the project, you will be able to change its parameters by simply editing the `.env` project configuration.
 
+**Keep data size values small for this unit, for dev purposes**
+```bash
+DATASET_SIZE=10k
+VALIDATION_DATASET_SIZE=10k
+CHUNK_SIZE=6000
+```
+
 **📝 Fill the following**
 - `LOCAL_DATA_PATH` variable in the `.env` project configuration with `~/.lewagon/mlops/data`
 - `LOCAL_REGISTRY_PATH` variable in the `.env` project configuration with `~/.lewagon/mlops/training_outputs`
@@ -208,22 +223,28 @@ make show_env
 
 ## ⚙️ Run your first training locally
 
-⚙️ Run the following command: `python -m taxifare.interface.main` to test each methods one by one, uncommenting each route below one after the other, and make sure to understand how your new package works.
+⚙️ We want you to check that you can run every "routes" in `taxifare.interface.main` _one by one_, to make sure your understand how your package works.
+
 ```python
 if __name__ == '__main__':
-    preprocess()
-    #train()
-    #pred()
-    #evaluate(first_row=9000)
+    # preprocess()
+    # preprocess(train_set)
+    # train()
+    # pred()
+    # evaluate()
 ```
 
-**💡`data.py` now acts as a switch** The beauty of having all the global logic implemented in `main.py` is that in `data.py` we need not worry about the context in which the functions are called. We only need to concentrate on what each function does and how it does it.
+To do so, you can either:
+- 🥵 Uncomment each route below one after the other, and run `python -m taxifare.interface.main` from your terminal
+- 😇 or (smarter) use each of the following make commands we created for you! (check how they are written)
 
-- Pay attention to the `ml_logic.data.get_chunk` _function_ in order to undertand how it can switch from local to cloud data loading (the `save_chunk` _function_ works similarly for storage).
-
-- We provide you with the code of the `data_sources.local_disk` _module_ so you can see how the `get_pandas_chunk` and `save_local_chunk` are working. Later on, we will code the equivalent for big query instead of local data storage.
-
-✋ Ask for a TA if you need explanations to understand any of the above steps.
+```bash
+make run_preprocess
+make run_train
+make run_pred
+make run_evaluate
+make run_all
+```
 
 🏁 You are ready to go!
 
@@ -272,7 +293,7 @@ Find the `gcloud` command allowing you to list your **GCP project id**.
 
 **📝 Fill the `PROJECT` variable in the `.env` project configuration with the name of your GCP project**
 
-**🧪 Run the tests with `make test_gcp_project_setup`**
+**🧪 Run the tests with `make test_gcp_project`**
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
@@ -335,7 +356,7 @@ Find the `gsutil` command allowing you to retrieve the name of your **bucket**.
 
 ⚠️ The goal here is not to challenge your internet connection, so we will not have you wait while all your classmates simultaneously try to upload the 170GB of the _TaxiFare_ dataset to their own BigQuery dataset 🙌
 
-Download the [sample 10k training dataset](https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv) and the [sample 10k validation dataset](https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv) on your machine and store them to `~/.lewagon/mlops/data` _if it has not been done yet_.
+Download the [sample 10k training dataset](https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_10k.csv) and the [sample 10k validation dataset](https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_10k.csv) on your machine and store them to `~/.lewagon/mlops/data` _if it has not been done yet_.
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
@@ -343,8 +364,8 @@ Download the [sample 10k training dataset](https://wagon-public-datasets.s3.amaz
   There is a command for everything. You may use `curl` to download the data:
 
   ``` bash
-  curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/train_10k.csv
-  curl https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/val_10k.csv
+  curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_10k.csv > ~/.lewagon/mlops/data/train_10k.csv
+  curl https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/val_10k.csv > ~/.lewagon/mlops/data/val_10k.csv
   ```
 </details>
 
@@ -429,11 +450,10 @@ You can now train you model from the cloud using data chunks retrieved from Big 
 
 ```python
 if __name__ == '__main__':
-    preprocess_and_train()
     preprocess()
     train()
     pred()
-    evaluate(first_row=9000)
+    evaluate()
 ```
 
 - Observe how the duration of the training varies when you source the data from Big Query versus when the data is stored on your machine. You can also time the result of your execution by prefixing `time <my_command>`
@@ -501,7 +521,7 @@ Head towards the GCP console [Compute Engine](https://console.cloud.google.com/c
   ``` bash
   INSTANCE=taxi-instance
   IMAGE_PROJECT=ubuntu-os-cloud
-  IMAGE_FAMILY=ubuntu-2110
+  IMAGE_FAMILY=ubuntu-2204-lts
 
   gcloud compute instances create $INSTANCE --image-project=$IMAGE_PROJECT --image-family=$IMAGE_FAMILY
   ```
@@ -518,13 +538,13 @@ You have access at arms length to virtually unlimited computing power. Ready to 
 
 The GCP console allows you to connect to the VM instance through a web interface:
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-ssh.png" width="150" alt="gce vm ssh"></a><a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-console-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-console-ssh.png" width="120" alt="gce console ssh"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-ssh.png" width="150" alt="gce vm ssh"></a><a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-console-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-console-ssh.png" width="120" alt="gce console ssh"></a>
 
 You can disconnect by typing `exit` or closing the window.
 
 A nice alternative is to connect to the virtual machine right from your command line 🤩
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-ssh.png" width="150" alt="gce ssh"></a>
 
 All you need to do is to `gcloud compute ssh` on a running instance and to run `exit` when you want to disconnect 🎉
 
@@ -610,12 +630,12 @@ Add dependencies required to build python:
 sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-python-dev python3-dev
+python3-dev
 ```
 
 ℹ️ If a window pops up to ask you which services to restart, just press *Enter*:
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-apt-services-restart.png" width="150" alt="gce apt services restart"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-apt-services-restart.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-apt-services-restart.png" width="150" alt="gce apt services restart"></a>
 
 Now we need to start a new user session so that the updates in the `~/.zshrc` and `~/.zprofile` are taken into account.
 
@@ -769,7 +789,7 @@ Let's run your first training in the cloud!
 
 **❓ How do you setup and run your project in the virtual machine ?**
 
-**💻 Clone your package, install its requirements, and run the training**
+**💻 Clone your package, install its requirements**
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
@@ -857,25 +877,24 @@ pip install pyarrow tensorflow  # this should be in your requirements.txt
 pip install -r requirements.txt
 ```
 
-And run the preprocess and the training in the cloud!
+</details>
+
+**🔥 Run the preprocess and the training in the cloud 🔥**!
 
 ``` bash
 make run_all  # Have a look at the Makefile to understand exactly what this does!
 ```
 
-</details>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-ssh.png" width="150" alt="gce train ssh"></a><a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-web-ssh.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-train-web-ssh.png" width="120" alt="gce train web ssh"></a>
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-ssh.png" width="150" alt="gce train ssh"></a><a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-web-ssh.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-train-web-ssh.png" width="120" alt="gce train web ssh"></a>
+**🏋🏽‍♂️ Go Big: re-run everything switching to 500k data sizes and 100k chunks 🏋🏽‍♂️**!
 
-You have trained your model in the cloud 🎉
 
-... You can switch the vm off 🌒
-
-**❓ How switch ON/OFF your VM ?**
+**🏁 Switch ON/OFF your VM to finish 🌒**
 
 You can easily start and stop a vm instance from the GCP console, which allows to see which instances are running.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/gce-vm-start.png" width="150" alt="gce vm start"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-start.png"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/gce-vm-start.png" width="150" alt="gce vm start"></a>
 
 <details>
   <summary markdown='span'><strong> 💡 Hint </strong></summary>

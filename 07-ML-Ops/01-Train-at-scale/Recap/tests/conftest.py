@@ -4,32 +4,22 @@ import os
 import pytest
 import numpy as np
 
-
-DATA_RAW_DTYPES_OPTIMIZED = {
-        "key": "O",
-        "fare_amount": "float32",
-        "pickup_datetime": "O",
-        "pickup_longitude": "float32",
-        "pickup_latitude": "float32",
-        "dropoff_longitude": "float32",
-        "dropoff_latitude": "float32",
-        "passenger_count": "int8"
-    }
+from taxifare.ml_logic.params import DTYPES_RAW_OPTIMIZED
 
 
 @pytest.fixture(scope="session")  # cached fixture
 def train_1k()->pd.DataFrame:
 
-    aws_path = "https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/train_1k.csv"
-    df_raw = pd.read_csv(aws_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    gcs_path = "https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/train_1k.csv"
+    df_raw = pd.read_csv(gcs_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     return df_raw
 
 
 @pytest.fixture(scope='session')
 def train_1k_cleaned()->pd.DataFrame:
-    aws_path = "https://wagon-public-datasets.s3.amazonaws.com/taxi-fare-ny/solutions/train_1k_cleaned.csv"
-    df_cleaned = pd.read_csv(aws_path, dtype=DATA_RAW_DTYPES_OPTIMIZED)
+    gcs_path = "https://storage.googleapis.com/datascience-mlops/taxi-fare-ny/solutions/train_1k_cleaned.csv"
+    df_cleaned = pd.read_csv(gcs_path, dtype=DTYPES_RAW_OPTIMIZED)
 
     return df_cleaned
 

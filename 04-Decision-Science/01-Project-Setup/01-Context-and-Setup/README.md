@@ -6,7 +6,7 @@ We will analyze a dataset provided by an e-commerce marketplace called [Olist](h
 
 ## About Olist 🇧🇷
 
-<img src="https://raw.githubusercontent.com/lewagon/data-images/master/best-practices/olist.png" width="500"/>
+<img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/best-practices/olist.png" width="500"/>
 
 Olist is a leading e-commerce service that connects merchants to main marketplaces in Brazil. They provide a wide range of offers including inventory management, dealing with reviews and customer contacts to logistic services.
 
@@ -37,47 +37,51 @@ Here are the seller and customer workflows:
 
 The dataset consists of ~100k orders from 2016 and 2018 that were made on the Olist store, available as csv files on Le Wagon S3 bucket (❗️the datasets available on Kaggle may be slightly different).
 
-✅ Download the 9 datasets compressed in the `olist.zip` file, unzip it and store them in your `~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv` folder:
+✅ Download the 9 datasets compressed in the `olist.zip` file, unzip it and store them in your `~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv` folder:
 
 ```bash
-curl https://wagon-public-datasets.s3.amazonaws.com/olist/olist.zip > ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv/olist.zip
-unzip -d ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv/ ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv/olist.zip
-rm -rf ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv/olist.zip
+curl https://wagon-public-datasets.s3.amazonaws.com/olist/olist.zip > ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv/olist.zip
+unzip -d ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv/ ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv/olist.zip
+rm ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv/olist.zip
 ```
 
 Check you have the 9 datasets on your machine:
 
 ```bash
-ls ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/data/csv
+ls ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}/data/csv
 ```
 
 ## Setup
 
 ### 1 - Project Structure
-Go to your local `04-Decision-Science` folder.
+Go to your local `~/code/<user.github_nickname>` folder.
 This will be your project structure for the week.
 
 ```bash
 .
-├── 01-Project-Setup             # your notebooks & analyses, day-by-day
-├── 02-Statistical-Inference
-├── 03-Linear-Regression
-├── 04-Logistic-Regression
-├── 05-Communicate
-|
-├── data                        # Your data source (git ignored)
-|   ├── csv
-|   |   ├── olist_customers_dataset.csv
-|   |   └── olist_orders_dataset.csv
-|   |   └── ...
-|   ├── README.md   # database documentation
-|
-├── olist                       # Your data-processing logic
-|   ├── data.py
-|   ├── product.py
-|   ├── seller.py
-|   ├── utils.py
-|   └── __init__.py.   # turns your folder into a "package"
+# Your whole code logic and data, this is your "package"
+├── context-and-setup-olist
+    ├── data                # Your data source (git ignored)
+    |   ├── csv
+    |   |   ├── olist_customers_dataset.csv
+    |   |   └── olist_orders_dataset.csv
+    |   |   └── ...
+    |   ├── README.md       # database documentation
+    |
+    ├── olist               # Your data-processing logic
+    |   ├── data.py
+    |   ├── product.py
+    |   ├── seller.py
+    |   ├── utils.py
+    |   └── __init__.py.    # turns the olist folder into a "package"
+# Your notebooks & analyses, challenge-by-challenge
+├── data-preparation
+├── exploratory-analysis
+├── orders
+├── simple-analysis
+├── ...
+├── logit
+├── olist_ceo_request
 ```
 
 ### 2 - Edit the `PYTHONPATH`
@@ -98,7 +102,7 @@ Now you'll need to open your `.zshrc` file. As you might have noticed the file s
 ls -a
 ```
 
-Next lets open the file using your text editor, choose from the options below:
+Next lets open the file using your text editor:
 
 ```bash
 code .zshrc
@@ -106,19 +110,19 @@ code .zshrc
 
 Now in your terminal run:
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science && echo "export PYTHONPATH=\"$(pwd):\$PYTHONPATH\""
+cd ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }} && echo "export PYTHONPATH=\"$(pwd):\$PYTHONPATH\""
 ```
 
-👉 Copy the resulting output line from your terminal and paste it at the bottom of your ~/.zshrc file. Don't forget to save and restart all your terminal windows to take into account this change.
+👉 Copy the resulting output line from your terminal and paste it at the bottom of your ~/.zshrc file. Don't forget to save and restart all your terminal windows to take this change into account.
 
 
 
 ### 🔥 Check your setup
 
-Go to your `01-Project-Setup` folder and run an `ipython` session:
+Go to your `context-and-setup-olist` folder and run an `ipython` session:
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science/01-Project-Setup
+cd ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}
 ipython
 ```
 
@@ -134,10 +138,10 @@ If you get something else than `pong`, raise a ticket to get some help from a TA
 
 ## Push your code on GitHub
 
-Go back to the Decision Science directory, commit and push your code:
+From your `context-and-setup-olist` directory, commit and push your code:
 
 ```bash
-cd ~/code/<user.github_nickname>/<program.challenges_repo_name>/04-Decision-Science
+cd ~/code/<user.github_nickname>/{{ local_path_to("04-Decision-Science/01-Project-Setup/01-Context-and-Setup") }}
 git add .
 git commit -m 'kick off olist challenge'
 git push origin master

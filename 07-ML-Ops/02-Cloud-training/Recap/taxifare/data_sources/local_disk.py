@@ -10,7 +10,8 @@ def get_pandas_chunk(path: str,
                      index: int,
                      chunk_size: int,
                      dtypes,
-                     columns: list = None) -> pd.DataFrame:
+                     columns: list = None,
+                     verbose=True) -> pd.DataFrame:
     """
     return a chunk of the raw dataset from local disk or cloud storage
     """
@@ -20,7 +21,8 @@ def get_pandas_chunk(path: str,
         "processed" if "processed" in path else "raw",
         f"{path}.csv")
 
-    print(Fore.MAGENTA + f"Source data from {path}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL)
+    if verbose:
+        print(Fore.MAGENTA + f"Source data from {path}: {chunk_size if chunk_size is not None else 'all'} rows (from row {index})" + Style.RESET_ALL)
 
     try:
 
@@ -29,7 +31,11 @@ def get_pandas_chunk(path: str,
                 skiprows=index + 1,  # skip header
                 nrows=chunk_size,
                 dtype=dtypes,
-                header=None)  # ignore header
+                header=None)  # read all rows
+
+        # read_csv(dtypes=...) will silently fail to convert data types, if column names do no match dictionnary key provided.
+        if isinstance(dtypes, dict):
+            assert dict(df.dtypes) == dtypes
 
         if columns is not None:
             df.columns = columns

@@ -19,41 +19,45 @@ In order to do so, we will:
 - Challenge 2 : create a **Docker image** containing the environment required in order to run the code of our API
 - Challenge 3 : push this image to **Google Cloud Run** so that it is instantiated as a **Docker container** that will run our code and allow developers all over the world to use it
 
-## Project setup
+# 1️⃣ PROJECT SETUP 🛠
 
-### API directory
+<details>
+  <summary markdown='span'><strong>❓ Instructions </strong></summary>
 
-A new `taxifare/api` directory has been added to the project to contain the code of the API.dand new files within the `model` project directory.
+## Environment
 
-First, let's have a look at this new directory:
+Copy your `.env` file from the previous package version:
+
+```bash
+cp ~/<user.github_nickname>/{{local_path_to('07-ML-Ops/03-Automate-model-lifecycle/01-Automate-model-lifecycle')}}/.env .env
+```
+
+OR
+
+Use the `env.sample` provided, replacing the environment variable values by yours.
+
+## API directory
+
+A new `taxifare/api` directory has been added to the project to contain the code of the API along with 2 new configuration files within the challenge project directory:
 
 ```bash
 .
-├── Dockerfile          # 🆕 Building instructions
-├── MANIFEST.in         # 🆕 Config file for production purpose
+├── Dockerfile          # 🎁  NEW Building instructions
+├── MANIFEST.in         # 🎁  NEW Config file for production purpose
 ├── Makefile            # Good old task manager
-├── README.md           # Package documentation
+├── README.md
 ├── requirements.txt    # All the dependencies you need to run the package
 ├── setup.py            # Package installer
 ├── taxifare
-│   ├── api             # 🆕 API directory
+│   ├── api             # 🎁  NEW API directory
 │   │   ├── __init__.py
-│   │   └── fast.py     # 🆕 Where the API lays
+│   │   └── fast.py     # 🎁  NEW Where the API lays
 │   ├── data_sources    # Data stuff
 │   ├── flow            # DAG stuff
 │   ├── interface       # Package entry point
-│   └── ml_logic        # ML logic
-└── tests               # Your favorite 🍔
+│   └── ml_logic        # ML stuff
+└── tests
 ```
-
-**❓ What's inside that new directory?**
-
-<details>
-  <summary markdown='span'>Answer</summary>
-
-🎁 As you can see, it contains a new **module** named **`taxifare.api.fast`** that you are going to implement!
-
-</details>
 
 Now, have a look at the `requirements.txt`. You can see new comers:
 
@@ -76,7 +80,7 @@ pytest-asyncio  # Asynchronous I/O support for pytest
 
 </details>
 
-### Running the API with FastAPI and a Uvicorn server
+## Running the API with FastAPI and a Uvicorn server
 
 We provide you with with a FastAPI skeleton in the `fast.py` file.
 
@@ -89,6 +93,11 @@ You probably need a `uvicorn` web server..., with a 🔥 reloading...
 
 In case you can't find the proper syntax, keep calm and look at your `Makefile`, we provided you with a new task `run_api`.
 
+If you run into an error `Address already in use`, the port `8000` on your local machine might already be used by another application.
+
+You can check this by running `lsof -i :8000`. If the command returns something, then the port `8000` is already in use.
+
+In this case specify another port in the [0, 65535] range in the `run_api` command using the `--port` parameter.
 </details>
 
 **❓ How do you consult your running API?**
@@ -113,13 +122,19 @@ The unimplemented root page is a little raw, remember you can always find more i
 
 </details>
 
-## Build the API
+</details>
 
+<br>
+
+# 2️⃣  Build the API 📡
+
+<details>
+  <summary markdown='span'><strong>❓ Instructions </strong></summary>
 An API is defined by its specifications. E.g. [GitHub repositories API](https://docs.github.com/en/rest/repos/repos). You will find below the API specifications you need to implement.
 
-### Specifications
+## Specifications
 
-#### Root
+### Root
 
 - GET `/`
 - Response
@@ -141,7 +156,7 @@ Once and _only once_ your API responds as required:
 
 **🚀 Commit and push your code!**
 
-#### Prediction
+### Prediction
 
 - GET `/predict`
 - Query parameters
@@ -155,10 +170,11 @@ Once and _only once_ your API responds as required:
 | dropoff_latitude | float |  `40.783282` |
 | passenger_count | int |  `2` |
 
-- Response
-Status 200
+- Response `Status 200`
 - Code sample
-GET `http://localhost:8000/predict?pickup_datetime=2013-07-06 17:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2`
+```bash
+GET http://localhost:8000/predict?pickup_datetime=2013-07-06 17:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2
+```
 Example response:
 ```json
 {
@@ -168,29 +184,13 @@ Example response:
 
 **❓ How would you proceed to implement the `/predict` endpoint? 💬 Discuss with your buddy.**
 
-<details>
-  <summary markdown='span'>⚡️ Kickstart pack</summary>
-Here is a piece of code you can use to kickstart the implementation:
-
-```Python
-@app.get("/predict")
-def predict(pickup_datetime: datetime,  # 2013-07-06 17:18:00
-            pickup_longitude: float,    # -73.950655
-            pickup_latitude: float,     # 40.783282
-            dropoff_longitude: float,   # -73.984365
-            dropoff_latitude: float,    # 40.769802
-            passenger_count: int):
-    pass # YOUR CODE HERE
-```
-
-</details>
 
 <details>
   <summary markdown='span'>💡 Hints</summary>
 
 Ask yourselves the following questions:
 - How should we handle the query parameters?
-- How can we re-use the `taxifare` model package?
+- How can we re-use the `taxifare` model package in the most lightweight way ?
 - How should we build `X_pred`? What does it look like?
 - How to render the correct response?
 </details>
@@ -198,39 +198,71 @@ Ask yourselves the following questions:
 <details>
   <summary markdown='span'>⚙️ Configuration</summary>
 
-Have you put a trained model in _Production_ in mlflow? If not, you can use the following configuration:
+Have you put a trained model in _Production_ in MLflow? If not, you can use the following configuration, which already has a saved model:
 
-``` bash
-MODEL_TARGET=mlflow
-MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
-MLFLOW_EXPERIMENT=taxifare_experiment_recap
-MLFLOW_MODEL_NAME=my_taxifare
-```
+    ``` bash
+    MODEL_TARGET=mlflow
+    MLFLOW_TRACKING_URI=https://mlflow.lewagon.ai
+    MLFLOW_EXPERIMENT=taxifare_experiment_krokrob
+    MLFLOW_MODEL_NAME=taxifare_krokrob
+    ```
 
 </details>
 
 <details>
   <summary markdown='span'>🍔 Food for thought</summary>
 
-1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires
-1. Of course you must re-use the `taxifare.interface.main.pred()` or the `taxifare.ml_logic.registry.load_model()` functions!
-1. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
-1. FastAPI can only render data type from the Python Standard Library, you may need to convert `y_pred` to match this requirement
+1. Investigate the data types of the query parameters, you may need to convert them into the types the model requires.
+2. It's more convenient to re-use the methods available in the `taxifare/ml_logic` package rather than the main routes in `taxifare/interface`. Always load the minimal amount of code!
+3. In order to make a prediction with the trained model, you must provide a valid `X_pred` but the `key` is missing!
+4. FastAPI can only render data type from the [Python Standard Library](https://docs.python.org/3.8/library/stdtypes.html), you may need to convert `y_pred` to match this requirement
 
 </details>
 
-**👀 Inspect your browser response 👉 ['http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
+**👀 Inspect your browser response 👉 [http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
 
-**🐛 Inspect the server logs and add some `breakpoint()` to debug**
+**👀 Inspect the server logs while you query the endpoint**
 
 Once and _only once_ your API responds as required:
 **🧪 Test your implementation with `make test_api_predict`**
 
-**🚀 Commit and push your code!**
+👏 Congrats, you build your first ML predictive API!
 
-**👏 Congrats, you build your first ML predictive API!**
 
-## Build a Docker image for our API
+### ⚡️ Faster predictions
+
+Did you notice your prediction were a bit slow? Why?
+
+The answer is in visible in your logs!
+
+We want to avoid loading the heavy deep-learning model from MLflow at each GET request! The trick is to load the model in memory at app startup and store it in a global variable in `app.state`, which is kept in memory and accessible across all routes instantly!
+
+This will prove very usefull for demo days!
+
+<details>
+  <summary markdown='span'>⚡️ like this ⚡️ </summary>
+
+```python
+app = FastAPI()
+app.state.model = ...
+
+@app.get("/predict")
+...
+app.state.model.predict(...)
+```
+
+</details>
+
+
+
+</details>
+
+<br>
+
+# 3️⃣ Build a Docker image for our API 🐳
+
+<details>
+  <summary markdown='span'><strong>❓ Instructions </strong></summary>
 
 We now have a working **predictive API** which can be queried from our local machine.
 
@@ -247,7 +279,7 @@ We want to make it available to the world. In order to do that, the first step i
 
 </details>
 
-### Setup
+## Setup
 
 You need Docker daemon to run on your machine so you  will be able to build and run the image locally.
 
@@ -258,7 +290,7 @@ You need Docker daemon to run on your machine so you  will be able to build and 
 
 Launch the Docker Desktop app, you should see a whale in your menu bar.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/macos-docker-desktop-running.png" target="_blank"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/macos-docker-desktop-running.png" width="150" alt="verify that Docker Desktop is running"></a>
 
 </details>
 
@@ -267,7 +299,7 @@ Launch the Docker Desktop app, you should see a whale in your menu bar.
 
 Launch the Docker app.
 
-<a href="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" target="_blank"><img src="https://raw.githubusercontent.com/lewagon/data-images/master/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running"></a>
+<a href="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/windows-docker-app.png" target="_blank"><img src="https://wagon-public-datasets.s3.amazonaws.com/data-science-images/DE/windows-docker-app.png" width="150" alt="verify that Docker Desktop is running"></a>
 
 </details>
 
@@ -277,7 +309,7 @@ A nice stack of logs should print:
 <a href="https://github.com/lewagon/data-setup/raw/master/images/docker_info.png" target="_blank"><img src='https://github.com/lewagon/data-setup/raw/master/images/docker_info.png' width=150></a>
 
 
-### `Dockerfile`
+## `Dockerfile`
 
 As a reminder, here is the project directory structure:
 
@@ -313,46 +345,55 @@ Here the most common instructions of good `Dockerfile`:
 
 </details>
 
-**❓ What the base image should contain to build our image on top of it?**
+**❓ What should the base image contain to build our image on top of it?**
 
 <details>
   <summary markdown='span'>💡 Hints</summary>
 
-Choosing an image with Python already installed could be a nice start...
+You can start from a raw linux (Ubuntu) image, but then you'll have to install python, and pip, before installing taxifare!
+
+OR
+
+You can choose an image with Python (and pip) already installed ! (recommended) ✅
+
 </details>
 
 **💻 Write the instructions needed to build the API image in the `Dockerfile` with the following specifications:**
 
-- [ ] it should contain the same Python version of your virtual env
-- [ ] it should contain the necessary directories from the `/taxifare` directory to allow the API to run
-- [ ] it should contain the dependencies list
-- [ ] the API depencies should be installed
-- [ ] the web server should be launched when the container is started from the image
-- [ ] the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
-- [ ] the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
+- ✅ it should contain the same Python version of your virtual env
+- ✅ it should contain the necessary directories from the `/taxifare` directory to allow the API to run
+- ✅ it should contain the dependencies list
+- ✅ the API depencies should be installed
+- ✅ the web server should be launched when the container is started from the image
+- ✅ the web server should listen to the HTTP requests coming from outside the container (cf `host` parameter)
+- ✅ the web server should be able listen to a specific port defined by an environment variable `$PORT` (cf `port` parameter)
 
 <details>
   <summary markdown='span'>⚡️ Kickstart pack</summary>
 
 Here is the skeleton of the `Dockerfile`:
 
-```Dockerfile
-FROM image
-COPY taxifare
-COPY dependencies
-RUN install dependencies
-CMD launch API web server
-```
+  ```Dockerfile
+  FROM image
+  COPY taxifare
+  COPY dependencies
+  RUN install dependencies
+  CMD launch API web server
+  ```
 
 </details>
 
-**🚨 Apple Silicon users**
+<details>
+  <summary markdown='span'><strong>🚨 Apple Silicon users</strong>, expand me and read carefully</summary>
 
-🚨 You will not be able to test your container locally with the tensorflow package since the current version does not install properly on _Apple Silicon_ machines.
+You will not be able to test your container locally with the tensorflow package since the current version does not install properly on _Apple Silicon_ machines.
 
 The solution is to use one image to test your code locally and another one to push your code to production.
 
 👉 Refer to the commands in the `Dockerfile_silicon` file in order to build and test your **local image** and build and deploy to production your **production image**
+</details>
+
+
 
 **❓ How would you check if the `Dockerfile` instructions will execute what you wanted?**
 
@@ -362,7 +403,7 @@ The solution is to use one image to test your code locally and another one to pu
 You can't at this point! 😁 You need to build the image and check if it contains everything required to run the API. Go to the next section: Build the API image.
 </details>
 
-### Build the API image
+## Build the API image
 
 Now is the time to **build** the API image on Docker so you can check if it satisfies the requirements and be able to run it on Docker.
 
@@ -400,7 +441,7 @@ docker images
 
 **🕵️‍♀️ The image you are looking for does not appear in the list? Ask for help 🙋‍♂️**
 
-### Check the API image
+## Check the API image
 
 Now the image is built let's check it satisfies the specifications to run the predictive API. Docker comes with a handy command to **interactively** communicate with the shell of the image:
 
@@ -442,7 +483,7 @@ exit
 
 **✅ ❌ All good? If something is missing, you  would probably need to fix your `Dockerfile` and re-build the image again**
 
-### Run the API image
+## Run the API image
 
 In the previous section you learned how to interact with the image shell. Now is the time to run the predictive API image and
 test if the API responds as it should.
@@ -452,10 +493,10 @@ test if the API responds as it should.
 <details>
   <summary markdown='span'>💡 Hints</summary>
 
-You should probably remove the interactivity mode and forget the `sh` command...
+You should probably remove the interactivity mode and forget the `sh` command... Read below if you're stuck!
 </details>
 
-**🐛 Unless you find the correct command to run the image, it is probably crashing with errors involving environment variable.**
+**😱 It is probably crashing with errors involving environment variables**
 
 **❓ What is the difference between your local environment and image environment? 💬 Discuss with your buddy.**
 
@@ -484,26 +525,56 @@ docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $IMAGE
 
 The API should respond in your browser, go visit it!
 
-Also you can check the image runs with:
-``` bash
-docker ps
-```
+Also you can check if the image runs with `docker ps` in a new terminal
+
 </details>
 
 It's Alive! 😱 🎉
 
 **👀 Inspect your browser response 👉 [http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2](http://localhost:8000/predict?pickup_datetime=2013-07-06%2017:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2)**
 
+**🛑 You can stop your container with `docker container stop <CONTAINER_ID>**
+
 **👏 Congrats, you build your first ML predictive API inside a Docker container!**
 
-## Deploy the API
+
+</details>
+
+<br>
+
+# 4️⃣ Deploy the API 🌎
+
+<details>
+  <summary markdown='span'><strong>❓ Instructions </strong></summary>
 
 Now we have built a **predictive API** Docker image that we are able to run on our local machine, we are 2 steps away from deploying:
 - Push the **Docker image** to **Google Container Registry**
 - Deploy the image on **Google Cloud Run** so that it gets instantiated into a **Docker container**
 
+## Lightweight image
 
-### Push our prediction API image to Google Container Registry
+As a responsible ML Engineer, you know the size of an image is important when it comes to production. Depending the choice of the base image you used in your `Dockerfile`, the API image could be huge:
+- `python:3.8.12-buster` 👉 `3.9GB`
+- `python:3.8.12-slim`   👉 `3.1GB`
+- `python:3.8.12-alpine` 👉 `3.1GB`
+
+**❓ What is the heaviest requirement used by your API?**
+
+<details>
+  <summary markdown='span'>Answer</summary>
+
+No doubt it is `tensorflow` with 1.1GB! You need to find a base image that is optimized for it.
+</details>
+
+**📝 Change your base image**
+
+You may want to use a [tensorflow docker image](https://hub.docker.com/r/tensorflow/tensorflow) and don't forget to remove `tensorflow` from the `requirements.txt` on your container
+
+- 💻 Build and run a lightweight local image of your API
+- ✅ Make sure the API is still up and running
+- 👀 Inspect the space saved with `docker images` and feel happy
+
+## Push our prediction API image to Google Container Registry
 
 **❓ What is the purpose of Google Container Registry ?**
 
@@ -516,7 +587,7 @@ It is in a way similar to **GitHub** allowing you to store your git repositories
 
 </details>
 
-#### Setup
+### Setup
 
 First, let's make sure to enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart) for your project in GCP.
 
@@ -526,32 +597,32 @@ Once this is done, let's allow the `docker` command to push an image to GCP.
 gcloud auth configure-docker
 ```
 
-#### Build and push the image on GCR
+### Build and push the image on GCR
 
 Now we are going to build our image again. This should be pretty fast since Docker is pretty smart and is going to reuse all the building blocks used previously in order to build the prediction API image.
 
-Add a `MULTI_REGION` variable to your project configuration and set it to `eu.gcr.io`.
+Add a `GCR_MULTI_REGION` variable to your project configuration and set it to `eu.gcr.io`.
 
 ``` bash
-docker build -t $MULTI_REGION/$PROJECT/$IMAGE .
+docker build -t $GCR_MULTI_REGION/$PROJECT/$IMAGE .
 ```
 
 Again, let's make sure that our image runs correctly, so that we avoid spending the time on pushing an image that is not working to the cloud.
 
 ``` bash
-docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $MULTI_REGION/$PROJECT/$IMAGE
+docker run -e PORT=8000 -p 8000:8000 --env-file path/to/.env $GCR_MULTI_REGION/$PROJECT/$IMAGE
 ```
 Visit [http://localhost:8000/](http://localhost:8000/) and check the API is running as expected.
 
 We can now push our image to Google Container Registry.
 
 ``` bash
-docker push $MULTI_REGION/$PROJECT/$IMAGE
+docker push $GCR_MULTI_REGION/$PROJECT/$IMAGE
 ```
 
 The image should be visible in the GCP console [here](https://console.cloud.google.com/gcr/).
 
-### Deploy the Container Registry image to Google Cloud Run
+## Deploy the Container Registry image to Google Cloud Run
 
 Add a `MEMORY` variable to your project configuration and set it to `2Gi`.
 
@@ -612,7 +683,7 @@ Cloud Run will instantiate the image into a container and run the `CMD` instruct
 Let's run one last command 🤞
 
 ``` bash
-gcloud run deploy --image $MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --region $REGION --env-vars-file .env.yaml
+gcloud run deploy --image $GCR_MULTI_REGION/$PROJECT/$IMAGE --memory $MEMORY --region $REGION --env-vars-file .env.yaml
 ```
 
 After confirmation, you should see a similar output indicating that the service is live 🎉
@@ -634,6 +705,23 @@ Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
 Any developer in the world 🌍 is now able to browse to the deployed url and make a prediction using the API 🤖!
 
 ⚠️ Keep in mind that you pay for the service as long as it is up 💸
+
+<details>
+  <summary markdown='span'>Hint</summary>
+
+You can look for the running instances using:
+
+``` bash
+gcloud compute instances list
+```
+
+You can shutdown your instance with:
+
+``` bash
+gcloud compute instances stop $INSTANCE
+```
+
+</details>
 
 **👏 Congrats, you deployed your first ML predictive API!**
 
@@ -657,4 +745,40 @@ Stop the `Docker.app` with **Quit Docker Desktop** in the menu bar.
   <summary markdown='span'>Windows WSL2/Ubuntu</summary>
 
 Stop the Docker app.
+</details>
+
+</details>
+
+<br>
+
+# 5️⃣ OPTIONAL
+
+<details>
+  <summary markdown='span'><strong>❓ Instructions </strong></summary>
+
+## 1) Create a /POST request to be able to return batch predictions
+
+Let's look at our `/GET` route format
+
+```bash
+http://localhost:8000/predict?pickup_datetime=2014-07-06&19:18:00&pickup_longitude=-73.950655&pickup_latitude=40.783282&dropoff_longitude=-73.984365&dropoff_latitude=40.769802&passenger_count=2
+```
+
+🤯 How would you send a prediction request for 1000 rows at once?
+
+The url query string (everything after `?` in the url above) is not adapted to send large volume of data.
+
+### Welcome to `/POST` HTTP requests
+
+- Your goal is to be able to send a batch of 1000 new predictions at once!
+- Try to read more about post in [fast api docs](https://fastapi.tiangolo.com/tutorial/body/#request-body-path-query-parameters) and implement it on your package
+
+## 2) Read about sending images 📸 via /POST requests to CNN models...
+
+In anticipation to your demo-day, you might be wondering how to send unstructured data like images (or videos, or sounds etc...) to your deep-learning model in prod.
+
+
+👉 Bookmark [Le Wagon - data-template](https://github.com/lewagon/data-templates) and try to understand & reproduce the project boilerplate called "[sending-images-streamlit-fastapi](https://github.com/lewagon/data-templates/tree/main/project-boilerplates/sending-images-streamlit-fastapi)"
+
+
 </details>

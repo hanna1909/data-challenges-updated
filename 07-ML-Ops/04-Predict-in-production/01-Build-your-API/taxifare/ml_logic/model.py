@@ -57,6 +57,7 @@ def train_model(model: Model,
                 X: np.ndarray,
                 y: np.ndarray,
                 batch_size=64,
+                patience=2,
                 validation_split=0.3,
                 validation_data=None) -> Tuple[Model, dict]:
     """
@@ -66,7 +67,7 @@ def train_model(model: Model,
     print(Fore.BLUE + "\nTrain model..." + Style.RESET_ALL)
 
     es = EarlyStopping(monitor="val_loss",
-                       patience=2,
+                       patience=patience,
                        restore_best_weights=True,
                        verbose=0)
 
@@ -93,6 +94,10 @@ def evaluate_model(model: Model,
     """
 
     print(Fore.BLUE + f"\nEvaluate model on {len(X)} rows..." + Style.RESET_ALL)
+
+    if model is None:
+        print(f"\n❌ no model to evaluate")
+        return None
 
     metrics = model.evaluate(
         x=X,

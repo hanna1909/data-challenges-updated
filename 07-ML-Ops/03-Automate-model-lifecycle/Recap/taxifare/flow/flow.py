@@ -1,108 +1,53 @@
 
-from taxifare.ml_logic.registry_db import get_next_first_row
-
 from taxifare.interface.main import preprocess, train, evaluate
 
 from prefect import task, Flow, Parameter
 
 import os
-
-from colorama import Fore, Style
-
+import requests
 
 @task
-def get_next_training_params(experiment):
+def preprocess_new_data(experiment):
     """
-    retrieve the parameters for the next training
-
-    the `taxifare` package saves after each training the run parameters
-    in mlflow: `row_index` and `row_count` identifying the range of data used
-
-    for the next training we want to determine the `first_row`
-    containing new data which the model has not seen yet
+    Run the preprocessing of the new data
     """
-
-    print(Fore.GREEN + "\n# 🐙 Prefect task - get next training params:" + Style.RESET_ALL)
-
-
-    print()
-
-    return next_row
-
+    preprocess()
+    preprocess(source_type='val')
 
 @task
-def eval_perf(next_row):
+def evaluate_production_model(status):
     """
-    evaluate the performance of the latest model in production on new data
+    Run the `Production` stage evaluation on new data
+    Returns `eval_mae`
     """
-
-    print(Fore.GREEN + "\n# 🐙 Prefect task - eval past model perf:" + Style.RESET_ALL
-          + f"\n- first row: {next_row}")
-
-    # evaluate latest production model on new data
-    past_perf = evaluate(next_row)
-
-    print()
-
-    return past_perf
-
+    eval_mae = evaluate()
+    return eval_mae
 
 @task
-def train_model(next_row):
+def re_train(status):
     """
-    retrain the latest model in production with the new data
-    the new data and model will be ignored if the performance is not improved
+    Run the training
+    Returns train_mae
     """
-
-    print(Fore.GREEN + "\n# 🐙 Prefect task - retrain production model:" + Style.RESET_ALL
-          + f"\n- first row: {next_row}")
-
-    # ⚠️ here we should decide whether to train the new data
-    # chunk by chunk or in one piece depending on whether it fits in memory
-    #
-    # for the sake of simplicity, for this challenge, we will train
-    # the first dataset chunk by chunk and the next ones in one piece
-    #
-    # if you wanted to decide based on data size, an option would be to:
-    # - big query: query the new row count in order to assess the data size
-    # - csv: approximate the new row count from the average line length
-
-    # train new model (or existing production model if it exists) with new data
-
-    # preprocess data chunk by chunk
-    preprocess(first_row=next_row)
-
-    # train model chunk by chunk
-    new_perf = train(first_row=next_row,
-                        stage="Production")
-    print()
-
-    return new_perf
-
+    train_mae = train()
+    return train_mae
 
 @task
-def notify(past_perf, new_perf):
-    """
-    send a mail if the `mae` fluctuates above +- $.2
-    """
-
-    print(Fore.GREEN + "\n# 🐙 Prefect task - notify:" + Style.RESET_ALL
-          + f"\n- past perf: {round(past_perf, 2) if past_perf is not None else 'None'}"
-          + f"\n- new perf: {round(new_perf, 2) if new_perf is not None else 'None'}")
-
-    # notify of performance evolution
-    # TODO: trigger slack or mail task
-
-    print()
-
-    return "done"
-
+def notify(eval_mae, train_mae):
+    base_url = 'https://wagon-chat.herokuapp.com'
+    channel = 'krokrob'
+    url = f"{base_url}/{channel}/messages"
+    author = 'krokrob'
+    content = "Evaluation MAE: {} - New training MAE: {}".format(
+        round(eval_mae, 2), round(train_mae, 2))
+    data = dict(author=author, content=content)
+    response = requests.post(url, data=data)
+    response.raise_for_status()
 
 def build_flow():
     """
     build the prefect workflow for the `taxifare` package
     """
-
     flow_name = os.environ.get("PREFECT_FLOW_NAME")
 
     with Flow(flow_name) as flow:
@@ -114,9 +59,9 @@ def build_flow():
         experiment = Parameter(name="experiment", default=mlflow_experiment)
 
         # register tasks in the workflow
-        next_row = get_next_training_params(experiment)
-        past_perf = eval_perf(next_row)
-        new_perf = train_model(next_row)
-        notify(past_perf, new_perf)
+        status = preprocess_new_data(experiment)
+        eval_mae = evaluate_production_model(status)
+        train_mae = re_train(status)
+        notify(eval_mae, train_mae)
 
     return flow
