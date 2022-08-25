@@ -199,11 +199,11 @@ Let's copy the files provided in the challenge to your web project...
   <summary markdown='span'><strong> 💡 Hint </strong></summary>
 
 ``` bash
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/setup.py ~/code/<user.github_nickname>/taxifare-website
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/MANIFEST.in ~/code/<user.github_nickname>/taxifare-website
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/requirements.txt ~/code/<user.github_nickname>/taxifare-website
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/Procfile ~/code/<user.github_nickname>/taxifare-website
-cp ~/code/<user.github_nickname>/<program.challenges_repo_name>/07-ML-Ops/05-User-interface/02-Taxifare-website/app/setup.sh ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/app/setup.py ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/app/MANIFEST.in ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/app/requirements.txt ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/app/Procfile ~/code/<user.github_nickname>/taxifare-website
+cp ~/code/<user.github_nickname>/{{local_path_to('07-ML-Ops/05-User-interface/02-Taxifare-website')}}/app/setup.sh ~/code/<user.github_nickname>/taxifare-website
 ```
 
 </details>
