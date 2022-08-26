@@ -32,7 +32,7 @@ git init
 Create a corresponding repository on our **GitHub** account:
 
 ``` bash
-gh repo create
+gh repo create taxifare-website --private --source=. --remote=origin
 ```
 
 Go to the GitHub repo in order to make sure that everything is ok:
