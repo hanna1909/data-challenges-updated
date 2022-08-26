@@ -80,7 +80,7 @@ We will start by creating a duplicate template of this repository on our own Git
 
 Now that we have a `taxi-fare-interface` repository on our GitHub account, we can clone it in order to modify it.
 
-Let's go right next to the `data-challenges` directory:
+Let's go into your code folder:
 
 ``` bash
 cd ~/code/<user.github_nickname>
