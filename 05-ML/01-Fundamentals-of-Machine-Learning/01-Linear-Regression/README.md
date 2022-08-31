@@ -3,8 +3,8 @@
 
 ## Download the dataset
 
-The dataset is available [here](https://wagon-public-datasets.s3.amazonaws.com/Machine%20Learning%20Datasets/ML_Houses_dataset.csv).  
-You can download it from your challenge notebook using only pandas :wink:
+The dataset is available [here](https://wagon-public-datasets.s3.amazonaws.com/Machine%20Learning%20Datasets/ML_Houses_dataset.csv).
+You can load it into a DataFrame from your challenge notebook using only pandas :wink:
 
 
 ## The dataset
