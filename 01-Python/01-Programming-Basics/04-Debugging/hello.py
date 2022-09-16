@@ -9,7 +9,12 @@ def full_name(first_name, last_name):
     return name
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("You must provide a first name and a last name as arguments!")
+    if len(sys.argv) == 1:
+        # => ['hello.py']
+        print(f'Hello{full_name("", "")}!')
+    elif len(sys.argv) == 2:
+        # => ['hello.py', 'John' ]
+        print(f'Hello {full_name(sys.argv[1], "")}!')
     else:
-        print(f"Hello {full_name(sys.argv[1], sys.argv[2])}")
+        # => ['hello.py', 'John', 'Lennon']
+        print(f"Hello {full_name(sys.argv[1], sys.argv[2])}!")

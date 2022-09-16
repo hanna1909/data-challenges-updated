@@ -16,7 +16,6 @@ class TestHello(unittest.TestCase):
         actual = full_name("ringo", "")
         self.assertEqual(actual, "Ringo")
 
-
     def test_only_last_name(self):
         actual = full_name("", "LENNON")
         self.assertEqual(actual, "Lennon")
