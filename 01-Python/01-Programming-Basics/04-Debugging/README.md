@@ -17,7 +17,7 @@ python hello.py john lennon
 What is the problem with the output of this program? It seems there is some trouble with the creation of the concatenated full name. Let's try to debug this! Insert the following line just after `def full_name`:
 
 ```python
-breakpoint()
+breakpoint() # equivalent to `ipdb.set_trace()`
 ```
 
 `breakpoint()` will allow us to pause the program at a certain line (it calls `ipdb.set_trace()` under the hood).
